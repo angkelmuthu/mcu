@@ -7,7 +7,7 @@ class T_daftar_model extends CI_Model
 {
 
     public $table = 't_daftar';
-    public $id = 'noreg';
+    public $id = 'idreg';
     public $order = 'DESC';
 
     function __construct()
@@ -16,14 +16,15 @@ class T_daftar_model extends CI_Model
     }
 
     // datatables
-    function json() {
-        $this->datatables->select('noreg,nomr,baru,kddokter,kdpoli,kdbayar,rujukan,kdrujuk,tglreg,id_users');
+    function json()
+    {
+        $this->datatables->select('idreg,noreg,nomr,baru,kddokter,kdpoli,kdbayar,rujukan,kdrujuk,tglreg,id_users');
         $this->datatables->from('t_daftar');
         //add this line for join
         //$this->datatables->join('table2', 't_daftar.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('t_daftar/read/$1'),'<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed'))." 
-            ".anchor(site_url('t_daftar/update/$1'),'<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed'))." 
-                ".anchor(site_url('t_daftar/delete/$1'),'<i class="fal fa-trash" aria-hidden="true"></i>','class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'noreg');
+        $this->datatables->add_column('action', anchor(site_url('t_daftar/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
+            " . anchor(site_url('t_daftar/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
+                " . anchor(site_url('t_daftar/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idreg');
         return $this->datatables->generate();
     }
 
@@ -40,37 +41,40 @@ class T_daftar_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
-    
+
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL)
+    {
         $this->db->like('noreg', $q);
-	$this->db->or_like('nomr', $q);
-	$this->db->or_like('baru', $q);
-	$this->db->or_like('kddokter', $q);
-	$this->db->or_like('kdpoli', $q);
-	$this->db->or_like('kdbayar', $q);
-	$this->db->or_like('rujukan', $q);
-	$this->db->or_like('kdrujuk', $q);
-	$this->db->or_like('tglreg', $q);
-	$this->db->or_like('id_users', $q);
-	$this->db->from($this->table);
+        $this->db->or_like('nomr', $q);
+        $this->db->or_like('baru', $q);
+        $this->db->or_like('kddokter', $q);
+        $this->db->or_like('kdpoli', $q);
+        $this->db->or_like('kdbayar', $q);
+        $this->db->or_like('rujukan', $q);
+        $this->db->or_like('kdrujuk', $q);
+        $this->db->or_like('tglreg', $q);
+        $this->db->or_like('id_users', $q);
+        $this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL)
+    {
         $this->db->order_by($this->id, $this->order);
+        $this->db->like('idreg', $q);
         $this->db->like('noreg', $q);
-	$this->db->or_like('nomr', $q);
-	$this->db->or_like('baru', $q);
-	$this->db->or_like('kddokter', $q);
-	$this->db->or_like('kdpoli', $q);
-	$this->db->or_like('kdbayar', $q);
-	$this->db->or_like('rujukan', $q);
-	$this->db->or_like('kdrujuk', $q);
-	$this->db->or_like('tglreg', $q);
-	$this->db->or_like('id_users', $q);
-	$this->db->limit($limit, $start);
+        $this->db->or_like('nomr', $q);
+        $this->db->or_like('baru', $q);
+        $this->db->or_like('kddokter', $q);
+        $this->db->or_like('kdpoli', $q);
+        $this->db->or_like('kdbayar', $q);
+        $this->db->or_like('rujukan', $q);
+        $this->db->or_like('kdrujuk', $q);
+        $this->db->or_like('tglreg', $q);
+        $this->db->or_like('id_users', $q);
+        $this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
 
@@ -93,7 +97,6 @@ class T_daftar_model extends CI_Model
         $this->db->where($this->id, $id);
         $this->db->delete($this->table);
     }
-
 }
 
 /* End of file T_daftar_model.php */

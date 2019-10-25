@@ -30,6 +30,7 @@ class T_daftar extends CI_Controller
         $row = $this->T_daftar_model->get_by_id($id);
         if ($row) {
             $data = array(
+                'idreg' => $row->idreg,
                 'noreg' => $row->noreg,
                 'nomr' => $row->nomr,
                 'baru' => $row->baru,
@@ -111,6 +112,7 @@ class T_daftar extends CI_Controller
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('t_daftar/update_action'),
+                'idreg' => set_value('idreg', $row->idreg),
                 'noreg' => set_value('noreg', $row->noreg),
                 'nomr' => set_value('nomr', $row->nomr),
                 'baru' => set_value('baru', $row->baru),
@@ -140,6 +142,7 @@ class T_daftar extends CI_Controller
             $this->update($this->input->post('noreg', TRUE));
         } else {
             $data = array(
+                'noreg' => $this->input->post('noreg', TRUE),
                 'nomr' => $this->input->post('nomr', TRUE),
                 'baru' => $this->input->post('baru', TRUE),
                 'kddokter' => $this->input->post('kddokter', TRUE),

@@ -18,6 +18,7 @@
                             <thead>
                                 <tr>
                                     <th width="30px">No</th>
+                                    <th>NoReg</th>
                                     <th>Nomr</th>
                                     <th>Baru</th>
                                     <th>Kddokter</th>
@@ -79,6 +80,8 @@
             columns: [{
                     "data": "noreg",
                     "orderable": false
+                }, {
+                    "data": "noreg"
                 }, {
                     "data": "nomr"
                 }, {

@@ -63,7 +63,7 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><input type="hidden" name="idreg" value="<?php echo $idreg; ?>" />
+                                    <td><input type="text" class="form-control" name="idreg" value="<?php echo $idreg; ?>" readonly />
                                         <input type="text" class="form-control" name="tglreg" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
                                         <input type="text" class="form-control" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" readonly />
                                         <button type="submit" class="btn btn-warning waves-effect waves-themed"><i class="fal fa-save"></i> <?php echo $button ?></button>
