@@ -31,7 +31,7 @@
 
                                 <tr>
                                     <td width='200'>Noreg</td>
-                                    <td><input type="text" class="form-control" name="nomr" value="<?php echo $noreg_max; ?>" readonly /></td>
+                                    <td><input type="text" class="form-control" name="noreg" value="<?php echo $noreg_max; ?>" readonly /></td>
                                 </tr>
                                 <tr>
                                     <td width='200'>Nomr <?php echo form_error('nomr') ?></td>

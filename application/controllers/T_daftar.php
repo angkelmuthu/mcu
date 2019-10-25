@@ -74,6 +74,7 @@ class T_daftar extends CI_Controller
     public function create_action()
     {
         $regdate = date('ym');
+        $noregx = $regdate . $this->input->post('noreg', TRUE);
 
         $this->_rules();
 
@@ -81,6 +82,7 @@ class T_daftar extends CI_Controller
             $this->create();
         } else {
             $data = array(
+                'noreg' => $noregx,
                 'nomr' => $this->input->post('nomr', TRUE),
                 'baru' => $this->input->post('baru', TRUE),
                 'kddokter' => $this->input->post('kddokter', TRUE),
