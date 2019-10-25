@@ -61,10 +61,12 @@ CREATE TABLE IF NOT EXISTS `m_pasien` (
   PRIMARY KEY (`nomr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.m_pasien: ~0 rows (approximately)
+-- Dumping data for table mcu.m_pasien: ~1 rows (approximately)
 /*!40000 ALTER TABLE `m_pasien` DISABLE KEYS */;
 INSERT INTO `m_pasien` (`nomr`, `nik`, `nama`, `tgllhr`, `alamat`, `kodepos`, `kdklmn`, `kdkawin`, `hp`, `foto`, `tglinput`, `id_users`) VALUES
-	('000001', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1);
+	('000001', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1),
+	('000002', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1),
+	('000003', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1);
 /*!40000 ALTER TABLE `m_pasien` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_hak_akses
@@ -111,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `tbl_kodepos` (
   KEY `ixkodepos` (`kodepos`)
 ) ENGINE=InnoDB AUTO_INCREMENT=81249 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_kodepos: ~28,634 rows (approximately)
+-- Dumping data for table mcu.tbl_kodepos: ~28,456 rows (approximately)
 /*!40000 ALTER TABLE `tbl_kodepos` DISABLE KEYS */;
 INSERT INTO `tbl_kodepos` (`id`, `kelurahan`, `kecamatan`, `kabupaten`, `provinsi`, `kodepos`) VALUES
 	(1, 'GAMBIR', 'GAMBIR', 'JAKARTA PUSAT', 'DKI JAKARTA', '10110'),
@@ -28608,7 +28610,7 @@ CREATE TABLE IF NOT EXISTS `tbl_setting` (
   PRIMARY KEY (`id_setting`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_setting: ~0 rows (approximately)
+-- Dumping data for table mcu.tbl_setting: ~1 rows (approximately)
 /*!40000 ALTER TABLE `tbl_setting` DISABLE KEYS */;
 INSERT INTO `tbl_setting` (`id_setting`, `nama_setting`, `value`) VALUES
 	(1, 'Tampil Menu', 'ya');
@@ -28669,7 +28671,8 @@ CREATE TABLE IF NOT EXISTS `t_asessment` (
 -- Dumping data for table mcu.t_asessment: ~1 rows (approximately)
 /*!40000 ALTER TABLE `t_asessment` DISABLE KEYS */;
 INSERT INTO `t_asessment` (`noreg`, `bb`, `tb`, `sb`, `sistole`, `diastole`, `nadi`, `napas`, `keterangan`, `tglinput`, `id_users`) VALUES
-	(1, 2, 1, 1, 1, 1, 1, 1, 'scsza', '2019-10-23 09:38:31', 1);
+	(1, 2, 1, 1, 1, 1, 1, 1, 'scsza', '2019-10-23 09:38:31', 1),
+	(191000003, 51, 161, 1, 1, 1, 1, 1, 'bjkhbkj', '2019-10-25 12:56:24', 1);
 /*!40000 ALTER TABLE `t_asessment` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_daftar
@@ -28691,6 +28694,8 @@ CREATE TABLE IF NOT EXISTS `t_daftar` (
 
 -- Dumping data for table mcu.t_daftar: ~0 rows (approximately)
 /*!40000 ALTER TABLE `t_daftar` DISABLE KEYS */;
+INSERT INTO `t_daftar` (`idreg`, `noreg`, `nomr`, `baru`, `kddokter`, `kdpoli`, `kdbayar`, `rujukan`, `kdrujuk`, `tglreg`, `id_users`) VALUES
+	(3, 191000003, '000003', 'Y', 1, 1, 1, 'Y', 0, '2019-10-25 12:41:25', 1);
 /*!40000 ALTER TABLE `t_daftar` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
