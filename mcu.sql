@@ -61,7 +61,19 @@ CREATE TABLE IF NOT EXISTS `m_pasien` (
   PRIMARY KEY (`nomr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+<<<<<<< HEAD
 -- Dumping data for table mcu.m_pasien: ~1 rows (approximately)
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+-- Dumping data for table mcu.m_pasien: ~3 rows (approximately)
+=======
+-- Dumping data for table mcu.m_pasien: ~1 rows (approximately)
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+=======
+-- Dumping data for table mcu.m_pasien: ~1 rows (approximately)
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+>>>>>>> test
 /*!40000 ALTER TABLE `m_pasien` DISABLE KEYS */;
 INSERT INTO `m_pasien` (`nomr`, `nik`, `nama`, `tgllhr`, `alamat`, `kodepos`, `kdklmn`, `kdkawin`, `hp`, `foto`, `tglinput`, `id_users`) VALUES
 	('000001', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1),
@@ -69,6 +81,82 @@ INSERT INTO `m_pasien` (`nomr`, `nik`, `nama`, `tgllhr`, `alamat`, `kodepos`, `k
 	('000003', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1);
 /*!40000 ALTER TABLE `m_pasien` ENABLE KEYS */;
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+-- Dumping structure for table mcu.m_poli
+DROP TABLE IF EXISTS `m_poli`;
+CREATE TABLE IF NOT EXISTS `m_poli` (
+  `kdpoli` int(11) NOT NULL AUTO_INCREMENT,
+  `poli` varchar(50) NOT NULL DEFAULT '',
+  `kdunit` int(11) NOT NULL,
+  PRIMARY KEY (`kdpoli`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table mcu.m_poli: ~3 rows (approximately)
+/*!40000 ALTER TABLE `m_poli` DISABLE KEYS */;
+INSERT INTO `m_poli` (`kdpoli`, `poli`, `kdunit`) VALUES
+	(2, 'IGD', 1),
+	(3, 'HCU', 1),
+	(4, 'UMUM', 2);
+/*!40000 ALTER TABLE `m_poli` ENABLE KEYS */;
+
+-- Dumping structure for table mcu.m_tarif
+DROP TABLE IF EXISTS `m_tarif`;
+CREATE TABLE IF NOT EXISTS `m_tarif` (
+  `kdtarif` int(11) NOT NULL AUTO_INCREMENT,
+  `nmtarif` varchar(150) NOT NULL DEFAULT '',
+  `kdtarifgroup` int(11) NOT NULL,
+  `harga` int(11) NOT NULL,
+  `tglinput` int(11) NOT NULL,
+  `id_users` int(11) NOT NULL,
+  PRIMARY KEY (`kdtarif`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table mcu.m_tarif: ~1 rows (approximately)
+/*!40000 ALTER TABLE `m_tarif` DISABLE KEYS */;
+INSERT INTO `m_tarif` (`kdtarif`, `nmtarif`, `kdtarifgroup`, `harga`, `tglinput`, `id_users`) VALUES
+	(1, 'Administrasi Pasien', 1, 10000, 2019, 1);
+/*!40000 ALTER TABLE `m_tarif` ENABLE KEYS */;
+
+-- Dumping structure for table mcu.m_tarifgroup
+DROP TABLE IF EXISTS `m_tarifgroup`;
+CREATE TABLE IF NOT EXISTS `m_tarifgroup` (
+  `kdtarifgroup` int(11) NOT NULL AUTO_INCREMENT,
+  `tarifgroup` varchar(50) NOT NULL,
+  PRIMARY KEY (`kdtarifgroup`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table mcu.m_tarifgroup: ~3 rows (approximately)
+/*!40000 ALTER TABLE `m_tarifgroup` DISABLE KEYS */;
+INSERT INTO `m_tarifgroup` (`kdtarifgroup`, `tarifgroup`) VALUES
+	(1, 'Administrasi'),
+	(2, 'Tindakan Perawat'),
+	(3, 'Tindakan Dokter');
+/*!40000 ALTER TABLE `m_tarifgroup` ENABLE KEYS */;
+
+-- Dumping structure for table mcu.m_unit
+DROP TABLE IF EXISTS `m_unit`;
+CREATE TABLE IF NOT EXISTS `m_unit` (
+  `kdunit` int(11) NOT NULL AUTO_INCREMENT,
+  `unit` varchar(50) NOT NULL,
+  PRIMARY KEY (`kdunit`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table mcu.m_unit: ~3 rows (approximately)
+/*!40000 ALTER TABLE `m_unit` DISABLE KEYS */;
+INSERT INTO `m_unit` (`kdunit`, `unit`) VALUES
+	(1, 'Gawat Darurat'),
+	(2, 'Rawat Jalan'),
+	(3, 'Rawat Inap');
+/*!40000 ALTER TABLE `m_unit` ENABLE KEYS */;
+
+=======
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+=======
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+>>>>>>> test
 -- Dumping structure for table mcu.tbl_hak_akses
 DROP TABLE IF EXISTS `tbl_hak_akses`;
 CREATE TABLE IF NOT EXISTS `tbl_hak_akses` (
@@ -76,9 +164,27 @@ CREATE TABLE IF NOT EXISTS `tbl_hak_akses` (
   `id_user_level` int(11) NOT NULL,
   `id_menu` int(11) NOT NULL,
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mcu.tbl_hak_akses: ~17 rows (approximately)
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table mcu.tbl_hak_akses: ~22 rows (approximately)
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table mcu.tbl_hak_akses: ~17 rows (approximately)
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table mcu.tbl_hak_akses: ~17 rows (approximately)
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+>>>>>>> test
 /*!40000 ALTER TABLE `tbl_hak_akses` DISABLE KEYS */;
 INSERT INTO `tbl_hak_akses` (`id`, `id_user_level`, `id_menu`) VALUES
 	(15, 1, 1),
@@ -97,7 +203,24 @@ INSERT INTO `tbl_hak_akses` (`id`, `id_user_level`, `id_menu`) VALUES
 	(37, 1, 16),
 	(38, 1, 17),
 	(39, 1, 18),
+<<<<<<< HEAD
 	(40, 1, 19);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+	(40, 1, 19),
+	(41, 1, 20),
+	(42, 1, 21),
+	(43, 1, 22),
+	(44, 1, 23),
+	(45, 1, 24);
+=======
+	(40, 1, 19);
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+=======
+	(40, 1, 19);
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+>>>>>>> test
 /*!40000 ALTER TABLE `tbl_hak_akses` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_kodepos
@@ -113,7 +236,19 @@ CREATE TABLE IF NOT EXISTS `tbl_kodepos` (
   KEY `ixkodepos` (`kodepos`)
 ) ENGINE=InnoDB AUTO_INCREMENT=81249 DEFAULT CHARSET=latin1;
 
+<<<<<<< HEAD
 -- Dumping data for table mcu.tbl_kodepos: ~28,456 rows (approximately)
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+-- Dumping data for table mcu.tbl_kodepos: ~29.161 rows (approximately)
+=======
+-- Dumping data for table mcu.tbl_kodepos: ~28,456 rows (approximately)
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+=======
+-- Dumping data for table mcu.tbl_kodepos: ~28,456 rows (approximately)
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+>>>>>>> test
 /*!40000 ALTER TABLE `tbl_kodepos` DISABLE KEYS */;
 INSERT INTO `tbl_kodepos` (`id`, `kelurahan`, `kecamatan`, `kabupaten`, `provinsi`, `kodepos`) VALUES
 	(1, 'GAMBIR', 'GAMBIR', 'JAKARTA PUSAT', 'DKI JAKARTA', '10110'),
@@ -28586,9 +28721,27 @@ CREATE TABLE IF NOT EXISTS `tbl_menu` (
   `is_main_menu` int(11) NOT NULL,
   `is_aktif` enum('y','n') NOT NULL COMMENT 'y=yes,n=no',
   PRIMARY KEY (`id_menu`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mcu.tbl_menu: ~8 rows (approximately)
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table mcu.tbl_menu: ~13 rows (approximately)
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table mcu.tbl_menu: ~8 rows (approximately)
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table mcu.tbl_menu: ~8 rows (approximately)
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+>>>>>>> test
 /*!40000 ALTER TABLE `tbl_menu` DISABLE KEYS */;
 INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_aktif`) VALUES
 	(1, 'KELOLA MENU', 'kelolamenu', 'fal fa-server', 15, 'y'),
@@ -28598,7 +28751,24 @@ INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_a
 	(15, 'SETTING', '#', 'fal fa-cogs', 0, 'y'),
 	(17, 'Master Pasien', 'M_pasien', 'fal fa-align-justify', 0, 'y'),
 	(18, 'pendaftaran', 'T_daftar', 'fal fa-align-justify', 0, 'y'),
+<<<<<<< HEAD
 	(19, 'Asessment', 't_asessment', 'fal fa-id-card', 0, 'y');
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+	(19, 'Asessment', 't_asessment', 'fal fa-id-card', 0, 'y'),
+	(20, 'emr', 't_emr', 'fal fa-align-justify', 0, 'y'),
+	(21, 'Master Poli', 'm_poli', 'fal fa-align-justify', 0, 'y'),
+	(22, 'Group Tarif', 'm_tarifgroup', 'fal fa-align-justify', 0, 'y'),
+	(23, 'Unit', 'm_unit', 'fal fa-align-justify', 0, 'y'),
+	(24, 'Tarif', 'm_tarif', 'fal fa-align-justify', 0, 'y');
+=======
+	(19, 'Asessment', 't_asessment', 'fal fa-id-card', 0, 'y');
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+=======
+	(19, 'Asessment', 't_asessment', 'fal fa-id-card', 0, 'y');
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+>>>>>>> test
 /*!40000 ALTER TABLE `tbl_menu` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_setting
@@ -28610,7 +28780,19 @@ CREATE TABLE IF NOT EXISTS `tbl_setting` (
   PRIMARY KEY (`id_setting`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
+<<<<<<< HEAD
 -- Dumping data for table mcu.tbl_setting: ~1 rows (approximately)
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+-- Dumping data for table mcu.tbl_setting: ~0 rows (approximately)
+=======
+-- Dumping data for table mcu.tbl_setting: ~1 rows (approximately)
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+=======
+-- Dumping data for table mcu.tbl_setting: ~1 rows (approximately)
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+>>>>>>> test
 /*!40000 ALTER TABLE `tbl_setting` DISABLE KEYS */;
 INSERT INTO `tbl_setting` (`id_setting`, `nama_setting`, `value`) VALUES
 	(1, 'Tampil Menu', 'ya');
@@ -28668,13 +28850,50 @@ CREATE TABLE IF NOT EXISTS `t_asessment` (
   PRIMARY KEY (`noreg`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+<<<<<<< HEAD
 -- Dumping data for table mcu.t_asessment: ~1 rows (approximately)
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+-- Dumping data for table mcu.t_asessment: ~2 rows (approximately)
+=======
+-- Dumping data for table mcu.t_asessment: ~1 rows (approximately)
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+=======
+-- Dumping data for table mcu.t_asessment: ~1 rows (approximately)
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+>>>>>>> test
 /*!40000 ALTER TABLE `t_asessment` DISABLE KEYS */;
 INSERT INTO `t_asessment` (`noreg`, `bb`, `tb`, `sb`, `sistole`, `diastole`, `nadi`, `napas`, `keterangan`, `tglinput`, `id_users`) VALUES
 	(1, 2, 1, 1, 1, 1, 1, 1, 'scsza', '2019-10-23 09:38:31', 1),
 	(191000003, 51, 161, 1, 1, 1, 1, 1, 'bjkhbkj', '2019-10-25 12:56:24', 1);
 /*!40000 ALTER TABLE `t_asessment` ENABLE KEYS */;
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+-- Dumping structure for table mcu.t_billrajal
+DROP TABLE IF EXISTS `t_billrajal`;
+CREATE TABLE IF NOT EXISTS `t_billrajal` (
+  `nobill` int(11) NOT NULL AUTO_INCREMENT,
+  `noreg` int(11) NOT NULL,
+  `paket` enum('Y','N') NOT NULL,
+  `kdtarif` int(11) NOT NULL,
+  `qty` int(3) NOT NULL,
+  `status` int(1) NOT NULL,
+  PRIMARY KEY (`nobill`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table mcu.t_billrajal: ~0 rows (approximately)
+/*!40000 ALTER TABLE `t_billrajal` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t_billrajal` ENABLE KEYS */;
+
+=======
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+=======
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+>>>>>>> test
 -- Dumping structure for table mcu.t_daftar
 DROP TABLE IF EXISTS `t_daftar`;
 CREATE TABLE IF NOT EXISTS `t_daftar` (
@@ -28690,7 +28909,19 @@ CREATE TABLE IF NOT EXISTS `t_daftar` (
   `tglreg` datetime NOT NULL,
   `id_users` int(11) NOT NULL,
   PRIMARY KEY (`idreg`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+=======
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+=======
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+>>>>>>> test
 
 -- Dumping data for table mcu.t_daftar: ~0 rows (approximately)
 /*!40000 ALTER TABLE `t_daftar` DISABLE KEYS */;
@@ -28698,6 +28929,33 @@ INSERT INTO `t_daftar` (`idreg`, `noreg`, `nomr`, `baru`, `kddokter`, `kdpoli`, 
 	(3, 191000003, '000003', 'Y', 1, 1, 1, 'Y', 0, '2019-10-25 12:41:25', 1);
 /*!40000 ALTER TABLE `t_daftar` ENABLE KEYS */;
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+-- Dumping structure for table mcu.t_emr
+DROP TABLE IF EXISTS `t_emr`;
+CREATE TABLE IF NOT EXISTS `t_emr` (
+  `idemr` int(11) NOT NULL AUTO_INCREMENT,
+  `noreg` int(11) NOT NULL,
+  `subjek` text,
+  `objek` text,
+  `asessment` text,
+  `plann` text,
+  `tglinput` datetime NOT NULL,
+  `id_users` int(11) NOT NULL,
+  PRIMARY KEY (`idemr`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table mcu.t_emr: ~0 rows (approximately)
+/*!40000 ALTER TABLE `t_emr` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t_emr` ENABLE KEYS */;
+
+=======
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+=======
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+>>>>>>> test
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

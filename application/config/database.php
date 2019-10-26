@@ -77,7 +77,19 @@ $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
 	'username' => 'root',
+<<<<<<< HEAD
 	'password' => '',
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+	'password' => 'root',
+=======
+	'password' => '',
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+=======
+	'password' => '',
+>>>>>>> 083af0c264646b79e8b93f8c8c390a06423aec99
+>>>>>>> test
 	'database' => 'mcu',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
