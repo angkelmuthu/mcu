@@ -79,134 +79,92 @@
             </div>
         </div>
         <div class="col-lg-12 col-xl-6 order-lg-3 order-xl-2">
-            <!-- post comment -->
-            <div class="card mb-g">
-                <div class="card-body pb-0 px-4">
-                    <div class="d-flex flex-row pb-3 pt-2  border-top-0 border-left-0 border-right-0">
-                        <button type="button" class="btn btn-default" data-toggle="modal" data-target=".default-example-modal-right-sm">Asessment Perawat</button>
-                    </div>
-                    <!-- Modal Right Small -->
-                    <div class="modal fade default-example-modal-right-sm" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-right modal-sm">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title h4">Large right side modal</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="form-group">
-                                            <label class="form-label" for="simpleinput">Berat Badan</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" for="simpleinput">Tinggi Badan</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" for="simpleinput">Suhu Badan</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" for="simpleinput">Sistole</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" for="simpleinput">Diastole</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" for="simpleinput">Nadi</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" for="simpleinput">Nafas</label>
-                                            <input type="text" id="simpleinput" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" for="example-textarea">Keterangan</label>
-                                            <textarea class="form-control" id="example-textarea" rows="5"></textarea>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </div>
-                        </div>
+            <div id="panel-10" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        REKAM MEDIS ELEKTRONIK <span class="fw-300"><i>(RME)</i></span>
+                    </h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                        <button class="btn btn-panel waves-effect waves-themed" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                        <button class="btn btn-panel waves-effect waves-themed" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
                     </div>
                 </div>
-                <div class="card-body py-0 px-4 border-faded border-right-0 border-bottom-0 border-left-0">
-                    <div class="d-flex flex-column align-items-center">
-                        <!-- comment -->
-                        <div class="d-flex flex-row w-100 py-4">
-                            <div class="d-inline-block align-middle status status-sm status-success mr-3">
-                                <span class="profile-image profile-image-md rounded-circle d-block mt-1" style="background-image:url('img/demo/avatars/avatar-c.png'); background-size: cover;"></span>
-                            </div>
-                            <div class="mb-0 flex-1 text-dark">
-                                <div class="d-flex">
-                                    <a href="javascript:void(0);" class="text-dark fw-500">
-                                        Test name
-                                    </a><span class="text-muted fs-xs opacity-70 ml-auto">
-                                        15 minutes
-                                    </span>
-                                </div>
-                                <p class="mb-0">
-                                    Excellent work, looking forward to it.
-                                </p>
-                            </div>
-                        </div>
-                        <hr class="m-0 w-100">
-                        <!-- comment end -->
-                        <!-- comment -->
-                        <div class="d-flex flex-row w-100 py-4">
-                            <div class="d-inline-block align-middle status status-sm status-success mr-3">
-                                <span class="profile-image profile-image-md rounded-circle d-block mt-1" style="background-image:url('img/demo/avatars/avatar-admin.png'); background-size: cover;"></span>
-                            </div>
-                            <div class="mb-0 flex-1 text-dark">
-                                <div class="d-flex">
-                                    <a href="javascript:void(0);" class="text-dark fw-500">
-                                        Dr. Codex Lantern
-                                    </a><span class="text-muted fs-xs opacity-70 ml-auto">
-                                        3 minutes
-                                    </span>
-                                </div>
-                                <p class="mb-0">
-                                    Congrats mate!
-                                </p>
-                                <div class="pl-0 d-flex flex-row w-100 pb-0 pt-4">
-                                    <div class="d-inline-block align-middle status status-sm status-success mr-3">
-                                        <span class="profile-image profile-image-md rounded-circle d-block mt-1" style="background-image:url('img/demo/avatars/avatar-e.png'); background-size: cover;"></span>
-                                    </div>
-                                    <div class="mb-0 flex-1 text-dark">
-                                        <div class="d-flex">
-                                            <a href="javascript:void(0);" class="text-dark fw-500">
-                                                Dr. John Cook PhD
-                                            </a><span class="text-muted fs-xs opacity-70 ml-auto">
-                                                30 seconds
-                                            </span>
+                <div class="panel-container show">
+                    <div class="panel-content">
+                        <ul class="nav nav-pills nav-justified" role="tablist">
+                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#js_change_pill_justified-1">ASESSMENT DOKTER</a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_justified-2">TINDAKAN</a></li>
+                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_justified-3">RESEP</a></li>
+                        </ul>
+                        <div class="tab-content py-3">
+                            <div class="tab-pane fade active show" id="js_change_pill_justified-1" role="tabpanel">
+                                <?php
+                                $this->db->select('*');
+                                $this->db->from('t_emr');
+                                $this->db->where('noreg', $noreg);
+                                $query = $this->db->get();
+                                if ($query->num_rows() > 0) {
+                                    foreach ($query->result() as $row) {
+                                        $idemr = $row->idemr;
+                                        $action = 't_emr/update_action';
+                                        $subjek = $row->subjek;
+                                        $objek = $row->objek;
+                                        $asessment = $row->asessment;
+                                        $plann = $row->plann;
+                                    }
+                                } else {
+                                    $idemr = '';
+                                    $action = 't_emr/create_action';
+                                    $subjek = '';
+                                    $objek = '';
+                                    $asessment = '';
+                                    $plann = '';
+                                }
+                                //print_r($this->db->last_query());
+                                ?>
+                                <form action="<?php echo base_url() . $action ?>" method="post">
+                                    <div class="col-12">
+                                        <input type="hidden" name="tglinput" value="<?php echo date('Y-m-d H:i:s'); ?>" />
+                                        <input type="hidden" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" />
+                                        <input type="hidden" name="noreg" value="<?php echo $noreg ?>">
+                                        <input type="hidden" name="idreg" value="<?php echo $idreg ?>">
+                                        <input type="hidden" name="idemr" value="<?php echo $idemr ?>">
+                                        <div class="form-group">
+                                            <label class="form-label" for="example-textarea">Subjek</label>
+                                            <textarea class="form-control" name="subjek" id="example-textarea" rows="2"><?php echo $subjek; ?></textarea>
                                         </div>
-                                        <p class="mb-0">
-                                            Thanks!
-                                        </p>
+
+                                        <div class="form-group">
+                                            <label class="form-label" for="example-textarea">Objek</label>
+                                            <textarea class="form-control" name="objek" id="example-textarea" rows="2"><?php echo $objek; ?></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" for="example-textarea">Asessment</label>
+                                            <textarea class="form-control" name="asessment" id="example-textarea" rows="2"><?php echo $asessment; ?></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label" for="example-textarea">Planning</label>
+                                            <textarea class="form-control" name="plann" id="example-textarea" rows="2"><?php echo $plann; ?></textarea>
+                                        </div>
+                                        <div class="p-3 text-center">
+                                            <button type="submit" class="btn btn-sm btn-primary font-weight-bold">Simpan</button>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="js_change_pill_justified-2" role="tabpanel">
+
+                            </div>
+                            <div class="tab-pane fade" id="js_change_pill_justified-3" role="tabpanel">
+
                             </div>
                         </div>
-                        <hr class="m-0 w-100">
-                        <!-- comment end -->
-                        <!-- add comment -->
-                        <div class="py-3 w-100">
-                            <textarea class="form-control border-0 p-0" rows="2" placeholder="add a comment..."></textarea>
-                        </div>
-                        <!-- add comment end -->
                     </div>
                 </div>
             </div>
-            <!-- post comment - end -->
         </div>
         <div class="col-lg-6 col-xl-3 order-lg-2 order-xl-3">
             <!-- add : -->
@@ -216,59 +174,143 @@
                     <div class="col-12">
                         <div class="p-3">
                             <h2 class="mb-0 fs-xl">
-                                Dr. Codex Lantern's Rating
+                                ASESSMENT PERAWAT
                             </h2>
                         </div>
                     </div>
                     <div class="col-12">
-                        <div class="p-3 d-flex text-primary align-items-center fs-xl">
-                            <i class="fas fa-star mr-1"></i>
-                            <i class="fas fa-star mr-1"></i>
-                            <i class="fas fa-star mr-1"></i>
-                            <i class="fas fa-star mr-1"></i>
-                            <i class="fal fa-star mr-1"></i>
-                            <span class="ml-auto">4/5 Stars</span>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="p-3">
-                            <div class="fw-500 fs-xs">Staff</div>
-                            <div class="progress progress-xs mt-2">
-                                <div class="progress-bar bg-primary-300 bg-primary-gradient" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="row">
+                            <?php
+                            $this->db->select('*');
+                            $this->db->from('t_asessment');
+                            $this->db->where('noreg', $noreg);
+                            $query = $this->db->get();
+                            if ($query->num_rows() > 0) {
+                                foreach ($query->result() as $row) {
+                                    $bb = $row->bb;
+                                    $tb = $row->tb;
+                                    $sb = $row->sb;
+                                    $sistole = $row->sistole;
+                                    $diastole = $row->diastole;
+                                    $sb = $row->sb;
+                                    $nadi = $row->nadi;
+                                    $napas = $row->napas;
+                                    $ket = $row->keterangan;
+                                }
+                            } else {
+                                $bb = '';
+                                $tb = '';
+                                $sb = '';
+                                $sistole = '';
+                                $diastole = '';
+                                $sb = '';
+                                $nadi = '';
+                                $napas = '';
+                                $ket = '';
+                            }
+                            //print_r($this->db->last_query());
+                            ?>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="basic-url">Berat Badan</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" value="<?php echo $bb; ?>">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">kg</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="basic-url">Tinggi Badan</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" value="<?php echo $tb ?>">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">cm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="basic-url">Suhu Badan</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" value="<?php echo $sb ?>">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">C</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="basic-url">Sistole</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" value="<?php echo $sistole ?>">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="basic-url">Diastole</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" value="<?php echo $diastole ?>">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="basic-url">Nadi</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" value="<?php echo $nadi ?>">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="basic-url">Napas</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" value="<?php echo $napas ?>">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="p-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="example-textarea">Keterangan</label>
+                                        <textarea class="form-control" id="example-textarea" rows="3"><?php echo $ket ?></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="p-3">
-                            <div class="fw-500 fs-xs">Punctuality</div>
-                            <div class="progress progress-xs mt-2">
-                                <div class="progress-bar bg-primary-300 bg-primary-gradient" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="p-3">
-                            <div class="fw-500 fs-xs">Helpfulness</div>
-                            <div class="progress progress-xs mt-2">
-                                <div class="progress-bar bg-primary-300 bg-primary-gradient" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="p-3">
-                            <div class="fw-500 fs-xs">Knowledge</div>
-                            <div class="progress progress-xs mt-2">
-                                <div class="progress-bar bg-primary-300 bg-primary-gradient" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="p-3">
-                            <div class="fw-500 fs-xs">Bedside manners</div>
-                            <div class="progress progress-xs mt-2">
-                                <div class="progress-bar bg-danger-300 bg-warning-gradient" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="col-12">
                         <div class="p-3 text-center">
