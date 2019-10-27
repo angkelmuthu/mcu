@@ -38,8 +38,11 @@ class T_daftar_model extends CI_Model
     // get data by id
     function get_by_id($id)
     {
-        $this->db->where($this->id, $id);
-        return $this->db->get($this->table)->row();
+        $this->db->select('a.idreg,a.noreg,a.nomr,b.nik,b.nama,b.tgllhr,a.baru,a.kddokter,a.kdpoli,a.kdbayar,a.rujukan,a.kdrujuk,a.tglreg,a.id_users');
+        $this->db->from('t_daftar a');
+        $this->db->join('m_pasien b', 'a.nomr = b.nomr', 'left');
+        $this->db->where('a.idreg', $id);
+        return $this->db->get()->row();
     }
 
     // get total rows
