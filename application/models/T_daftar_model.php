@@ -45,6 +45,25 @@ class T_daftar_model extends CI_Model
         return $this->db->get()->row();
     }
 
+    function get_tarifg()
+    {
+        $this->db->select('*');
+        $this->db->from('m_tarifgroup');
+        return $this->db->get()->result();
+    }
+
+    function barang_list()
+    {
+        $hasil = $this->db->query("SELECT * FROM t_billrajal a LEFT JOIN m_tarif b on a.kdtarif=b.kdtarif");
+        return $hasil->result();
+    }
+
+    function simpan_barang($noreg, $paket, $kdtarif, $qty)
+    {
+        $hasil = $this->db->query("INSERT INTO t_billrajal (noreg,paket,kdtarif,qty)VALUES('$noreg','$paket','$kdtarif','$qty')");
+        return $hasil;
+    }
+
     // get total rows
     function total_rows($q = NULL)
     {

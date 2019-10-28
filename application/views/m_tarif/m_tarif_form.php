@@ -22,7 +22,7 @@
                                 </tr>
                                 <tr>
                                     <td width='200'>Kdtarifgroup <?php echo form_error('kdtarifgroup') ?></td>
-                                    <td><input type="text" class="form-control" name="kdtarifgroup" id="kdtarifgroup" placeholder="Kdtarifgroup" value="<?php echo $kdtarifgroup; ?>" /></td>
+                                    <td><?php echo cmb_dinamis('kdtarifgroup', 'm_tarifgroup', 'tarifgroup', 'kdtarifgroup') ?></td>
                                 </tr>
                                 <tr>
                                     <td width='200'>Harga <?php echo form_error('harga') ?></td>

@@ -44,8 +44,12 @@ class T_daftar extends CI_Controller
                 'kdrujuk' => $row->kdrujuk,
                 'tglreg' => $row->tglreg,
                 'id_users' => $row->id_users,
+                'tarifgroup' => $this->T_daftar_model->get_tarifg(),
+
             );
             $this->template->load('template', 't_daftar/t_daftar_read', $data);
+
+            //$this->template->load('template', 't_daftar/t_daftar_read',);
         } else {
             $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -55,6 +59,20 @@ class T_daftar extends CI_Controller
         }
     }
 
+    function data_barang()
+    {
+        $data = $this->T_daftar_model->barang_list();
+        echo json_encode($data);
+    }
+    function simpan_barang()
+    {
+        $noreg = $this->input->post('noreg');
+        $paket = $this->input->post('paket');
+        $kdtarif = $this->input->post('kdtarif');
+        $qty = $this->input->post('qty');
+        $data = $this->T_daftar_model->simpan_barang($noreg, $paket, $kdtarif, $qty);
+        echo json_encode($data);
+    }
     public function create()
     {
         $data = array(

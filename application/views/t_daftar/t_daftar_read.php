@@ -156,7 +156,96 @@
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="js_change_pill_justified-2" role="tabpanel">
+                                <button type="button" class="btn btn-default waves-effect waves-themed" data-toggle="modal" data-target=".default-example-modal-right">Right Normal</button>
+                                <div id="reload">
+                                    <table class="table table-bordered table-hover table-striped w-100" id="billing">
+                                        <thead>
+                                            <tr>
+                                                <th>Nama Tarif</th>
+                                                <th>Harga</th>
+                                                <th>qty</th>
+                                                <th>Total</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="show_data">
 
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal fade default-example-modal-right" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-right">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title h4">Large right side modal</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="accordion" id="js_demo_accordion-4">
+                                                    <?php foreach ($tarifgroup as $tgroup) { ?>
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" data-target="#js_demo_accordion-<?php echo $tgroup->kdtarifgroup; ?>" aria-expanded="false">
+                                                                    <?php echo $tgroup->tarifgroup; ?>
+                                                                    <span class="ml-auto">
+                                                                        <span class="collapsed-reveal">
+                                                                            <i class="fal fa-minus-circle text-danger fs-xl"></i>
+                                                                        </span>
+                                                                        <span class="collapsed-hidden">
+                                                                            <i class="fal fa-plus-circle text-success fs-xl"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                            <div id="js_demo_accordion-<?php echo $tgroup->kdtarifgroup; ?>" class="collapse" data-parent="#js_demo_accordion-<?php echo $tgroup->kdtarifgroup; ?>" style="">
+                                                                <div class="card-body">
+                                                                    <table class="table table-bordered table-hover table-striped w-100" id="tarif-<?php echo $tgroup->kdtarifgroup; ?>">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Nama Tarif</th>
+                                                                                <th>Harga</th>
+                                                                                <th>Action</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody><?php
+                                                                                    $this->db->select('*');
+                                                                                    $this->db->from('m_tarif');
+                                                                                    $this->db->where('kdtarifgroup', $tgroup->kdtarifgroup);
+                                                                                    $query = $this->db->get();
+                                                                                    foreach ($query->result() as $row) {
+                                                                                        ?>
+                                                                                <tr>
+
+
+                                                                                    <td><?php echo $row->nmtarif ?></td>
+                                                                                    <td><?php echo number_format($row->harga) ?></td>
+                                                                                    <td>
+                                                                                        <input type="text" name="noreg" id="noreg<?php echo $row->kdtarif ?>" value="<?php echo $noreg ?>">
+                                                                                        <input type="text" name="paket" id="paket<?php echo $row->kdtarif ?>" value="N">
+                                                                                        <input type="text" name="kdtarif" id="kdtarif<?php echo $row->kdtarif ?>" value="<?php echo $row->kdtarif ?>">
+                                                                                        <input type="text" name="qty" id="qty<?php echo $row->kdtarif ?>" value="1">
+                                                                                        <button class="btn btn-info" id="btn_simpan<?php echo $row->kdtarif ?>">Simpan</button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            <?php } ?>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php } ?>
+
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary waves-effect waves-themed" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary waves-effect waves-themed">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="js_change_pill_justified-3" role="tabpanel">
 
@@ -324,3 +413,155 @@
 </main>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/vendors.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/app.bundle.js"></script>
+<script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
+<script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.export.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        <?php foreach ($tarifgroup as $tgroup) { ?>
+            $('#tarif-<?php echo $tgroup->kdtarifgroup; ?>').DataTable();
+        <?php } ?>
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        tampil_data_barang(); //pemanggilan fungsi tampil barang.
+
+        $('#billing').dataTable();
+
+        //fungsi tampil barang
+        function tampil_data_barang() {
+            $.ajax({
+                type: 'GET',
+                url: '<?php echo base_url() ?>index.php/t_daftar/data_barang',
+                async: true,
+                dataType: 'json',
+                success: function(data) {
+                    var html = '';
+                    var i;
+                    for (i = 0; i < data.length; i++) {
+                        html += '<tr>' +
+                            '<td>' + data[i].nmtarif + '</td>' +
+                            '<td align="right">' + parseInt(data[i].harga).toLocaleString() + '</td>' +
+                            '<td align="center">' + data[i].qty + '</td>' +
+                            '<td align="right">' + parseInt(data[i].harga * data[i].qty).toLocaleString() + '</td>' +
+                            '<td style="text-align:center;">' +
+                            //'<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="' + data[i].kdtarif + '">Edit</a>' + ' ' +
+                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].kdtarif + '">Hapus</a>' +
+                            '</td>' +
+                            '</tr>';
+                    }
+                    $('#show_data').html(html);
+                }
+
+            });
+        }
+
+        //GET UPDATE
+        $('#show_data').on('click', '.item_edit', function() {
+            var id = $(this).attr('data');
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('index.php/barang/get_barang') ?>",
+                dataType: "JSON",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $.each(data, function(barang_kode, barang_nama, barang_harga) {
+                        $('#ModalaEdit').modal('show');
+                        $('[name="kobar_edit"]').val(data.barang_kode);
+                        $('[name="nabar_edit"]').val(data.barang_nama);
+                        $('[name="harga_edit"]').val(data.barang_harga);
+                    });
+                }
+            });
+            return false;
+        });
+
+
+        //GET HAPUS
+        $('#show_data').on('click', '.item_hapus', function() {
+            var id = $(this).attr('data');
+            $('#ModalHapus').modal('show');
+            $('[name="kode"]').val(id);
+        });
+
+        //Simpan Barang
+        <?php
+        $this->db->select('*');
+        $this->db->from('m_tarif');
+        $query = $this->db->get();
+        foreach ($query->result() as $row) {
+            ?>
+            $('#btn_simpan<?php echo $row->kdtarif ?>').on('click', function() {
+                var noreg = $('#noreg<?php echo $row->kdtarif ?>').val();
+                var paket = $('#paket<?php echo $row->kdtarif ?>').val();
+                var kdtarif = $('#kdtarif<?php echo $row->kdtarif ?>').val();
+                var qty = $('#qty<?php echo $row->kdtarif ?>').val();
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url('index.php/t_daftar/simpan_barang') ?>",
+                    dataType: "JSON",
+                    data: {
+                        noreg: noreg,
+                        paket: paket,
+                        kdtarif: kdtarif,
+                        qty: qty
+                    },
+                    success: function(data) {
+                        $('[name="kobar"]').val("");
+                        $('[name="nabar"]').val("");
+                        $('[name="harga"]').val("");
+                        $('#ModalaAdd').modal('hide');
+                        tampil_data_barang();
+                    }
+                });
+                return false;
+            });
+        <?php } ?>
+
+        //Update Barang
+        $('#btn_update').on('click', function() {
+            var kobar = $('#kode_barang2').val();
+            var nabar = $('#nama_barang2').val();
+            var harga = $('#harga2').val();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('index.php/barang/update_barang') ?>",
+                dataType: "JSON",
+                data: {
+                    kobar: kobar,
+                    nabar: nabar,
+                    harga: harga
+                },
+                success: function(data) {
+                    $('[name="kobar_edit"]').val("");
+                    $('[name="nabar_edit"]').val("");
+                    $('[name="harga_edit"]').val("");
+                    $('#ModalaEdit').modal('hide');
+                    tampil_data_barang();
+                }
+            });
+            return false;
+        });
+
+        //Hapus Barang
+        $('#btn_hapus').on('click', function() {
+            var kode = $('#textkode').val();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('index.php/barang/hapus_barang') ?>",
+                dataType: "JSON",
+                data: {
+                    kode: kode
+                },
+                success: function(data) {
+                    $('#ModalHapus').modal('hide');
+                    tampil_data_barang();
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
