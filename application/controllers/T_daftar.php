@@ -44,7 +44,7 @@ class T_daftar extends CI_Controller
                 'kdrujuk' => $row->kdrujuk,
                 'tglreg' => $row->tglreg,
                 'id_users' => $row->id_users,
-                'tarifgroup' => $this->T_daftar_model->get_tarifg(),
+                'tarifgroup' => $this->T_daftar_model->get_tarif(),
 
             );
             $this->template->load('template', 't_daftar/t_daftar_read', $data);
@@ -58,7 +58,7 @@ class T_daftar extends CI_Controller
             redirect(site_url('t_daftar'));
         }
     }
-
+    ////////////////////////////////////////////
     function data_barang()
     {
         $data = $this->T_daftar_model->barang_list();
@@ -73,6 +73,13 @@ class T_daftar extends CI_Controller
         $data = $this->T_daftar_model->simpan_barang($noreg, $paket, $kdtarif, $qty);
         echo json_encode($data);
     }
+    function hapus_barang()
+    {
+        $nobill = $this->input->post('nobill');
+        $data = $this->T_daftar_model->hapus_barang($nobill);
+        echo json_encode($data);
+    }
+    ////////////////////////////////////////////////
     public function create()
     {
         $data = array(

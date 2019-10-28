@@ -92,7 +92,7 @@
                 </div>
                 <div class="panel-container show">
                     <div class="panel-content">
-                        <ul class="nav nav-tabs nav-justified" role="tablist">
+                        <ul class="nav nav-pills nav-justified" role="tablist">
                             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#js_change_pill_justified-1">ASESSMENT DOKTER</a></li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_justified-2">TINDAKAN</a></li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_justified-3">RESEP</a></li>
@@ -156,10 +156,9 @@
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="js_change_pill_justified-2" role="tabpanel">
-                                <button type="button" class="btn btn-sm btn-primary waves-effect waves-themed" data-toggle="modal" data-target=".default-example-modal-right">Tindakan</button>
-                                <hr>
+                                <button type="button" class="btn btn-default waves-effect waves-themed" data-toggle="modal" data-target=".default-example-modal-right">Right Normal</button>
                                 <div id="reload">
-                                    <table class="table table-bordered table-hover table-striped w-100" id="">
+                                    <table class="display table table-bordered table-hover table-striped w-100" id="">
                                         <thead>
                                             <tr>
                                                 <th>Nama Tarif</th>
@@ -174,68 +173,71 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <!--MODAL HAPUS-->
-                                <div class="modal fade" id="ModalHapus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">Hapus Barang</h4>
-                                            </div>
-                                            <form class="form-horizontal">
-                                                <div class="modal-body">
-
-                                                    <input type="hidden" name="nobill" id="textnobill" value="">
-                                                    <div class="alert alert-warning">
-                                                        <p>Apakah Anda yakin mau memhapus barang ini?</p>
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                                                    <button class="btn_hapus btn btn-danger" id="btn_hapus">Hapus</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--END MODAL HAPUS-->
                                 <div class="modal fade default-example-modal-right" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-right">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title h4">Master Tarif</h5>
+                                                <h5 class="modal-title h4">Large right side modal</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true"><i class="fal fa-times"></i></span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <table class="table table-bordered table-hover table-striped w-100" id="tarif">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Group Tarif</th>
-                                                            <th>Nama Tarif</th>
-                                                            <th>Harga</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php foreach ($tarifgroup as $tgroup) { ?>
-                                                            <tr>
-                                                                <td><b style="text-transform: uppercase;"><?php echo $tgroup->tarifgroup ?></b></td>
-                                                                <td><?php echo $tgroup->nmtarif ?></td>
-                                                                <td><?php echo number_format($tgroup->harga) ?></td>
-                                                                <td>
-                                                                    <input type="hidden" name="noreg" id="noreg<?php echo $tgroup->kdtarif ?>" value="<?php echo $noreg ?>">
-                                                                    <input type="hidden" name="paket" id="paket<?php echo $tgroup->kdtarif ?>" value="N">
-                                                                    <input type="hidden" name="kdtarif" id="kdtarif<?php echo $tgroup->kdtarif ?>" value="<?php echo $tgroup->kdtarif ?>">
-                                                                    <input type="hidden" name="qty" id="qty<?php echo $tgroup->kdtarif ?>" value="1">
-                                                                    <button class="btn btn-info btn-xs" id="btn_simpan<?php echo $tgroup->kdtarif ?>">add</button>
-                                                                </td>
-                                                            </tr>
-                                                        <?php } ?>
-                                                    </tbody>
-                                                </table>
+                                                <div class="accordion" id="js_demo_accordion-4">
+                                                    <?php foreach ($tarifgroup as $tgroup) { ?>
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" data-target="#js_demo_accordion-<?php echo $tgroup->kdtarifgroup; ?>" aria-expanded="false">
+                                                                    <?php echo $tgroup->tarifgroup; ?>
+                                                                    <span class="ml-auto">
+                                                                        <span class="collapsed-reveal">
+                                                                            <i class="fal fa-minus-circle text-danger fs-xl"></i>
+                                                                        </span>
+                                                                        <span class="collapsed-hidden">
+                                                                            <i class="fal fa-plus-circle text-success fs-xl"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                            <div id="js_demo_accordion-<?php echo $tgroup->kdtarifgroup; ?>" class="collapse" data-parent="#js_demo_accordion-<?php echo $tgroup->kdtarifgroup; ?>" style="">
+                                                                <div class="card-body">
+                                                                    <table class="display table table-bordered table-hover table-striped w-100" id="">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Nama Tarif</th>
+                                                                                <th>Harga</th>
+                                                                                <th>Action</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody><?php
+                                                                                    $this->db->select('*');
+                                                                                    $this->db->from('m_tarif');
+                                                                                    $this->db->where('kdtarifgroup', $tgroup->kdtarifgroup);
+                                                                                    $query = $this->db->get();
+                                                                                    foreach ($query->result() as $row) {
+                                                                                        ?>
+                                                                                <tr>
+
+
+                                                                                    <td><?php echo $row->nmtarif ?></td>
+                                                                                    <td><?php echo number_format($row->harga) ?></td>
+                                                                                    <td>
+                                                                                        <input type="text" name="noreg" id="noreg<?php echo $row->kdtarif ?>" value="<?php echo $noreg ?>">
+                                                                                        <input type="text" name="paket" id="paket<?php echo $row->kdtarif ?>" value="N">
+                                                                                        <input type="text" name="kdtarif" id="kdtarif<?php echo $row->kdtarif ?>" value="<?php echo $row->kdtarif ?>">
+                                                                                        <input type="text" name="qty" id="qty<?php echo $row->kdtarif ?>" value="1">
+                                                                                        <button class="btn btn-info" id="btn_simpan<?php echo $row->kdtarif ?>">add</button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            <?php } ?>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php } ?>
+
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary waves-effect waves-themed" data-dismiss="modal">Close</button>
@@ -414,56 +416,15 @@
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.export.js"></script>
 <script type="text/javascript">
+    // $(document).ready(function() {
+    //     <?php foreach ($tarifgroup as $tgroup) { ?>
+    //         $('#tarif-<?php echo $tgroup->kdtarifgroup; ?>').DataTable();
+    //     <?php } ?>
+    // });
     $(document).ready(function() {
-        var groupColumn = 0;
-        var table = $('#tarif').DataTable({
-            "columnDefs": [{
-                "visible": false,
-                "targets": groupColumn
-            }],
-            "order": [
-                [groupColumn, 'asc']
-            ],
-            "displayLength": 25,
-            "drawCallback": function(settings) {
-                var api = this.api();
-                var rows = api.rows({
-                    page: 'current'
-                }).nodes();
-                var last = null;
-
-                api.column(groupColumn, {
-                    page: 'current'
-                }).data().each(function(group, i) {
-                    if (last !== group) {
-                        $(rows).eq(i).before(
-                            '<tr class="group"><td colspan="5">' + group + '</td></tr>'
-                        );
-
-                        last = group;
-                    }
-                });
-            }
-        });
-
-        // Order by the grouping
-        $('#example tbody').on('click', 'tr.group', function() {
-            var currentOrder = table.order()[0];
-            if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
-                table.order([groupColumn, 'desc']).draw();
-            } else {
-                table.order([groupColumn, 'asc']).draw();
-            }
-        });
-    });
-    $(document).ready(function() {
-        $('table.display').DataTable({
-            "paging": false,
-            "columnDefs": [{
-                "targets": [0, 1, 2, 3, 4],
-                "orderable": false
-            }]
-        });
+        <?php foreach ($tarifgroup as $tgroup) { ?>
+            $('table.display').DataTable();
+        <?php } ?>
     });
 </script>
 <script type="text/javascript">
@@ -490,7 +451,7 @@
                             '<td align="right">' + parseInt(data[i].harga * data[i].qty).toLocaleString() + '</td>' +
                             '<td style="text-align:center;">' +
                             //'<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="' + data[i].kdtarif + '">Edit</a>' + ' ' +
-                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].nobill + '">Hapus</a>' +
+                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].kdtarif + '">Hapus</a>' +
                             '</td>' +
                             '</tr>';
                     }
@@ -527,7 +488,7 @@
         $('#show_data').on('click', '.item_hapus', function() {
             var id = $(this).attr('data');
             $('#ModalHapus').modal('show');
-            $('[name="nobill"]').val(id);
+            $('[name="kode"]').val(id);
         });
 
         //Simpan Barang
@@ -591,13 +552,13 @@
 
         //Hapus Barang
         $('#btn_hapus').on('click', function() {
-            var nobill = $('#textnobill').val();
+            var kode = $('#textkode').val();
             $.ajax({
                 type: "POST",
-                url: "<?php echo base_url('index.php/t_daftar/hapus_barang') ?>",
+                url: "<?php echo base_url('index.php/barang/hapus_barang') ?>",
                 dataType: "JSON",
                 data: {
-                    nobill: nobill
+                    kode: kode
                 },
                 success: function(data) {
                     $('#ModalHapus').modal('hide');
