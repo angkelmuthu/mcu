@@ -93,15 +93,19 @@ CREATE TABLE IF NOT EXISTS `m_tarif` (
   `nmtarif` varchar(150) NOT NULL DEFAULT '',
   `kdtarifgroup` int(11) NOT NULL,
   `harga` int(11) NOT NULL,
-  `tglinput` int(11) NOT NULL,
+  `tglinput` datetime NOT NULL,
   `id_users` int(11) NOT NULL,
   PRIMARY KEY (`kdtarif`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.m_tarif: ~0 rows (approximately)
+-- Dumping data for table mcu.m_tarif: ~5 rows (approximately)
 /*!40000 ALTER TABLE `m_tarif` DISABLE KEYS */;
 INSERT INTO `m_tarif` (`kdtarif`, `nmtarif`, `kdtarifgroup`, `harga`, `tglinput`, `id_users`) VALUES
-	(1, 'Administrasi Pasien', 1, 10000, 2019, 1);
+	(1, 'Administrasi Pasien', 1, 10000, '2019-10-28 04:39:24', 1),
+	(2, 'Lepas Perban', 2, 25000, '2019-10-28 04:39:50', 1),
+	(3, 'Ganti Impus', 2, 5000, '2019-10-28 04:39:45', 1),
+	(4, 'Suntik', 3, 10000, '2019-10-28 04:39:38', 1),
+	(5, 'Konsultasi', 3, 150000, '2019-10-28 04:39:32', 1);
 /*!40000 ALTER TABLE `m_tarif` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_tarifgroup
@@ -112,13 +116,51 @@ CREATE TABLE IF NOT EXISTS `m_tarifgroup` (
   PRIMARY KEY (`kdtarifgroup`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.m_tarifgroup: ~2 rows (approximately)
+-- Dumping data for table mcu.m_tarifgroup: ~3 rows (approximately)
 /*!40000 ALTER TABLE `m_tarifgroup` DISABLE KEYS */;
 INSERT INTO `m_tarifgroup` (`kdtarifgroup`, `tarifgroup`) VALUES
 	(1, 'Administrasi'),
 	(2, 'Tindakan Perawat'),
 	(3, 'Tindakan Dokter');
 /*!40000 ALTER TABLE `m_tarifgroup` ENABLE KEYS */;
+
+-- Dumping structure for table mcu.m_tarifpaket
+DROP TABLE IF EXISTS `m_tarifpaket`;
+CREATE TABLE IF NOT EXISTS `m_tarifpaket` (
+  `kdtarifpaket` int(11) NOT NULL AUTO_INCREMENT,
+  `nmpaket` varchar(70) NOT NULL,
+  `potongan` int(11) NOT NULL DEFAULT '0',
+  `aktif` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `tglinput` datetime NOT NULL,
+  `id_users` int(11) NOT NULL,
+  PRIMARY KEY (`kdtarifpaket`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table mcu.m_tarifpaket: ~2 rows (approximately)
+/*!40000 ALTER TABLE `m_tarifpaket` DISABLE KEYS */;
+INSERT INTO `m_tarifpaket` (`kdtarifpaket`, `nmpaket`, `potongan`, `aktif`, `tglinput`, `id_users`) VALUES
+	(1, 'Paket MCU Lengkap', 50000, 'Y', '2019-10-30 07:21:03', 1),
+	(2, 'Paket MCU CPNS', 75000, 'Y', '2019-10-30 07:20:06', 1);
+/*!40000 ALTER TABLE `m_tarifpaket` ENABLE KEYS */;
+
+-- Dumping structure for table mcu.m_tarifpaketdetail
+DROP TABLE IF EXISTS `m_tarifpaketdetail`;
+CREATE TABLE IF NOT EXISTS `m_tarifpaketdetail` (
+  `kdpaketdetail` int(11) NOT NULL AUTO_INCREMENT,
+  `kdtarifpaket` int(11) NOT NULL,
+  `kdtarif` int(11) NOT NULL,
+  `tglinput` datetime NOT NULL,
+  `id_users` int(11) NOT NULL,
+  PRIMARY KEY (`kdpaketdetail`),
+  KEY `kdtarif` (`kdtarif`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table mcu.m_tarifpaketdetail: ~2 rows (approximately)
+/*!40000 ALTER TABLE `m_tarifpaketdetail` DISABLE KEYS */;
+INSERT INTO `m_tarifpaketdetail` (`kdpaketdetail`, `kdtarifpaket`, `kdtarif`, `tglinput`, `id_users`) VALUES
+	(1, 1, 5, '2019-10-30 07:50:57', 1),
+	(2, 1, 4, '2019-10-30 08:49:19', 1);
+/*!40000 ALTER TABLE `m_tarifpaketdetail` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_unit
 DROP TABLE IF EXISTS `m_unit`;
@@ -128,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `m_unit` (
   PRIMARY KEY (`kdunit`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.m_unit: ~2 rows (approximately)
+-- Dumping data for table mcu.m_unit: ~3 rows (approximately)
 /*!40000 ALTER TABLE `m_unit` DISABLE KEYS */;
 INSERT INTO `m_unit` (`kdunit`, `unit`) VALUES
 	(1, 'Gawat Darurat'),
@@ -143,9 +185,9 @@ CREATE TABLE IF NOT EXISTS `tbl_hak_akses` (
   `id_user_level` int(11) NOT NULL,
   `id_menu` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_hak_akses: ~21 rows (approximately)
+-- Dumping data for table mcu.tbl_hak_akses: ~25 rows (approximately)
 /*!40000 ALTER TABLE `tbl_hak_akses` DISABLE KEYS */;
 INSERT INTO `tbl_hak_akses` (`id`, `id_user_level`, `id_menu`) VALUES
 	(15, 1, 1),
@@ -169,7 +211,10 @@ INSERT INTO `tbl_hak_akses` (`id`, `id_user_level`, `id_menu`) VALUES
 	(42, 1, 21),
 	(43, 1, 22),
 	(44, 1, 23),
-	(45, 1, 24);
+	(45, 1, 24),
+	(46, 1, 25),
+	(47, 1, 26),
+	(48, 1, 27);
 /*!40000 ALTER TABLE `tbl_hak_akses` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_kodepos
@@ -185,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `tbl_kodepos` (
   KEY `ixkodepos` (`kodepos`)
 ) ENGINE=InnoDB AUTO_INCREMENT=28457 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_kodepos: ~29.161 rows (approximately)
+-- Dumping data for table mcu.tbl_kodepos: ~29,115 rows (approximately)
 /*!40000 ALTER TABLE `tbl_kodepos` DISABLE KEYS */;
 INSERT INTO `tbl_kodepos` (`id`, `kelurahan`, `kecamatan`, `kabupaten`, `provinsi`, `kodepos`) VALUES
 	(1, 'GAMBIR', 'GAMBIR', 'JAKARTA PUSAT', 'DKI JAKARTA', '10110'),
@@ -28658,9 +28703,9 @@ CREATE TABLE IF NOT EXISTS `tbl_menu` (
   `is_main_menu` int(11) NOT NULL,
   `is_aktif` enum('y','n') NOT NULL COMMENT 'y=yes,n=no',
   PRIMARY KEY (`id_menu`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_menu: ~13 rows (approximately)
+-- Dumping data for table mcu.tbl_menu: ~16 rows (approximately)
 /*!40000 ALTER TABLE `tbl_menu` DISABLE KEYS */;
 INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_aktif`) VALUES
 	(1, 'KELOLA MENU', 'kelolamenu', 'fal fa-server', 15, 'y'),
@@ -28673,9 +28718,12 @@ INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_a
 	(19, 'Asessment', 't_asessment', 'fal fa-id-card', 0, 'y'),
 	(20, 'emr', 't_emr', 'fal fa-align-justify', 0, 'y'),
 	(21, 'Master Poli', 'm_poli', 'fal fa-align-justify', 0, 'y'),
-	(22, 'Group Tarif', 'm_tarifgroup', 'fal fa-align-justify', 0, 'y'),
+	(22, 'Group Tarif', 'm_tarifgroup', 'fal fa-align-justify', 25, 'y'),
 	(23, 'Unit', 'm_unit', 'fal fa-align-justify', 0, 'y'),
-	(24, 'Tarif', 'm_tarif', 'fal fa-align-justify', 0, 'y');
+	(24, 'Tarif', 'm_tarif', 'fal fa-align-justify', 25, 'y'),
+	(25, 'master tarif', '#', 'fal fa-calculator', 0, 'y'),
+	(26, 'Paket Tarif', 'M_tarifpaket', 'fal fa-align-justify', 25, 'y'),
+	(27, 'Paket Tarif Detail', 'M_tarifpaketdetail', 'fal fa-align-justify', 25, 'y');
 /*!40000 ALTER TABLE `tbl_menu` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_setting
@@ -28758,14 +28806,19 @@ CREATE TABLE IF NOT EXISTS `t_billrajal` (
   `nobill` int(11) NOT NULL AUTO_INCREMENT,
   `noreg` int(11) NOT NULL,
   `paket` enum('Y','N') NOT NULL,
+  `kdpaket` int(11) DEFAULT NULL,
   `kdtarif` int(11) NOT NULL,
   `qty` int(3) NOT NULL,
   `status` int(1) NOT NULL,
   PRIMARY KEY (`nobill`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table mcu.t_billrajal: ~0 rows (approximately)
 /*!40000 ALTER TABLE `t_billrajal` DISABLE KEYS */;
+INSERT INTO `t_billrajal` (`nobill`, `noreg`, `paket`, `kdpaket`, `kdtarif`, `qty`, `status`) VALUES
+	(1, 191000003, 'N', NULL, 1, 1, 0),
+	(2, 191000003, 'N', NULL, 5, 1, 0),
+	(3, 191000003, 'N', NULL, 3, 2, 0);
 /*!40000 ALTER TABLE `t_billrajal` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_daftar

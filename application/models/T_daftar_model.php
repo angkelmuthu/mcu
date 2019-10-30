@@ -44,14 +44,23 @@ class T_daftar_model extends CI_Model
         $this->db->where('a.idreg', $id);
         return $this->db->get()->row();
     }
-
+    ////tarif
     function get_tarif()
     {
         $this->db->select('*');
         $this->db->from('m_tarif a');
-        $this->datatables->join('m_tarifgroup b', 'a.kdtarifgroup = b.kdtarifgroup');
+        $this->db->join('m_tarifgroup b', 'a.kdtarifgroup = b.kdtarifgroup');
         return $this->db->get()->result();
     }
+    /////tarif paket
+    function get_tarifpaket()
+    {
+        $hasil = $this->db->query("SELECT a.kdtarifpaket,a.nmpaket,c.kdtarif,c.nmtarif,sum(c.harga) as harga FROM m_tarifpaket a
+        INNER JOIN m_tarifpaketdetail b ON a.kdtarifpaket=b.kdtarifpaket
+        LEFT JOIN m_tarif c ON b.kdtarif=c.kdtarif");
+        return $hasil->result();
+    }
+
     //////////////////////////////////////////////
     function barang_list()
     {
@@ -62,6 +71,11 @@ class T_daftar_model extends CI_Model
     function simpan_barang($noreg, $paket, $kdtarif, $qty)
     {
         $hasil = $this->db->query("INSERT INTO t_billrajal (noreg,paket,kdtarif,qty)VALUES('$noreg','$paket','$kdtarif','$qty')");
+        return $hasil;
+    }
+    function update_barang($noreg, $paket, $kdtarif, $qty)
+    {
+        $hasil = $this->db->query("update t_billrajal set qty='$qty' where noreg='$noreg' and kdtarif='$kdtarif'");
         return $hasil;
     }
     function hapus_barang($nobill)

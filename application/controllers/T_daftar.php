@@ -45,6 +45,7 @@ class T_daftar extends CI_Controller
                 'tglreg' => $row->tglreg,
                 'id_users' => $row->id_users,
                 'tarifgroup' => $this->T_daftar_model->get_tarif(),
+                'tarifpaket' => $this->T_daftar_model->get_tarifpaket(),
 
             );
             $this->template->load('template', 't_daftar/t_daftar_read', $data);
@@ -68,11 +69,22 @@ class T_daftar extends CI_Controller
     {
         $noreg = $this->input->post('noreg');
         $paket = $this->input->post('paket');
+        $kdpaket = $this->input->post('kdpaket');
         $kdtarif = $this->input->post('kdtarif');
         $qty = $this->input->post('qty');
-        $data = $this->T_daftar_model->simpan_barang($noreg, $paket, $kdtarif, $qty);
+        // cek bill //
+        $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and kdtarif='$kdtarif'");
+        $rows = $cek->num_rows();
+        $dt = $cek->row_array();
+        if ($rows > 0) {
+            $qty = $dt['qty'] + $qty;
+            $data = $this->T_daftar_model->update_barang($noreg, $paket, $kdpaket, $kdtarif, $qty);
+        } else {
+            $data = $this->T_daftar_model->simpan_barang($noreg, $paket, $kdpaket, $kdtarif, $qty);
+        }
         echo json_encode($data);
     }
+
     function hapus_barang()
     {
         $nobill = $this->input->post('nobill');

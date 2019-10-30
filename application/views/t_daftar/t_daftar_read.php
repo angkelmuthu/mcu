@@ -156,7 +156,8 @@
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="js_change_pill_justified-2" role="tabpanel">
-                                <button type="button" class="btn btn-sm btn-primary waves-effect waves-themed" data-toggle="modal" data-target=".default-example-modal-right">Tindakan</button>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect waves-themed" data-toggle="modal" data-target=".modal-tindakan">Tindakan</button>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect waves-themed" data-toggle="modal" data-target=".modal-paket">Tindakan Paket</button>
                                 <hr>
                                 <div id="reload">
                                     <table class="table table-bordered table-hover table-striped w-100" id="">
@@ -200,7 +201,7 @@
                                     </div>
                                 </div>
                                 <!--END MODAL HAPUS-->
-                                <div class="modal fade default-example-modal-right" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                <div class="modal fade modal-tindakan" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-right">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -228,9 +229,56 @@
                                                                 <td>
                                                                     <input type="hidden" name="noreg" id="noreg<?php echo $tgroup->kdtarif ?>" value="<?php echo $noreg ?>">
                                                                     <input type="hidden" name="paket" id="paket<?php echo $tgroup->kdtarif ?>" value="N">
+                                                                    <input type="hidden" name="kdpaket" id="kdpaket<?php echo $tgroup->kdtarif ?>" value="">
                                                                     <input type="hidden" name="kdtarif" id="kdtarif<?php echo $tgroup->kdtarif ?>" value="<?php echo $tgroup->kdtarif ?>">
                                                                     <input type="hidden" name="qty" id="qty<?php echo $tgroup->kdtarif ?>" value="1">
                                                                     <button class="btn btn-info btn-xs" id="btn_simpan<?php echo $tgroup->kdtarif ?>">add</button>
+                                                                </td>
+                                                            </tr>
+                                                        <?php } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary waves-effect waves-themed" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary waves-effect waves-themed">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- modal paket -->
+                                <div class="modal fade modal-paket" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-right">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title h4">Master Tarif</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table table-bordered table-hover table-striped w-100" id="tarif">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Paket Tarif</th>
+                                                            <!-- <th>Nama Tarif</th> -->
+                                                            <th>Harga Paket</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php foreach ($tarifpaket as $tpaket) { ?>
+                                                            <tr>
+                                                                <td><b style="text-transform: uppercase;"><?php echo $tpaket->nmpaket ?></b></td>
+                                                                <!-- <td><?php echo $tpaket->nmtarif ?></td> -->
+                                                                <td><?php echo number_format($tpaket->harga) ?></td>
+                                                                <td>
+                                                                    <input type="text" name="noreg" id="noreg<?php echo $tpaket->kdtarifpaket ?>" value="<?php echo $noreg ?>">
+                                                                    <input type="text" name="paket" id="paket<?php echo $tpaket->kdtarifpaket ?>" value="N">
+                                                                    <input type="text" name="kdpaket" id="kdpaket<?php echo $tpaket->kdtarifpaket ?>" value="<?php echo $tpaket->kdtarifpaket ?>">
+                                                                    <input type="text" name="kdtarif" id="kdtarif<?php echo $tpaket->kdtarifpaket ?>" value="<?php echo $tpaket->kdtarif ?>">
+                                                                    <input type="text" name="qty" id="qty<?php echo $tpaket->kdtarifpaket ?>" value="1">
+                                                                    <button class="btn btn-info btn-xs" id="btn_simpan<?php echo $tpaket->kdtarifpaket ?>">add</button>
                                                                 </td>
                                                             </tr>
                                                         <?php } ?>
@@ -549,6 +597,7 @@
                     data: {
                         noreg: noreg,
                         paket: paket,
+                        kdpaket: kdpaket,
                         kdtarif: kdtarif,
                         qty: qty
                     },
