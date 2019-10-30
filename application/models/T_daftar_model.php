@@ -68,12 +68,12 @@ class T_daftar_model extends CI_Model
         return $hasil->result();
     }
 
-    function simpan_barang($noreg, $paket, $kdtarif, $qty)
+    function simpan_barang($noreg, $paket, $kdpaket, $kdtarif, $qty)
     {
-        $hasil = $this->db->query("INSERT INTO t_billrajal (noreg,paket,kdtarif,qty)VALUES('$noreg','$paket','$kdtarif','$qty')");
+        $hasil = $this->db->query("INSERT INTO t_billrajal (noreg,paket,kdpaket,kdtarif,qty)VALUES('$noreg','$paket','$kdpaket','$kdtarif','$qty')");
         return $hasil;
     }
-    function update_barang($noreg, $paket, $kdtarif, $qty)
+    function update_barang($noreg, $paket, $kdpaket, $kdtarif, $qty)
     {
         $hasil = $this->db->query("update t_billrajal set qty='$qty' where noreg='$noreg' and kdtarif='$kdtarif'");
         return $hasil;

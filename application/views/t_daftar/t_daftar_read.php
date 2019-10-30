@@ -278,7 +278,7 @@
                                                                     <input type="text" name="kdpaket" id="kdpaket<?php echo $tpaket->kdtarifpaket ?>" value="<?php echo $tpaket->kdtarifpaket ?>">
                                                                     <input type="text" name="kdtarif" id="kdtarif<?php echo $tpaket->kdtarifpaket ?>" value="<?php echo $tpaket->kdtarif ?>">
                                                                     <input type="text" name="qty" id="qty<?php echo $tpaket->kdtarifpaket ?>" value="1">
-                                                                    <button class="btn btn-info btn-xs" id="btn_simpan<?php echo $tpaket->kdtarifpaket ?>">add</button>
+                                                                    <button class="btn btn-info btn-xs" id="btn_addpaket<?php echo $tpaket->kdtarifpaket ?>">add</button>
                                                                 </td>
                                                             </tr>
                                                         <?php } ?>
@@ -588,11 +588,43 @@
             $('#btn_simpan<?php echo $row->kdtarif ?>').on('click', function() {
                 var noreg = $('#noreg<?php echo $row->kdtarif ?>').val();
                 var paket = $('#paket<?php echo $row->kdtarif ?>').val();
+                var kdpaket = $('#kdpaket<?php echo $row->kdtarif ?>').val();
                 var kdtarif = $('#kdtarif<?php echo $row->kdtarif ?>').val();
                 var qty = $('#qty<?php echo $row->kdtarif ?>').val();
                 $.ajax({
                     type: "POST",
                     url: "<?php echo base_url('index.php/t_daftar/simpan_barang') ?>",
+                    dataType: "JSON",
+                    data: {
+                        noreg: noreg,
+                        paket: paket,
+                        kdpaket: kdpaket,
+                        kdtarif: kdtarif,
+                        qty: qty
+                    },
+                    success: function(data) {
+                        $('[name="kobar"]').val("");
+                        $('[name="nabar"]').val("");
+                        $('[name="harga"]').val("");
+                        $('#ModalaAdd').modal('hide');
+                        tampil_data_barang();
+                    }
+                });
+                return false;
+            });
+        <?php } ?>
+
+        //add paket tarif
+        <?php foreach ($tarifpaket as $tpaket) { ?>
+            $('#btn_addpaket<?php echo $tpaket->kdtarifpaket ?>').on('click', function() {
+                var noreg = $('#noreg<?php echo $tpaket->kdtarifpaket ?>').val();
+                var paket = $('#paket<?php echo $tpaket->kdtarifpaket ?>').val();
+                var kdpaket = $('#kdpaket<?php echo $tpaket->kdtarifpaket ?>').val();
+                var kdtarif = $('#kdtarif<?php echo $tpaket->kdtarifpaket ?>').val();
+                var qty = $('#qty<?php echo $tpaket->kdtarifpaket ?>').val();
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url('index.php/t_daftar/addpaket') ?>",
                     dataType: "JSON",
                     data: {
                         noreg: noreg,
