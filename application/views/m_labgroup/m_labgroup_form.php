@@ -3,7 +3,7 @@
         <div class="col-xl-12">
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
-                    <h2>INPUT DATA M_POLI</h2>
+                    <h2>INPUT DATA M_LABGROUP</h2>
                     <div class="panel-toolbar">
                         <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
                         <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
@@ -17,18 +17,20 @@
                             <table class='table table-striped'>
 
                                 <tr>
-                                    <td width='200'>Poli <?php echo form_error('poli') ?></td>
-                                    <td><input type="text" class="form-control" name="poli" id="poli" placeholder="Poli" value="<?php echo $poli; ?>" /></td>
+                                    <td width='200'>Kdtarif <?php echo form_error('kdtarif') ?></td>
+                                    <td><input type="text" class="form-control" name="kdtarif" id="kdtarif" placeholder="Kdtarif" value="<?php echo $kdtarif; ?>" /></td>
                                 </tr>
                                 <tr>
-                                    <td width='200'>Kdunit <?php echo form_error('kdunit') ?></td>
-                                    <td><?php echo cmb_dinamis('kdunit', 'm_unit', 'unit', 'kdunit') ?></td>
+                                    <td width='200'>Kdlab <?php echo form_error('kdlab') ?></td>
+                                    <td><input type="text" class="form-control" name="kdlab" id="kdlab" placeholder="Kdlab" value="<?php echo $kdlab; ?>" /></td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><input type="hidden" name="kdpoli" value="<?php echo $kdpoli; ?>" />
+                                    <td><input type="hidden" name="kdlabgroup" value="<?php echo $kdlabgroup; ?>" />
+                                        <input type="text" class="form-control" name="tglinput" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
+                                        <input type="text" class="form-control" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" readonly />
                                         <button type="submit" class="btn btn-warning waves-effect waves-themed"><i class="fal fa-save"></i> <?php echo $button ?></button>
-                                        <a href="<?php echo site_url('m_poli') ?>" class="btn btn-info waves-effect waves-themed"><i class="fal fa-sign-out"></i> Kembali</a></td>
+                                        <a href="<?php echo site_url('m_labgroup') ?>" class="btn btn-info waves-effect waves-themed"><i class="fal fa-sign-out"></i> Kembali</a></td>
                                 </tr>
                             </table>
                         </form>

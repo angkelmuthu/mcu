@@ -65,6 +65,11 @@ class T_daftar extends CI_Controller
         $data = $this->T_daftar_model->barang_list();
         echo json_encode($data);
     }
+    function paket_billing()
+    {
+        $data = $this->T_daftar_model->paket_bill_list();
+        echo json_encode($data);
+    }
     function simpan_barang()
     {
         $noreg = $this->input->post('noreg');
@@ -73,27 +78,11 @@ class T_daftar extends CI_Controller
         $kdtarif = $this->input->post('kdtarif');
         $qty = $this->input->post('qty');
         // cek bill //
-        $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and kdtarif='$kdtarif'");
-        $rows = $cek->num_rows();
-        $dt = $cek->row_array();
-        if ($rows > 0) {
-            $qty = $dt['qty'] + $qty;
-            $data = $this->T_daftar_model->update_barang($noreg, $paket, $kdpaket, $kdtarif, $qty);
+        if ($paket == 'N') {
+            $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and kdtarif='$kdtarif'");
         } else {
-            $data = $this->T_daftar_model->simpan_barang($noreg, $paket, $kdpaket, $kdtarif, $qty);
+            $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and kdpaket='$kdpaket'");
         }
-        echo json_encode($data);
-    }
-
-    function addpaket()
-    {
-        $noreg = $this->input->post('noreg');
-        $paket = $this->input->post('paket');
-        $kdpaket = $this->input->post('kdpaket');
-        $kdtarif = $this->input->post('kdtarif');
-        $qty = $this->input->post('qty');
-        // cek bill //
-        $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and kdpaket='$kdpaket'");
         $rows = $cek->num_rows();
         $dt = $cek->row_array();
         if ($rows > 0) {
@@ -111,7 +100,28 @@ class T_daftar extends CI_Controller
         $data = $this->T_daftar_model->hapus_barang($nobill);
         echo json_encode($data);
     }
-    ////////////////////////////////////////////////
+    //////////////////Paket Tarif//////////////////////////////
+    function addpaket()
+    {
+        $noreg = $this->input->post('noreg');
+        $paket = $this->input->post('paket');
+        $kdpaket = $this->input->post('kdpaket');
+        $kdtarif = $this->input->post('kdtarif');
+        $qty = $this->input->post('qty');
+        // cek bill //
+        $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and kdpaket='$kdpaket'");
+        $rows = $cek->num_rows();
+        $dt = $cek->row_array();
+        if ($rows > 0) {
+            $qty = $dt['qty'] + $qty;
+            $data = $this->T_daftar_model->update_barang($noreg, $paket, $kdpaket, $kdtarif, $qty);
+        } else {
+            $data = $this->T_daftar_model->savepaket($noreg, $paket, $kdpaket, $kdtarif, $qty);
+        }
+        echo json_encode($data);
+    }
+
+    ///////////////////////////////////////////////
     public function create()
     {
         $data = array(

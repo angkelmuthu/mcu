@@ -57,14 +57,23 @@ class T_daftar_model extends CI_Model
     {
         $hasil = $this->db->query("SELECT a.kdtarifpaket,a.nmpaket,c.kdtarif,c.nmtarif,sum(c.harga) as harga FROM m_tarifpaket a
         INNER JOIN m_tarifpaketdetail b ON a.kdtarifpaket=b.kdtarifpaket
-        LEFT JOIN m_tarif c ON b.kdtarif=c.kdtarif");
+        LEFT JOIN m_tarif c ON b.kdtarif=c.kdtarif GROUP BY a.kdtarifpaket");
         return $hasil->result();
     }
 
     //////////////////////////////////////////////
     function barang_list()
     {
-        $hasil = $this->db->query("SELECT * FROM t_billrajal a LEFT JOIN m_tarif b on a.kdtarif=b.kdtarif");
+        $hasil = $this->db->query("SELECT * FROM t_billrajal a LEFT JOIN m_tarif b on a.kdtarif=b.kdtarif LEFT JOIN m_tarifgroup c on b.kdtarifgroup=c.kdtarifgroup where a.paket='N'");
+        return $hasil->result();
+    }
+    function paket_bill_list()
+    {
+        $hasil = $this->db->query("SELECT b.nmpaket,a.qty,b.potongan,(SELECT SUM(harga) FROM m_tarifpaketdetail x1
+        LEFT JOIN m_tarifpaket x2 ON x1.kdtarifpaket=x2.kdtarifpaket
+        LEFT JOIN m_tarif x3 ON x1.kdtarif=x3.kdtarif
+        WHERE x2.kdtarifpaket=b.kdtarifpaket) AS harga
+        FROM t_billrajal a LEFT JOIN m_tarifpaket b on a.kdpaket=b.kdtarifpaket where a.paket='Y'");
         return $hasil->result();
     }
 
@@ -83,7 +92,18 @@ class T_daftar_model extends CI_Model
         $hasil = $this->db->query("DELETE FROM t_billrajal WHERE nobill='$nobill'");
         return $hasil;
     }
-    ///////////////////////////////////////////////
+    /////////////////////Paket tarif//////////////////////////
+    function addpaket($noreg, $paket, $kdpaket, $kdtarif, $qty)
+    {
+        $hasil = $this->db->query("INSERT INTO t_billrajal (noreg,paket,kdpaket,kdtarif,qty)VALUES('$noreg','$paket','$kdpaket','$kdtarif','$qty')");
+        return $hasil;
+    }
+    function savepaket($noreg, $paket, $kdpaket, $kdtarif, $qty)
+    {
+        $hasil = $this->db->query("INSERT INTO t_billrajal (noreg,paket,kdpaket,kdtarif,qty)VALUES('$noreg','$paket','$kdpaket','$kdtarif','$qty')");
+        return $hasil;
+    }
+    //////////////////////////////////////////////////////////
     // get total rows
     function total_rows($q = NULL)
     {
