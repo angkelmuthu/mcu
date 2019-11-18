@@ -46,6 +46,7 @@ class T_daftar extends CI_Controller
                 'id_users' => $row->id_users,
                 'tarifgroup' => $this->T_daftar_model->get_tarif(),
                 'tarifpaket' => $this->T_daftar_model->get_tarifpaket(),
+                'listobat' => $this->T_daftar_model->get_obat(),
 
             );
             $this->template->load('template', 't_daftar/t_daftar_read', $data);

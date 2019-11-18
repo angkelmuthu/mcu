@@ -60,6 +60,13 @@ class T_daftar_model extends CI_Model
         LEFT JOIN m_tarif c ON b.kdtarif=c.kdtarif GROUP BY a.kdtarifpaket");
         return $hasil->result();
     }
+    ///////obat
+    function get_obat()
+    {
+        $this->db->from('v_obatdetail');
+        return $this->db->get()->result();
+    }
+
 
     //////////////////////////////////////////////
     function barang_list()

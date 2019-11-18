@@ -211,7 +211,47 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="js_change_pill_justified-3" role="tabpanel">
+                                <button type="button" class="btn btn-sm btn-primary waves-effect waves-themed" data-toggle="modal" data-target=".modal-obat">Obat</button>
 
+                                <div class="modal fade modal-obat" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-right">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title h4">Master Tarif</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table table-bordered table-hover table-striped w-100" id="obat">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nama Obat</th>
+                                                            <th>Harga</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php foreach ($listobat as $obat) { ?>
+                                                            <tr>
+                                                                <td><b style="text-transform: uppercase;"><?php echo $obat->obat ?></b></td>
+                                                                <td>Rp. <?php echo number_format($obat->hargaobat) ?></td>
+                                                                <td>
+                                                                    <input type="hidden" name="noreg" id="noreg<?php echo $obat->kdobat ?>" value="<?php echo $noreg ?>">
+                                                                    <button class="btn btn-primary btn-sm btn-icon waves-effect waves-themed" id="btn_simpanpaket<?php echo $obat->kdobat ?>"><i class="fal fa-plus"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                        <?php } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary waves-effect waves-themed" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary waves-effect waves-themed">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
