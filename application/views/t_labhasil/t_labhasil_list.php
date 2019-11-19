@@ -49,7 +49,7 @@
                                         <td><?php echo $lab->tgllhr ?></td>
                                         <td><?php echo $lab->alamat ?></td>
                                         <td>
-                                            <button class="btn btn-info btn-xs" id="btn_simpanpaket<?php echo $lab->noreg ?>"><i class="fal fa-plus"></i></button>
+                                            <a href="t_labhasil/read/<?php echo $lab->noreg ?>" class="btn btn-info btn-xs"><i class="fal fa-eye"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>

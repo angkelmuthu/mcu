@@ -31,15 +31,15 @@ class T_labhasil extends CI_Controller
         echo json_encode($data);
     }
 
-    public function read($id)
+    public function read($noreg)
     {
-        $row = $this->T_labhasil_model->get_by_id($id);
+        $row = $this->T_labhasil_model->get_by_id($noreg);
         if ($row) {
             $data = array(
-                'nobill' => $row->nobill,
+                'nama' => $row->nama,
                 'noreg' => $row->noreg,
-                'kdtarif' => $row->kdtarif,
-                'nilai' => $row->nilai,
+                'tgllhr' => $row->tgllhr,
+                'alamat' => $row->alamat,
                 'tglinput' => $row->tglinput,
                 'id_users' => $row->id_users,
             );

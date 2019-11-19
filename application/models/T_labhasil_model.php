@@ -54,10 +54,14 @@ class T_labhasil_model extends CI_Model
     }
 
     // get data by id
-    function get_by_id($id)
+    function get_by_id($noreg)
     {
-        $this->db->where($this->id, $id);
-        return $this->db->get($this->table)->row();
+        $this->db->select('*');
+        $this->db->from('t_daftar');
+        $this->datatables->join('m_pasien', 't_daftar.nomr = m_pasien.nomr');
+        $this->db->where('noreg', $noreg);
+        //return $this->db->get($this->table)->row();
+        return $this->db->get()->row();
     }
 
     // get total rows
