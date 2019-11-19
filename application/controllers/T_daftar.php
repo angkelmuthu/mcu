@@ -61,16 +61,17 @@ class T_daftar extends CI_Controller
         }
     }
     ////////////////////////////////////////////
-    function data_barang()
+    function data_barang($noreg)
     {
-        $data = $this->T_daftar_model->barang_list();
+        $data = $this->T_daftar_model->barang_list($noreg);
         echo json_encode($data);
     }
-    function paket_billing()
+    function paket_billing($noreg)
     {
-        $data = $this->T_daftar_model->paket_bill_list();
+        $data = $this->T_daftar_model->paket_bill_list($noreg);
         echo json_encode($data);
     }
+
     function simpan_barang()
     {
         $noreg = $this->input->post('noreg');
@@ -121,7 +122,38 @@ class T_daftar extends CI_Controller
         }
         echo json_encode($data);
     }
-
+    //////////////////////////////obat/////////////////////////////////////////
+    function obat_billing($noreg)
+    {
+        $data = $this->T_daftar_model->obat_bill_list($noreg);
+        echo json_encode($data);
+    }
+    function simpan_obat()
+    {
+        $noreg = $this->input->post('noreg');
+        $user = $this->input->post('user');
+        $kdobat = $this->input->post('kdobat');
+        $qty = $this->input->post('qty');
+        // cek bill //
+        $cek = $this->db->query("SELECT * from t_billobat where noreg='$noreg' and kdobat='$kdobat'");
+        $rows = $cek->num_rows();
+        $dt = $cek->row_array();
+        $tgl = date('Y-m-d H:i:s');
+        $status = 'BL';
+        if ($rows > 0) {
+            $qty = $dt['qty'] + $qty;
+            $data = $this->T_daftar_model->update_obat($noreg, $kdobat, $qty, $status, $tgl, $user);
+        } else {
+            $data = $this->T_daftar_model->simpan_obat($noreg, $kdobat, $qty, $status, $tgl, $user);
+        }
+        echo json_encode($data);
+    }
+    function hapus_obat()
+    {
+        $nobill = $this->input->post('nobill');
+        $data = $this->T_daftar_model->hapus_obat($nobill);
+        echo json_encode($data);
+    }
     ///////////////////////////////////////////////
     public function create()
     {

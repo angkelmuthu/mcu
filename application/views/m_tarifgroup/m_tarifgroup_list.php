@@ -19,6 +19,7 @@
                 <tr>
                     <th width="30px">No</th>
 		    <th>Tarifgroup</th>
+		    <th>Kdpoli</th>
 		    <th width="200px">Action</th>
                 </tr>
             </thead>
@@ -70,7 +71,7 @@
                         {
                             "data": "kdtarifgroup",
                             "orderable": false
-                        },{"data": "tarifgroup"},
+                        },{"data": "tarifgroup"},{"data": "kdpoli"},
                         {
                             "data" : "action",
                             "orderable": false,

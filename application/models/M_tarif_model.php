@@ -18,10 +18,10 @@ class M_tarif_model extends CI_Model
     // datatables
     function json()
     {
-        $this->datatables->select('kdtarif,nmtarif,tarifgroup,harga,tglinput,id_users');
+        $this->datatables->select('kdtarif,nmtarif,poli,harga,tglinput,id_users');
         $this->datatables->from('m_tarif');
         //add this line for join
-        $this->datatables->join('m_tarifgroup', 'm_tarif.kdtarifgroup = m_tarifgroup.kdtarifgroup');
+        $this->datatables->join('m_poli', 'm_tarif.kdpoli = m_poli.kdpoli');
         $this->datatables->add_column('action', anchor(site_url('m_tarif/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
             " . anchor(site_url('m_tarif/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
                 " . anchor(site_url('m_tarif/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'kdtarif');

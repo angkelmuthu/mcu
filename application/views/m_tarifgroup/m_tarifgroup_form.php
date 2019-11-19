@@ -21,6 +21,10 @@
                                     <td><input type="text" class="form-control" name="tarifgroup" id="tarifgroup" placeholder="Tarifgroup" value="<?php echo $tarifgroup; ?>" /></td>
                                 </tr>
                                 <tr>
+                                    <td width='200'>Kdpoli <?php echo form_error('kdpoli') ?></td>
+                                    <td><?php echo cmb_dinamis('kdpoli', 'm_poli', 'poli', 'kdpoli') ?></td>
+                                </tr>
+                                <tr>
                                     <td></td>
                                     <td><input type="hidden" name="kdtarifgroup" value="<?php echo $kdtarifgroup; ?>" />
                                         <button type="submit" class="btn btn-warning waves-effect waves-themed"><i class="fal fa-save"></i> <?php echo $button ?></button>

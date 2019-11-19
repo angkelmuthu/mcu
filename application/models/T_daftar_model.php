@@ -49,7 +49,7 @@ class T_daftar_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('m_tarif a');
-        $this->db->join('m_tarifgroup b', 'a.kdtarifgroup = b.kdtarifgroup');
+        $this->db->join('m_poli b', 'a.kdpoli = b.kdpoli');
         return $this->db->get()->result();
     }
     /////tarif paket
@@ -69,18 +69,18 @@ class T_daftar_model extends CI_Model
 
 
     //////////////////////////////////////////////
-    function barang_list()
+    function barang_list($noreg)
     {
-        $hasil = $this->db->query("SELECT * FROM t_billrajal a LEFT JOIN m_tarif b on a.kdtarif=b.kdtarif LEFT JOIN m_tarifgroup c on b.kdtarifgroup=c.kdtarifgroup where a.paket='N'");
+        $hasil = $this->db->query("SELECT * FROM t_billrajal a LEFT JOIN m_tarif b on a.kdtarif=b.kdtarif LEFT JOIN m_poli c on b.kdpoli=c.kdpoli where a.noreg='$noreg' and a.paket='N'");
         return $hasil->result();
     }
-    function paket_bill_list()
+    function paket_bill_list($noreg)
     {
-        $hasil = $this->db->query("SELECT b.nmpaket,a.qty,b.potongan,(SELECT SUM(harga) FROM m_tarifpaketdetail x1
+        $hasil = $this->db->query("SELECT a.nobill,b.nmpaket,a.qty,b.potongan,(SELECT SUM(harga) FROM m_tarifpaketdetail x1
         LEFT JOIN m_tarifpaket x2 ON x1.kdtarifpaket=x2.kdtarifpaket
         LEFT JOIN m_tarif x3 ON x1.kdtarif=x3.kdtarif
         WHERE x2.kdtarifpaket=b.kdtarifpaket) AS harga
-        FROM t_billrajal a LEFT JOIN m_tarifpaket b on a.kdpaket=b.kdtarifpaket where a.paket='Y'");
+        FROM t_billrajal a LEFT JOIN m_tarifpaket b on a.kdpaket=b.kdtarifpaket where a.noreg='$noreg' and a.paket='Y'");
         return $hasil->result();
     }
 
@@ -91,7 +91,11 @@ class T_daftar_model extends CI_Model
     }
     function update_barang($noreg, $paket, $kdpaket, $kdtarif, $qty)
     {
-        $hasil = $this->db->query("update t_billrajal set qty='$qty' where noreg='$noreg' and kdtarif='$kdtarif'");
+        if ($paket == 'Y') {
+            $hasil = $this->db->query("update t_billrajal set qty='$qty' where noreg='$noreg' and kdpaket='$kdpaket'");
+        } else {
+            $hasil = $this->db->query("update t_billrajal set qty='$qty' where noreg='$noreg' and kdtarif='$kdtarif'");
+        }
         return $hasil;
     }
     function hapus_barang($nobill)
@@ -110,7 +114,29 @@ class T_daftar_model extends CI_Model
         $hasil = $this->db->query("INSERT INTO t_billrajal (noreg,paket,kdpaket,kdtarif,qty)VALUES('$noreg','$paket','$kdpaket','$kdtarif','$qty')");
         return $hasil;
     }
-    //////////////////////////////////////////////////////////
+    //////////////////////obat////////////////////////////////////
+    function obat_bill_list($noreg)
+    {
+        $hasil = $this->db->query("SELECT a.*,b.nmobat,b.hargaobat FROM t_billobat a
+            LEFT JOIN m_obat b ON a.kdobat=b.kdobat where a.noreg='$noreg'");
+        return $hasil->result();
+    }
+
+    function simpan_obat($noreg, $kdobat, $qty, $status, $tgl, $user)
+    {
+        $hasil = $this->db->query("INSERT INTO t_billobat (noreg, kdobat, qty, status, tglinput, id_users)VALUES('$noreg','$kdobat','$qty','$status','$tgl','$user')");
+        return $hasil;
+    }
+    function update_obat($noreg, $kdobat, $qty, $status, $tgl, $user)
+    {
+        $hasil = $this->db->query("update t_billobat set qty='$qty',id_users='$user' where noreg='$noreg' and kdobat='$kdobat'");
+        return $hasil;
+    }
+    function hapus_obat($nobill)
+    {
+        $hasil = $this->db->query("DELETE FROM t_billobat WHERE nobill='$nobill'");
+        return $hasil;
+    }
     // get total rows
     function total_rows($q = NULL)
     {

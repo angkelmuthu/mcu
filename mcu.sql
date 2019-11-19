@@ -49,8 +49,8 @@ CREATE TABLE IF NOT EXISTS `m_lab` (
   `kdlab` int(11) NOT NULL AUTO_INCREMENT,
   `nmlab` varchar(70) NOT NULL,
   `deskripsi` varchar(150) NOT NULL DEFAULT '',
-  `nilai_min` int(11) NOT NULL,
-  `nilai_max` int(11) NOT NULL,
+  `nilai_min` float NOT NULL DEFAULT '0',
+  `nilai_max` float NOT NULL DEFAULT '0',
   `tglinput` datetime NOT NULL,
   `id_users` int(11) NOT NULL,
   PRIMARY KEY (`kdlab`)
@@ -59,8 +59,8 @@ CREATE TABLE IF NOT EXISTS `m_lab` (
 -- Dumping data for table mcu.m_lab: ~3 rows (approximately)
 /*!40000 ALTER TABLE `m_lab` DISABLE KEYS */;
 INSERT INTO `m_lab` (`kdlab`, `nmlab`, `deskripsi`, `nilai_min`, `nilai_max`, `tglinput`, `id_users`) VALUES
-	(1, 'Sabu', 'aaaaaa', 60, 80, '2019-11-03 16:24:33', 1),
-	(2, 'Heroin', 'asdsads', 70, 90, '2019-11-03 16:24:20', 1),
+	(1, 'Sabu', 'aaaaaa', 0.8, 0.12, '2019-11-03 16:24:33', 1),
+	(2, 'Heroin', 'asdsads', 11.5, 15.5, '2019-11-03 16:24:20', 1),
 	(3, 'Cannabis', 'ganja', 10, 14, '2019-11-03 16:24:12', 1);
 /*!40000 ALTER TABLE `m_lab` ENABLE KEYS */;
 
@@ -217,24 +217,26 @@ CREATE TABLE IF NOT EXISTS `m_pasien` (
 INSERT INTO `m_pasien` (`nomr`, `nik`, `nama`, `tgllhr`, `alamat`, `kodepos`, `kdklmn`, `kdkawin`, `hp`, `foto`, `tglinput`, `id_users`) VALUES
 	('000001', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1),
 	('000002', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1),
-	('000003', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1);
+	('000003', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1),
+	('000004', 1431431, 'doddy ahmad', '2019-11-02', 'mampang prapatan', 12710, 1, 1, '08158300000', '', '2019-11-19', 1);
 /*!40000 ALTER TABLE `m_pasien` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_poli
 DROP TABLE IF EXISTS `m_poli`;
 CREATE TABLE IF NOT EXISTS `m_poli` (
   `kdpoli` int(11) NOT NULL AUTO_INCREMENT,
-  `poli` varchar(50) NOT NULL DEFAULT '',
+  `poli` varchar(50) NOT NULL,
   `kdunit` int(11) NOT NULL,
   PRIMARY KEY (`kdpoli`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.m_poli: ~4 rows (approximately)
+-- Dumping data for table mcu.m_poli: ~5 rows (approximately)
 /*!40000 ALTER TABLE `m_poli` DISABLE KEYS */;
 INSERT INTO `m_poli` (`kdpoli`, `poli`, `kdunit`) VALUES
-	(2, 'IGD', 1),
-	(3, 'HCU', 1),
-	(4, 'UMUM', 2),
+	(1, 'IGD', 1),
+	(2, 'HCU', 1),
+	(3, 'UMUM', 2),
+	(4, 'RADIOLOGI', 4),
 	(5, 'LAB', 4);
 /*!40000 ALTER TABLE `m_poli` ENABLE KEYS */;
 
@@ -243,7 +245,7 @@ DROP TABLE IF EXISTS `m_tarif`;
 CREATE TABLE IF NOT EXISTS `m_tarif` (
   `kdtarif` int(11) NOT NULL AUTO_INCREMENT,
   `nmtarif` varchar(150) NOT NULL DEFAULT '',
-  `kdtarifgroup` int(11) NOT NULL,
+  `kdpoli` int(11) NOT NULL,
   `harga` int(11) NOT NULL,
   `tglinput` datetime NOT NULL,
   `id_users` int(11) NOT NULL,
@@ -252,13 +254,13 @@ CREATE TABLE IF NOT EXISTS `m_tarif` (
 
 -- Dumping data for table mcu.m_tarif: ~6 rows (approximately)
 /*!40000 ALTER TABLE `m_tarif` DISABLE KEYS */;
-INSERT INTO `m_tarif` (`kdtarif`, `nmtarif`, `kdtarifgroup`, `harga`, `tglinput`, `id_users`) VALUES
+INSERT INTO `m_tarif` (`kdtarif`, `nmtarif`, `kdpoli`, `harga`, `tglinput`, `id_users`) VALUES
 	(1, 'Administrasi Pasien', 1, 10000, '2019-10-28 04:39:24', 1),
 	(2, 'Lepas Perban', 2, 25000, '2019-10-28 04:39:50', 1),
 	(3, 'Ganti Impus', 2, 5000, '2019-10-28 04:39:45', 1),
 	(4, 'Suntik', 3, 10000, '2019-10-28 04:39:38', 1),
 	(5, 'Konsultasi', 3, 150000, '2019-10-28 04:39:32', 1),
-	(6, 'Test Urine Narkoba', 4, 210000, '2019-11-03 16:23:07', 1);
+	(6, 'Test Urine Narkoba', 5, 210000, '2019-11-03 16:23:07', 1);
 /*!40000 ALTER TABLE `m_tarif` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_tarifgroup
@@ -266,16 +268,17 @@ DROP TABLE IF EXISTS `m_tarifgroup`;
 CREATE TABLE IF NOT EXISTS `m_tarifgroup` (
   `kdtarifgroup` int(11) NOT NULL AUTO_INCREMENT,
   `tarifgroup` varchar(50) NOT NULL,
+  `kdpoli` int(11) NOT NULL,
   PRIMARY KEY (`kdtarifgroup`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table mcu.m_tarifgroup: ~4 rows (approximately)
 /*!40000 ALTER TABLE `m_tarifgroup` DISABLE KEYS */;
-INSERT INTO `m_tarifgroup` (`kdtarifgroup`, `tarifgroup`) VALUES
-	(1, 'Administrasi'),
-	(2, 'Tindakan Perawat'),
-	(3, 'Tindakan Dokter'),
-	(4, 'Tindakan Lab');
+INSERT INTO `m_tarifgroup` (`kdtarifgroup`, `tarifgroup`, `kdpoli`) VALUES
+	(1, 'Administrasi', 0),
+	(2, 'Tindakan Perawat', 0),
+	(3, 'Tindakan Dokter', 0),
+	(4, 'Tindakan Lab', 5);
 /*!40000 ALTER TABLE `m_tarifgroup` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_tarifpaket
@@ -307,7 +310,7 @@ CREATE TABLE IF NOT EXISTS `m_tarifpaketdetail` (
   `id_users` int(11) NOT NULL,
   PRIMARY KEY (`kdpaketdetail`),
   KEY `kdtarif` (`kdtarif`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table mcu.m_tarifpaketdetail: ~4 rows (approximately)
 /*!40000 ALTER TABLE `m_tarifpaketdetail` DISABLE KEYS */;
@@ -315,7 +318,8 @@ INSERT INTO `m_tarifpaketdetail` (`kdpaketdetail`, `kdtarifpaket`, `kdtarif`, `t
 	(1, 1, 5, '2019-10-30 07:50:57', 1),
 	(2, 1, 4, '2019-10-30 08:49:19', 1),
 	(3, 2, 1, '2019-11-03 09:12:24', 1),
-	(4, 2, 5, '2019-11-03 11:33:46', 1);
+	(4, 2, 5, '2019-11-03 11:33:46', 1),
+	(5, 2, 6, '2019-11-19 08:31:25', 1);
 /*!40000 ALTER TABLE `m_tarifpaketdetail` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_unit
@@ -342,9 +346,9 @@ CREATE TABLE IF NOT EXISTS `tbl_hak_akses` (
   `id_user_level` int(11) NOT NULL,
   `id_menu` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_hak_akses: ~35 rows (approximately)
+-- Dumping data for table mcu.tbl_hak_akses: ~36 rows (approximately)
 /*!40000 ALTER TABLE `tbl_hak_akses` DISABLE KEYS */;
 INSERT INTO `tbl_hak_akses` (`id`, `id_user_level`, `id_menu`) VALUES
 	(15, 1, 1),
@@ -381,7 +385,8 @@ INSERT INTO `tbl_hak_akses` (`id`, `id_user_level`, `id_menu`) VALUES
 	(55, 1, 34),
 	(56, 1, 35),
 	(57, 1, 36),
-	(58, 1, 37);
+	(58, 1, 37),
+	(59, 1, 38);
 /*!40000 ALTER TABLE `tbl_hak_akses` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_kodepos
@@ -28870,9 +28875,9 @@ CREATE TABLE IF NOT EXISTS `tbl_menu` (
   `is_main_menu` int(11) NOT NULL,
   `is_aktif` enum('y','n') NOT NULL COMMENT 'y=yes,n=no',
   PRIMARY KEY (`id_menu`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_menu: ~26 rows (approximately)
+-- Dumping data for table mcu.tbl_menu: ~27 rows (approximately)
 /*!40000 ALTER TABLE `tbl_menu` DISABLE KEYS */;
 INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_aktif`) VALUES
 	(1, 'KELOLA MENU', 'kelolamenu', 'fal fa-server', 15, 'y'),
@@ -28900,7 +28905,8 @@ INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_a
 	(34, 'Satuan Obat', 'M_obatsatuan', 'fa fa-circle-o', 31, 'y'),
 	(35, 'Rute Pemakaian', 'm_obatpakai', 'fa fa-circle-o', 31, 'y'),
 	(36, 'Data Obat', 'M_obat', 'fa fa-circle-o', 31, 'y'),
-	(37, 'Stok Obat', 'M_obatstok', 'fa fa-circle-o', 31, 'y');
+	(37, 'Stok Obat', 'M_obatstok', 'fa fa-circle-o', 31, 'y'),
+	(38, 'Pasien Lab', 'T_labhasil', 'fa fa-circle-o', 0, 'y');
 /*!40000 ALTER TABLE `tbl_menu` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_setting
@@ -28977,6 +28983,25 @@ INSERT INTO `t_asessment` (`noreg`, `bb`, `tb`, `sb`, `sistole`, `diastole`, `na
 	(191000003, 51, 161, 1, 1, 1, 1, 1, 'bjkhbkj', '2019-10-25 12:56:24', 1);
 /*!40000 ALTER TABLE `t_asessment` ENABLE KEYS */;
 
+-- Dumping structure for table mcu.t_billobat
+DROP TABLE IF EXISTS `t_billobat`;
+CREATE TABLE IF NOT EXISTS `t_billobat` (
+  `nobill` int(11) NOT NULL AUTO_INCREMENT,
+  `noreg` int(11) NOT NULL,
+  `kdobat` int(11) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `tglinput` datetime NOT NULL,
+  `id_users` int(11) NOT NULL,
+  PRIMARY KEY (`nobill`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table mcu.t_billobat: ~1 rows (approximately)
+/*!40000 ALTER TABLE `t_billobat` DISABLE KEYS */;
+INSERT INTO `t_billobat` (`nobill`, `noreg`, `kdobat`, `qty`, `status`, `tglinput`, `id_users`) VALUES
+	(6, 191000003, 2, 5, 'BL', '2019-11-19 05:35:58', 1);
+/*!40000 ALTER TABLE `t_billobat` ENABLE KEYS */;
+
 -- Dumping structure for table mcu.t_billrajal
 DROP TABLE IF EXISTS `t_billrajal`;
 CREATE TABLE IF NOT EXISTS `t_billrajal` (
@@ -28988,18 +29013,17 @@ CREATE TABLE IF NOT EXISTS `t_billrajal` (
   `qty` int(3) NOT NULL,
   `status` int(1) NOT NULL,
   PRIMARY KEY (`nobill`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.t_billrajal: ~7 rows (approximately)
+-- Dumping data for table mcu.t_billrajal: ~5 rows (approximately)
 /*!40000 ALTER TABLE `t_billrajal` DISABLE KEYS */;
 INSERT INTO `t_billrajal` (`nobill`, `noreg`, `paket`, `kdpaket`, `kdtarif`, `qty`, `status`) VALUES
-	(1, 191000003, 'N', 0, 1, 2, 0),
-	(2, 191000003, 'Y', 1, 0, 2, 0),
-	(3, 191000003, 'N', 0, 4, 1, 0),
-	(4, 191000003, 'N', 0, 2, 1, 0),
-	(5, 191000003, 'N', 0, 5, 1, 0),
-	(6, 191000003, 'Y', 2, 0, 2, 0),
-	(7, 191000003, 'N', 0, 6, 1, 0);
+	(15, 191000003, 'N', 0, 1, 1, 0),
+	(18, 191000003, 'N', 0, 4, 1, 0),
+	(19, 191000003, 'N', 0, 5, 1, 0),
+	(20, 191000003, 'N', 0, 2, 2, 0),
+	(21, 191000003, 'Y', 2, 0, 1, 0),
+	(23, 191100004, 'N', 0, 6, 1, 0);
 /*!40000 ALTER TABLE `t_billrajal` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_daftar
@@ -29022,7 +29046,8 @@ CREATE TABLE IF NOT EXISTS `t_daftar` (
 -- Dumping data for table mcu.t_daftar: ~0 rows (approximately)
 /*!40000 ALTER TABLE `t_daftar` DISABLE KEYS */;
 INSERT INTO `t_daftar` (`idreg`, `noreg`, `nomr`, `baru`, `kddokter`, `kdpoli`, `kdbayar`, `rujukan`, `kdrujuk`, `tglreg`, `id_users`) VALUES
-	(3, 191000003, '000003', 'Y', 1, 1, 1, 'Y', 0, '2019-10-25 12:41:25', 1);
+	(3, 191000003, '000003', 'Y', 1, 1, 1, 'Y', 0, '2019-10-25 12:41:25', 1),
+	(4, 191100004, '000004', 'Y', 2, 1, 1, 'N', 76786, '2019-11-19 08:36:57', 1);
 /*!40000 ALTER TABLE `t_daftar` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_emr
@@ -29044,6 +29069,21 @@ CREATE TABLE IF NOT EXISTS `t_emr` (
 INSERT INTO `t_emr` (`idemr`, `noreg`, `subjek`, `objek`, `asessment`, `plann`, `tglinput`, `id_users`) VALUES
 	(1, 191000003, 'zzx', 'ff', 'cc', 'dd', '2019-11-03 06:51:27', 1);
 /*!40000 ALTER TABLE `t_emr` ENABLE KEYS */;
+
+-- Dumping structure for table mcu.t_labhasil
+DROP TABLE IF EXISTS `t_labhasil`;
+CREATE TABLE IF NOT EXISTS `t_labhasil` (
+  `nobill` int(11) NOT NULL,
+  `noreg` int(11) NOT NULL,
+  `kdtarif` int(11) NOT NULL,
+  `nilai` float NOT NULL,
+  `tglinput` datetime NOT NULL,
+  `id_users` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table mcu.t_labhasil: ~0 rows (approximately)
+/*!40000 ALTER TABLE `t_labhasil` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t_labhasil` ENABLE KEYS */;
 
 -- Dumping structure for view mcu.v_obatdetail
 DROP VIEW IF EXISTS `v_obatdetail`;

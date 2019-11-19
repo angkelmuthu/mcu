@@ -56,7 +56,6 @@
                         <ul class="nav nav-tabs nav-justified" role="tablist">
                             <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#js_change_pill_justified-1">ASESSMENT DOKTER</a></li>
                             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_justified-2">TINDAKAN</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_justified-3">RESEP</a></li>
                         </ul>
                         <div class="tab-content py-3">
                             <div class="tab-pane fade active show" id="js_change_pill_justified-1" role="tabpanel">
@@ -65,13 +64,13 @@
                             <div class="tab-pane fade" id="js_change_pill_justified-2" role="tabpanel">
                                 <button type="button" class="btn btn-sm btn-primary waves-effect waves-themed" data-toggle="modal" data-target=".modal-tindakan">Tindakan</button>
                                 <button type="button" class="btn btn-sm btn-primary waves-effect waves-themed" data-toggle="modal" data-target=".modal-paket">Tindakan Paket</button>
+                                <button type="button" class="btn btn-sm btn-primary waves-effect waves-themed" data-toggle="modal" data-target=".modal-obat">Obat</button>
                                 <hr>
                                 <div id="reload">
-                                    <div class="table-responsive">
+                                    <!-- <div class="table-responsive">
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                    <!--<th class="border-top-0 table-scale-border-bottom fw-700">Group Tarif</th>-->
                                                     <th class="border-top-0 table-scale-border-bottom fw-700">Nama Tarif</th>
                                                     <th class="text-right border-top-0 table-scale-border-bottom fw-700">Harga</th>
                                                     <th class="text-center border-top-0 table-scale-border-bottom fw-700">Qty</th>
@@ -83,7 +82,7 @@
 
                                             </tbody>
                                         </table>
-                                    </div>
+                                    </div> -->
                                     <table class="table" id="">
                                         <thead>
                                             <tr>
@@ -95,12 +94,18 @@
                                                 <th class="text-right border-top-0 table-scale-border-bottom fw-700"></th>
                                             </tr>
                                         </thead>
+                                        <tbody id="show_data">
+
+                                        </tbody>
                                         <tbody id="show_paket">
+
+                                        </tbody>
+                                        <tbody id="show_obat">
 
                                         </tbody>
                                     </table>
                                 </div>
-                                <!--MODAL HAPUS-->
+                                <!--MODAL HAPUS Tindakan-->
                                 <div class="modal fade" id="ModalHapus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -120,6 +125,57 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
                                                     <button class="btn_hapus btn btn-danger" id="btn_hapus">Hapus</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--END MODAL HAPUS-->
+                                <!--MODAL HAPUS Paket-->
+                                <div class="modal fade" id="ModalHapusPaket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Hapus Barang</h4>
+                                            </div>
+                                            <form class="form-horizontal">
+                                                <div class="modal-body">
+
+                                                    <input type="hidden" name="nobillpaket" id="textnobillpaket" value="">
+                                                    <div class="alert alert-warning">
+                                                        <p>Apakah Anda yakin mau memhapus barang ini?</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                                                    <button class="btn_hapus_paket btn btn-danger" id="btn_hapus_paket">Hapus</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--MODAL HAPUS Obat-->
+                                <div class="modal fade" id="ModalHapusObat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Hapus Obat</h4>
+                                            </div>
+                                            <form class="form-horizontal">
+                                                <div class="modal-body">
+
+                                                    <input type="hidden" name="nobillobat" id="textnobillobat" value="">
+                                                    <div class="alert alert-warning">
+                                                        <p>Apakah Anda yakin mau memhapus barang ini?</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                                                    <button class="btn_hapus_obat btn btn-danger" id="btn_hapus_obat">Hapus</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -148,12 +204,12 @@
                                                     <tbody>
                                                         <?php foreach ($tarifgroup as $tgroup) { ?>
                                                             <tr>
-                                                                <td><b style="text-transform: uppercase;"><?php echo $tgroup->tarifgroup ?></b></td>
+                                                                <td><b style="text-transform: uppercase;"><?php echo $tgroup->poli ?></b></td>
                                                                 <td><?php echo $tgroup->nmtarif ?></td>
                                                                 <td><?php echo number_format($tgroup->harga) ?></td>
                                                                 <td>
                                                                     <input type="hidden" name="noreg" id="noreg<?php echo $tgroup->kdtarif ?>" value="<?php echo $noreg ?>">
-                                                                    <button class="btn btn-info btn-xs" id="btn_simpan<?php echo $tgroup->kdtarif ?>">add</button>
+                                                                    <button class="btn btn-info btn-xs" id="btn_simpan<?php echo $tgroup->kdtarif ?>"><i class="fal fa-plus"></i></button>
                                                                 </td>
                                                             </tr>
                                                         <?php } ?>
@@ -178,7 +234,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <table class="table table-bordered table-hover table-striped w-100" id="tarif">
+                                                <table class="display table table-bordered table-hover table-striped w-100">
                                                     <thead>
                                                         <tr>
                                                             <th>Paket Tarif</th>
@@ -194,8 +250,8 @@
                                                                 <!-- <td><?php echo $tpaket->nmtarif ?></td> -->
                                                                 <td><?php echo number_format($tpaket->harga) ?></td>
                                                                 <td>
-                                                                    <input type="text" name="noreg" id="noreg<?php echo $tpaket->kdtarifpaket ?>" value="<?php echo $noreg ?>">
-                                                                    <button class="btn btn-info btn-xs" id="btn_simpanpaket<?php echo $tpaket->kdtarifpaket ?>">add</button>
+                                                                    <input type="hidden" name="noreg" id="noreg<?php echo $tpaket->kdtarifpaket ?>" value="<?php echo $noreg ?>">
+                                                                    <button class="btn btn-info btn-xs" id="btn_simpanpaket<?php echo $tpaket->kdtarifpaket ?>"><i class="fal fa-plus"></i></button>
                                                                 </td>
                                                             </tr>
                                                         <?php } ?>
@@ -209,10 +265,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="js_change_pill_justified-3" role="tabpanel">
-                                <button type="button" class="btn btn-sm btn-primary waves-effect waves-themed" data-toggle="modal" data-target=".modal-obat">Obat</button>
-
+                                <!-- modal Obat -->
                                 <div class="modal fade modal-obat" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-right">
                                         <div class="modal-content">
@@ -223,22 +276,31 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <table class="table table-bordered table-hover table-striped w-100" id="obat">
+                                                <table class="display table table-bordered table-hover table-striped w-100">
                                                     <thead>
                                                         <tr>
                                                             <th>Nama Obat</th>
                                                             <th>Harga</th>
+                                                            <th>Stok</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php foreach ($listobat as $obat) { ?>
+                                                        <?php foreach ($listobat as $obat) {
+                                                            if ($obat->stok == 0) {
+                                                                $hidden = ' disabled';
+                                                            } else {
+                                                                $hidden = '';
+                                                            }
+                                                            ?>
                                                             <tr>
                                                                 <td><b style="text-transform: uppercase;"><?php echo $obat->obat ?></b></td>
                                                                 <td>Rp. <?php echo number_format($obat->hargaobat) ?></td>
+                                                                <td><?php echo number_format($obat->stok) ?></td>
                                                                 <td>
                                                                     <input type="hidden" name="noreg" id="noreg<?php echo $obat->kdobat ?>" value="<?php echo $noreg ?>">
-                                                                    <button class="btn btn-primary btn-sm btn-icon waves-effect waves-themed" id="btn_simpanpaket<?php echo $obat->kdobat ?>"><i class="fal fa-plus"></i></button>
+                                                                    <input type="hidden" name="user" id="user<?php echo $obat->kdobat ?>" value="<?php echo $this->session->userdata('id_users'); ?>">
+                                                                    <button class="btn btn-primary btn-sm btn-icon waves-effect waves-themed" <?php echo $hidden ?> id="btn_simpanobat<?php echo $obat->kdobat ?>"><i class="fal fa-plus"></i></button>
                                                                 </td>
                                                             </tr>
                                                         <?php } ?>
@@ -307,13 +369,7 @@
         });
     });
     $(document).ready(function() {
-        $('table.display').DataTable({
-            "paging": false,
-            "columnDefs": [{
-                "targets": [0, 1, 2, 3, 4],
-                "orderable": false
-            }]
-        });
+        $('table.display').DataTable();
     });
 </script>
 <script type="text/javascript">
@@ -324,7 +380,7 @@
         function tampil_data_barang() {
             $.ajax({
                 type: 'GET',
-                url: '<?php echo base_url() ?>index.php/t_daftar/data_barang',
+                url: '<?php echo base_url() ?>index.php/t_daftar/data_barang/<?php echo $noreg ?>',
                 async: true,
                 dataType: 'json',
                 success: function(data) {
@@ -336,10 +392,11 @@
                             '<td>' + data[i].nmtarif + '</td>' +
                             '<td align="right">' + parseInt(data[i].harga).toLocaleString() + '</td>' +
                             '<td align="center">' + data[i].qty + '</td>' +
+                            '<td align="center"></td>' +
                             '<td align="right">' + parseInt(data[i].harga * data[i].qty).toLocaleString() + '</td>' +
                             '<td style="text-align:center;">' +
                             //'<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="' + data[i].kdtarif + '">Edit</a>' + ' ' +
-                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].nobill + '">Hapus</a>' +
+                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].nobill + '"><i class="fal fa-trash"></i></a>' +
                             '</td>' +
                             '</tr>';
                     }
@@ -347,27 +404,6 @@
                 }
             });
         }
-        //GET UPDATE
-        $('#show_data').on('click', '.item_edit', function() {
-            var id = $(this).attr('data');
-            $.ajax({
-                type: "GET",
-                url: "<?php echo base_url('index.php/barang/get_barang') ?>",
-                dataType: "JSON",
-                data: {
-                    id: id
-                },
-                success: function(data) {
-                    $.each(data, function(barang_kode, barang_nama, barang_harga) {
-                        $('#ModalaEdit').modal('show');
-                        $('[name="kobar_edit"]').val(data.barang_kode);
-                        $('[name="nabar_edit"]').val(data.barang_nama);
-                        $('[name="harga_edit"]').val(data.barang_harga);
-                    });
-                }
-            });
-            return false;
-        });
         //GET HAPUS
         $('#show_data').on('click', '.item_hapus', function() {
             var id = $(this).attr('data');
@@ -400,9 +436,6 @@
                         qty: qty
                     },
                     success: function(data) {
-                        $('[name="kobar"]').val("");
-                        $('[name="nabar"]').val("");
-                        $('[name="harga"]').val("");
                         $('#ModalaAdd').modal('hide');
                         tampil_data_barang();
                     }
@@ -410,30 +443,6 @@
                 return false;
             });
         <?php } ?>
-        //Update Barang
-        $('#btn_update').on('click', function() {
-            var kobar = $('#kode_barang2').val();
-            var nabar = $('#nama_barang2').val();
-            var harga = $('#harga2').val();
-            $.ajax({
-                type: "POST",
-                url: "<?php echo base_url('index.php/barang/update_barang') ?>",
-                dataType: "JSON",
-                data: {
-                    kobar: kobar,
-                    nabar: nabar,
-                    harga: harga
-                },
-                success: function(data) {
-                    $('[name="kobar_edit"]').val("");
-                    $('[name="nabar_edit"]').val("");
-                    $('[name="harga_edit"]').val("");
-                    $('#ModalaEdit').modal('hide');
-                    tampil_data_barang();
-                }
-            });
-            return false;
-        });
 
         //Hapus Barang
         $('#btn_hapus').on('click', function() {
@@ -461,7 +470,7 @@
         function tampil_paket_tarif() {
             $.ajax({
                 type: 'GET',
-                url: '<?php echo base_url() ?>index.php/t_daftar/paket_billing',
+                url: '<?php echo base_url() ?>index.php/t_daftar/paket_billing/<?php echo $noreg ?>',
                 async: true,
                 dataType: 'json',
                 success: function(data) {
@@ -472,10 +481,10 @@
                             '<td>' + data[i].nmpaket + '</td>' +
                             '<td align="right">' + parseInt(data[i].harga).toLocaleString() + '</td>' +
                             '<td align="center">' + data[i].qty + '</td>' +
-                            '<td align="center">' + parseInt(data[i].potongan * data[i].qty).toLocaleString() + '</td>' +
+                            '<td align="right">' + parseInt(data[i].potongan * data[i].qty).toLocaleString() + '</td>' +
                             '<td align="right">' + parseInt((data[i].harga * data[i].qty) - data[i].potongan * data[i].qty).toLocaleString() + '</td>' +
                             '<td style="text-align:center;">' +
-                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].nobill + '">Hapus</a>' +
+                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus_paket" data="' + data[i].nobill + '"><i class="fal fa-trash"></i></a>' +
                             '</td>' +
                             '</tr>';
                     }
@@ -505,9 +514,6 @@
                         qty: qty
                     },
                     success: function(data) {
-                        $('[name="kobar"]').val("");
-                        $('[name="nabar"]').val("");
-                        $('[name="harga"]').val("");
                         $('#ModalaAdd').modal('hide');
                         tampil_paket_tarif();
                     }
@@ -515,6 +521,108 @@
                 return false;
             });
         <?php } ?>
+        //GET HAPUS
+        $('#show_paket').on('click', '.item_hapus_paket', function() {
+            var id = $(this).attr('data');
+            $('#ModalHapusPaket').modal('show');
+            $('[name="nobillpaket"]').val(id);
+        });
 
+        //Hapus Barang
+        $('#btn_hapus_paket').on('click', function() {
+            var nobill = $('#textnobillpaket').val();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('index.php/t_daftar/hapus_barang') ?>",
+                dataType: "JSON",
+                data: {
+                    nobill: nobill
+                },
+                success: function(data) {
+                    $('#ModalHapusPaket').modal('hide');
+                    tampil_paket_tarif();
+                }
+            });
+            return false;
+        });
+        /////////////////////////////////////////////////////////
+        //tampil Obat
+        tampil_obat(); //pemanggilan fungsi tampil barang.
+        $('table.display').dataTable();
+        //fungsi tampil barang
+        function tampil_obat() {
+            $.ajax({
+                type: 'GET',
+                url: '<?php echo base_url() ?>index.php/t_daftar/obat_billing/<?php echo $noreg ?>',
+                async: true,
+                dataType: 'json',
+                success: function(data) {
+                    var html = '';
+                    var i;
+                    for (i = 0; i < data.length; i++) {
+                        html += '<tr>' +
+                            '<td>' + data[i].nmobat + '</td>' +
+                            '<td align="right">' + parseInt(data[i].hargaobat).toLocaleString() + '</td>' +
+                            '<td align="center">' + data[i].qty + '</td>' +
+                            '<td align="right"></td>' +
+                            '<td align="right">' + parseInt(data[i].hargaobat * data[i].qty).toLocaleString() + '</td>' +
+                            '<td style="text-align:center;">' +
+                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus_obat" data="' + data[i].nobill + '"><i class="fal fa-trash"></i></a>' +
+                            '</td>' +
+                            '</tr>';
+                    }
+                    $('#show_obat').html(html);
+                }
+            });
+        }
+
+        //add paket tarif
+        <?php foreach ($listobat as $obat) { ?>
+            $('#btn_simpanobat<?php echo $obat->kdobat ?>').on('click', function() {
+                var noreg = $('#noreg<?php echo $obat->kdobat ?>').val();
+                var user = $('#user<?php echo $obat->kdobat ?>').val();
+                var kdobat = '<?php echo $obat->kdobat ?>';
+                var qty = '1';
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url('index.php/t_daftar/simpan_obat') ?>",
+                    dataType: "JSON",
+                    data: {
+                        noreg: noreg,
+                        user: user,
+                        kdobat: kdobat,
+                        qty: qty
+                    },
+                    success: function(data) {
+                        tampil_obat();
+                    }
+                });
+                return false;
+            });
+        <?php } ?>
+        //GET HAPUS
+        $('#show_obat').on('click', '.item_hapus_obat', function() {
+            var id = $(this).attr('data');
+            $('#ModalHapusObat').modal('show');
+            $('[name="nobillobat"]').val(id);
+        });
+
+        //Hapus Barang
+        $('#btn_hapus_obat').on('click', function() {
+            var nobill = $('#textnobillobat').val();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('index.php/t_daftar/hapus_obat') ?>",
+                dataType: "JSON",
+                data: {
+                    nobill: nobill
+                },
+                success: function(data) {
+                    $('#ModalHapusObat').modal('hide');
+                    tampil_obat();
+                }
+            });
+            return false;
+        });
     });
 </script>

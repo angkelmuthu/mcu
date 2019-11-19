@@ -19,7 +19,7 @@
                                 <tr>
                                     <th width="30px">No</th>
                                     <th>Nmtarif</th>
-                                    <th>Kdtarifgroup</th>
+                                    <th>Poli</th>
                                     <th>Harga</th>
                                     <th>Tglinput</th>
                                     <th>Id Users</th>
@@ -78,7 +78,7 @@
                 }, {
                     "data": "nmtarif"
                 }, {
-                    "data": "tarifgroup"
+                    "data": "poli"
                 }, {
                     "data": "harga"
                 }, {
