@@ -30,16 +30,7 @@
                                 LEFT JOIN m_tarif d ON a.kdtarif=d.kdtarif
                                 LEFT JOIN t_daftar e ON a.noreg=e.noreg
                                 LEFT JOIN m_pasien f ON e.nomr=f.nomr
-                                WHERE a.paket='N' AND d.kdpoli=5
-                                GROUP BY a.noreg
-                                UNION ALL
-                                SELECT a.noreg,f.nama,f.tgllhr,f.alamat FROM t_billrajal a
-                                INNER JOIN m_tarifpaket b ON a.kdpaket=b.kdtarifpaket
-                                LEFT JOIN m_tarifpaketdetail c ON b.kdtarifpaket=c.kdtarifpaket
-                                LEFT JOIN m_tarif d ON c.kdtarif=d.kdtarif
-                                LEFT JOIN t_daftar e ON a.noreg=e.noreg
-                                LEFT JOIN m_pasien f ON e.nomr=f.nomr
-                                WHERE a.paket='Y' AND d.kdpoli=5
+                                WHERE d.kdpoli=5
                                 GROUP BY a.noreg";
                                 $data = $this->db->query($sql_lab)->result();
                                 foreach ($data as $lab) { ?>

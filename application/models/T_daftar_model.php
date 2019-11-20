@@ -76,27 +76,63 @@ class T_daftar_model extends CI_Model
     }
     function paket_bill_list($noreg)
     {
-        $hasil = $this->db->query("SELECT a.nobill,b.nmpaket,a.qty,b.potongan,(SELECT SUM(harga) FROM m_tarifpaketdetail x1
-        LEFT JOIN m_tarifpaket x2 ON x1.kdtarifpaket=x2.kdtarifpaket
-        LEFT JOIN m_tarif x3 ON x1.kdtarif=x3.kdtarif
-        WHERE x2.kdtarifpaket=b.kdtarifpaket) AS harga
-        FROM t_billrajal a LEFT JOIN m_tarifpaket b on a.kdpaket=b.kdtarifpaket where a.noreg='$noreg' and a.paket='Y'");
+        $hasil = $this->db->query("SELECT * FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
+        LEFT JOIN m_tarifpaket c ON c.kdtarifpaket=a.kdpaket WHERE a.paket='Y' and a.noreg='$noreg'");
         return $hasil->result();
     }
 
     function simpan_barang($noreg, $paket, $kdpaket, $kdtarif, $qty)
     {
-        $hasil = $this->db->query("INSERT INTO t_billrajal (noreg,paket,kdpaket,kdtarif,qty)VALUES('$noreg','$paket','$kdpaket','$kdtarif','$qty')");
-        return $hasil;
+        if ($paket == 'Y') {
+            $qry = "SELECT '" . $noreg . "' AS noreg,'Y' AS paket,kdtarifpaket as kdpaket,kdtarif,'" . $qty . "' AS qty, '0' AS status FROM m_tarifpaketdetail
+            WHERE kdtarifpaket='" . $kdpaket . "'";
+            //$qry = "SELECT kdtarifpaket as kdpaket,kdtarif FROM m_tarifpaketdetail WHERE kdtarifpaket=" . $kdpaket;
+            $query = $this->db->query($qry);
+            $hasil = array();
+            foreach ($query->result() as $dat) {
+                $hasil[] = array(
+                    'noreg'   => $dat->noreg,
+                    'paket'   => $dat->paket,
+                    'kdpaket'   => $dat->kdpaket,
+                    'kdtarif'   => $dat->kdtarif,
+                    'qty'   => $dat->qty,
+                    'status'   => $dat->status
+                );
+            }
+            $this->db->insert_batch('t_billrajal', $hasil);
+            return $hasil;
+        } else {
+            $hasil = $this->db->query("INSERT INTO t_billrajal (noreg,paket,kdpaket,kdtarif,qty)VALUES('$noreg','$paket','$kdpaket','$kdtarif','$qty')");
+            return $hasil;
+        }
     }
     function update_barang($noreg, $paket, $kdpaket, $kdtarif, $qty)
     {
         if ($paket == 'Y') {
-            $hasil = $this->db->query("update t_billrajal set qty='$qty' where noreg='$noreg' and kdpaket='$kdpaket'");
+            //$hasil = $this->db->query("update t_billrajal set qty='$qty' where noreg='$noreg' and kdpaket='$kdpaket'");
+            $qry = "SELECT '" . $noreg . "' AS noreg,'Y' AS paket,kdtarifpaket as kdpaket,kdtarif,'" . $qty . "' AS qty, '0' AS status FROM m_tarifpaketdetail
+            WHERE kdtarifpaket='" . $kdpaket . "'";
+            $query = $this->db->query($qry);
+            $hasil = array();
+            foreach ($query->result() as $dat) {
+                $hasil[] = array(
+                    'noreg'   => $dat->noreg,
+                    'paket'   => $dat->paket,
+                    'kdpaket'   => $dat->kdpaket,
+                    'kdtarif'   => $dat->kdtarif,
+                    'qty'   => $dat->qty,
+                    'status'   => $dat->status
+                );
+            }
+            $this->db->where('kdpaket', $kdpaket);
+            $this->db->where('paket', 'Y');
+            $this->db->where('noreg', $noreg);
+            $this->db->update_batch('t_billrajal', $hasil, 'kdtarif');
+            return $hasil;
         } else {
-            $hasil = $this->db->query("update t_billrajal set qty='$qty' where noreg='$noreg' and kdtarif='$kdtarif'");
+            $hasil = $this->db->query("update t_billrajal set qty='$qty' where noreg='$noreg' and paket='N' and kdtarif='$kdtarif'");
+            return $hasil;
         }
-        return $hasil;
     }
     function hapus_barang($nobill)
     {

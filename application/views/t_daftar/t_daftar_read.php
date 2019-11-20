@@ -86,22 +86,34 @@
                                     <table class="table" id="">
                                         <thead>
                                             <tr>
-                                                <th class="border-top-0 table-scale-border-bottom fw-700">Nama Paket</th>
-                                                <th class="text-right border-top-0 table-scale-border-bottom fw-700">Harga</th>
-                                                <th class="text-center border-top-0 table-scale-border-bottom fw-700">Qty</th>
-                                                <th class="text-center border-top-0 table-scale-border-bottom fw-700">Potongan</th>
-                                                <th class="text-right border-top-0 table-scale-border-bottom fw-700">Total</th>
-                                                <th class="text-right border-top-0 table-scale-border-bottom fw-700"></th>
+                                                <th class="border-top-0 table-scale-border-bottom">Nama Paket</th>
+                                                <th class="text-right border-top-0 table-scale-border-bottom">Harga</th>
+                                                <th class="text-center border-top-0 table-scale-border-bottom">Qty</th>
+                                                <th class="text-right border-top-0 table-scale-border-bottom">Total</th>
+                                                <th class="text-right border-top-0 table-scale-border-bottom"></th>
                                             </tr>
                                         </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="5"><b>TINDAKAN</b></td>
+                                            </tr>
+                                        </tbody>
                                         <tbody id="show_data">
 
                                         </tbody>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="5"><b>TINDAKAN PAKET</b></td>
+                                            </tr>
+                                        </tbody>
                                         <tbody id="show_paket">
-
+                                        </tbody>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="5"><b>RESEP</b></td>
+                                            </tr>
                                         </tbody>
                                         <tbody id="show_obat">
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -388,14 +400,11 @@
                     var i;
                     for (i = 0; i < data.length; i++) {
                         html += '<tr>' +
-                            //'<td>' + data[i].tarifgroup + '</td>' +
                             '<td>' + data[i].nmtarif + '</td>' +
                             '<td align="right">' + parseInt(data[i].harga).toLocaleString() + '</td>' +
                             '<td align="center">' + data[i].qty + '</td>' +
-                            '<td align="center"></td>' +
                             '<td align="right">' + parseInt(data[i].harga * data[i].qty).toLocaleString() + '</td>' +
                             '<td style="text-align:center;">' +
-                            //'<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="' + data[i].kdtarif + '">Edit</a>' + ' ' +
                             '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].nobill + '"><i class="fal fa-trash"></i></a>' +
                             '</td>' +
                             '</tr>';
@@ -478,11 +487,10 @@
                     var i;
                     for (i = 0; i < data.length; i++) {
                         html += '<tr>' +
-                            '<td>' + data[i].nmpaket + '</td>' +
+                            '<td>' + data[i].nmtarif + ' ( ' + data[i].nmpaket + ' )</td>' +
                             '<td align="right">' + parseInt(data[i].harga).toLocaleString() + '</td>' +
                             '<td align="center">' + data[i].qty + '</td>' +
-                            '<td align="right">' + parseInt(data[i].potongan * data[i].qty).toLocaleString() + '</td>' +
-                            '<td align="right">' + parseInt((data[i].harga * data[i].qty) - data[i].potongan * data[i].qty).toLocaleString() + '</td>' +
+                            '<td align="right">' + parseInt(data[i].harga * data[i].qty).toLocaleString() + '</td>' +
                             '<td style="text-align:center;">' +
                             '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus_paket" data="' + data[i].nobill + '"><i class="fal fa-trash"></i></a>' +
                             '</td>' +
@@ -564,7 +572,6 @@
                             '<td>' + data[i].nmobat + '</td>' +
                             '<td align="right">' + parseInt(data[i].hargaobat).toLocaleString() + '</td>' +
                             '<td align="center">' + data[i].qty + '</td>' +
-                            '<td align="right"></td>' +
                             '<td align="right">' + parseInt(data[i].hargaobat * data[i].qty).toLocaleString() + '</td>' +
                             '<td style="text-align:center;">' +
                             '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus_obat" data="' + data[i].nobill + '"><i class="fal fa-trash"></i></a>' +

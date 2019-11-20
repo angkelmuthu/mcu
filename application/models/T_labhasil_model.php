@@ -27,30 +27,24 @@ class T_labhasil_model extends CI_Model
                 " . anchor(site_url('t_labhasil/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), '');
         return $this->datatables->generate();
     }
-    function get_pasien_lab()
-    {
-        $hasil = $this->db->query("SELECT a.noreg,f.nama,f.tgllhr,f.alamat FROM t_billrajal a
-        LEFT JOIN m_tarif d ON a.kdtarif=d.kdtarif
-        LEFT JOIN t_daftar e ON a.noreg=e.noreg
-        LEFT JOIN m_pasien f ON e.nomr=f.nomr
-        WHERE a.paket='N' AND d.kdpoli=5
-        GROUP BY a.noreg
-        UNION ALL
-        SELECT a.noreg,f.nama,f.tgllhr,f.alamat FROM t_billrajal a
-        INNER JOIN m_tarifpaket b ON a.kdpaket=b.kdtarifpaket
-        LEFT JOIN m_tarifpaketdetail c ON b.kdtarifpaket=c.kdtarifpaket
-        LEFT JOIN m_tarif d ON c.kdtarif=d.kdtarif
-        LEFT JOIN t_daftar e ON a.noreg=e.noreg
-        LEFT JOIN m_pasien f ON e.nomr=f.nomr
-        WHERE a.paket='Y' AND d.kdpoli=5
-        GROUP BY a.noreg");
-        return $hasil->result();
-    }
     // get all
     function get_all()
     {
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
+    }
+
+    function get_tindakan_lab($noreg)
+    {
+        $qry = "SELECT d.*,e.full_name FROM t_billrajal a
+        LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
+        LEFT JOIN m_labgroup c ON b.kdtarif=c.kdtarif
+        LEFT JOIN m_lab d ON c.kdlab=d.kdlab
+        LEFT JOIN tbl_user e ON e.id_users=d.id_users
+        WHERE b.kdpoli='5' and a.noreg='$noreg'";
+        $hasil = $this->db->query($qry);
+        return $hasil->result();
+        //return $this->db->get()->row();
     }
 
     // get data by id

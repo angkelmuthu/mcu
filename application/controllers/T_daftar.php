@@ -81,9 +81,9 @@ class T_daftar extends CI_Controller
         $qty = $this->input->post('qty');
         // cek bill //
         if ($paket == 'N') {
-            $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and kdtarif='$kdtarif'");
+            $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and paket='N' and kdtarif='$kdtarif'");
         } else {
-            $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and kdpaket='$kdpaket'");
+            $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and paket='Y' and kdpaket='$kdpaket'");
         }
         $rows = $cek->num_rows();
         $dt = $cek->row_array();

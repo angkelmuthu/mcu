@@ -25,12 +25,6 @@ class T_labhasil extends CI_Controller
         echo $this->T_labhasil_model->json();
     }
 
-    function pasien_lab()
-    {
-        $data = $this->T_labhasil_model->get_pasien_lab();
-        echo json_encode($data);
-    }
-
     public function read($noreg)
     {
         $row = $this->T_labhasil_model->get_by_id($noreg);
@@ -42,6 +36,7 @@ class T_labhasil extends CI_Controller
                 'alamat' => $row->alamat,
                 'tglinput' => $row->tglinput,
                 'id_users' => $row->id_users,
+                'list_lab' => $this->T_labhasil_model->get_tindakan_lab($noreg),
             );
             $this->template->load('template', 't_labhasil/t_labhasil_read', $data);
         } else {
