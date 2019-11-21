@@ -21,6 +21,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo base_url() ?>assets/smartadmin/img/favicon/favicon-32x32.png">
     <link rel="mask-icon" href="<?php echo base_url() ?>assets/smartadmin/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/css/datagrid/datatables/datatables.bundle.css">
+    <link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/css/formplugins/select2/select2.bundle.css">
     <!--<link rel="stylesheet" media="screen, print" href="css/your_styles.css">-->
 </head>
 

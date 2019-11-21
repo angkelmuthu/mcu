@@ -171,6 +171,7 @@ class T_daftar extends CI_Controller
             'kdrujuk' => set_value('kdrujuk'),
             'tglreg' => set_value('tglreg'),
             'id_users' => set_value('id_users'),
+            'jadwaldok' => $this->T_daftar_model->get_dokter(),
         );
         $this->template->load('template', 't_daftar/t_daftar_form', $data);
     }

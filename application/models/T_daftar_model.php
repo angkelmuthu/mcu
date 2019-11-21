@@ -52,6 +52,14 @@ class T_daftar_model extends CI_Model
         $this->db->join('m_poli b', 'a.kdpoli = b.kdpoli');
         return $this->db->get()->result();
     }
+    function get_dokter()
+    {
+        $qry = "SELECT a.kdjadwal,a.kddokter,b.dokter,a.jam_mulai,a.jam_akhir,a.kdpoli FROM m_dokterjadwal a
+        LEFT JOIN m_dokter b ON a.kddokter=b.kddokter
+        WHERE a.hari=date_format(now(),'%w')";
+        $query = $this->db->query($qry);
+        return $query->result();
+    }
     /////tarif paket
     function get_tarifpaket()
     {

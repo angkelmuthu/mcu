@@ -19,11 +19,37 @@ CREATE TABLE IF NOT EXISTS `m_dokter` (
   `dokter` varchar(100) NOT NULL,
   `aktif` enum('Y','N') NOT NULL,
   PRIMARY KEY (`kddokter`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.m_dokter: ~0 rows (approximately)
+-- Dumping data for table mcu.m_dokter: ~3 rows (approximately)
 /*!40000 ALTER TABLE `m_dokter` DISABLE KEYS */;
+INSERT INTO `m_dokter` (`kddokter`, `NIP`, `dokter`, `aktif`) VALUES
+	(1, 112233, 'Dr. Imelda Wijaya, SpKJ', 'Y'),
+	(2, 112244, 'Dr. Laela Dian Kurniasih, SpKJ', 'Y'),
+	(3, 112255, 'Dr. Kinan, SpKJ', 'Y');
 /*!40000 ALTER TABLE `m_dokter` ENABLE KEYS */;
+
+-- Dumping structure for table mcu.m_dokterjadwal
+DROP TABLE IF EXISTS `m_dokterjadwal`;
+CREATE TABLE IF NOT EXISTS `m_dokterjadwal` (
+  `kdjadwal` int(11) NOT NULL AUTO_INCREMENT,
+  `kddokter` int(11) NOT NULL,
+  `kdpoli` int(11) NOT NULL,
+  `hari` int(11) NOT NULL,
+  `jam_mulai` time NOT NULL,
+  `jam_akhir` time NOT NULL,
+  `tglinput` datetime NOT NULL,
+  `id_users` int(11) NOT NULL,
+  PRIMARY KEY (`kdjadwal`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table mcu.m_dokterjadwal: ~0 rows (approximately)
+/*!40000 ALTER TABLE `m_dokterjadwal` DISABLE KEYS */;
+INSERT INTO `m_dokterjadwal` (`kdjadwal`, `kddokter`, `kdpoli`, `hari`, `jam_mulai`, `jam_akhir`, `tglinput`, `id_users`) VALUES
+	(1, 3, 3, 5, '08:00:00', '12:00:00', '2019-11-21 16:15:43', 1),
+	(2, 2, 1, 5, '09:00:00', '11:30:00', '2019-11-21 16:45:36', 1),
+	(3, 2, 3, 5, '00:00:00', '24:00:00', '2019-11-21 16:46:05', 1);
+/*!40000 ALTER TABLE `m_dokterjadwal` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_kawin
 DROP TABLE IF EXISTS `m_kawin`;
@@ -231,8 +257,6 @@ CREATE TABLE IF NOT EXISTS `m_pasien` (
 -- Dumping data for table mcu.m_pasien: ~4 rows (approximately)
 /*!40000 ALTER TABLE `m_pasien` DISABLE KEYS */;
 INSERT INTO `m_pasien` (`nomr`, `nik`, `nama`, `tgllhr`, `alamat`, `kodepos`, `kdklmn`, `kdkawin`, `hp`, `foto`, `tglinput`, `id_users`) VALUES
-	('000001', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1),
-	('000002', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1),
 	('000003', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1),
 	('000004', 1431431, 'doddy ahmad', '2019-11-02', 'mampang prapatan', 12710, 1, 1, '08158300000', '', '2019-11-19', 1);
 /*!40000 ALTER TABLE `m_pasien` ENABLE KEYS */;
@@ -363,9 +387,9 @@ CREATE TABLE IF NOT EXISTS `tbl_hak_akses` (
   `id_user_level` int(11) NOT NULL,
   `id_menu` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_hak_akses: ~37 rows (approximately)
+-- Dumping data for table mcu.tbl_hak_akses: ~39 rows (approximately)
 /*!40000 ALTER TABLE `tbl_hak_akses` DISABLE KEYS */;
 INSERT INTO `tbl_hak_akses` (`id`, `id_user_level`, `id_menu`) VALUES
 	(15, 1, 1),
@@ -404,7 +428,9 @@ INSERT INTO `tbl_hak_akses` (`id`, `id_user_level`, `id_menu`) VALUES
 	(57, 1, 36),
 	(58, 1, 37),
 	(59, 1, 38),
-	(60, 1, 39);
+	(60, 1, 39),
+	(61, 1, 40),
+	(62, 1, 41);
 /*!40000 ALTER TABLE `tbl_hak_akses` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_kodepos
@@ -420,7 +446,7 @@ CREATE TABLE IF NOT EXISTS `tbl_kodepos` (
   KEY `ixkodepos` (`kodepos`)
 ) ENGINE=InnoDB AUTO_INCREMENT=28457 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_kodepos: ~29,123 rows (approximately)
+-- Dumping data for table mcu.tbl_kodepos: ~28.962 rows (approximately)
 /*!40000 ALTER TABLE `tbl_kodepos` DISABLE KEYS */;
 INSERT INTO `tbl_kodepos` (`id`, `kelurahan`, `kecamatan`, `kabupaten`, `provinsi`, `kodepos`) VALUES
 	(1, 'GAMBIR', 'GAMBIR', 'JAKARTA PUSAT', 'DKI JAKARTA', '10110'),
@@ -28893,9 +28919,9 @@ CREATE TABLE IF NOT EXISTS `tbl_menu` (
   `is_main_menu` int(11) NOT NULL,
   `is_aktif` enum('y','n') NOT NULL COMMENT 'y=yes,n=no',
   PRIMARY KEY (`id_menu`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_menu: ~28 rows (approximately)
+-- Dumping data for table mcu.tbl_menu: ~30 rows (approximately)
 /*!40000 ALTER TABLE `tbl_menu` DISABLE KEYS */;
 INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_aktif`) VALUES
 	(1, 'KELOLA MENU', 'kelolamenu', 'fal fa-server', 15, 'y'),
@@ -28917,15 +28943,17 @@ INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_a
 	(28, 'Komponen Lab', 'm_lab', 'fal fa-align-justify', 29, 'y'),
 	(29, 'Master Lab', '#', 'fal fa-align-justify', 0, 'y'),
 	(30, 'Group Lab', 'm_labgroup', 'fal fa-align-justify', 29, 'y'),
-	(31, 'Master Obat', '#', 'fa fa-circle-o', 0, 'y'),
-	(32, 'Jenis Obat', 'M_obatjenis', 'fa fa-circle-o', 31, 'y'),
-	(33, 'Rute Pemberian', 'M_obatcara', 'fa fa-circle-o', 31, 'y'),
-	(34, 'Satuan Obat', 'M_obatsatuan', 'fa fa-circle-o', 31, 'y'),
-	(35, 'Rute Pemakaian', 'm_obatpakai', 'fa fa-circle-o', 31, 'y'),
-	(36, 'Data Obat', 'M_obat', 'fa fa-circle-o', 31, 'y'),
-	(37, 'Stok Obat', 'M_obatstok', 'fa fa-circle-o', 31, 'y'),
-	(38, 'Pasien Lab', 'T_labhasil', 'fa fa-circle-o', 0, 'y'),
-	(39, 'Pasien Radiologi', 'T_radhasil', 'fa fa-circle-o', 0, 'y');
+	(31, 'Master Obat', '#', 'fal fa-align-justify', 0, 'y'),
+	(32, 'Jenis Obat', 'M_obatjenis', 'fal fa-align-justify', 31, 'y'),
+	(33, 'Rute Pemberian', 'M_obatcara', 'fal fa-align-justify', 31, 'y'),
+	(34, 'Satuan Obat', 'M_obatsatuan', 'fal fa-align-justify', 31, 'y'),
+	(35, 'Rute Pemakaian', 'm_obatpakai', 'fal fa-align-justify', 31, 'y'),
+	(36, 'Data Obat', 'M_obat', 'fal fa-align-justify', 31, 'y'),
+	(37, 'Stok Obat', 'M_obatstok', 'fal fa-align-justify', 31, 'y'),
+	(38, 'Pasien Lab', 'T_labhasil', 'fal fa-align-justify', 0, 'y'),
+	(39, 'Pasien Radiologi', 'T_radhasil', 'fal fa-align-justify', 0, 'y'),
+	(40, 'Dokter', 'M_dokter', 'fal fa-align-justify', 0, 'y'),
+	(41, 'Jadwal Dokter', 'M_dokterjadwal', 'fal fa-align-justify', 0, 'y');
 /*!40000 ALTER TABLE `tbl_menu` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_setting
@@ -29015,7 +29043,7 @@ CREATE TABLE IF NOT EXISTS `t_billobat` (
   PRIMARY KEY (`nobill`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.t_billobat: ~1 rows (approximately)
+-- Dumping data for table mcu.t_billobat: ~0 rows (approximately)
 /*!40000 ALTER TABLE `t_billobat` DISABLE KEYS */;
 INSERT INTO `t_billobat` (`nobill`, `noreg`, `kdobat`, `qty`, `status`, `tglinput`, `id_users`) VALUES
 	(6, 191000003, 2, 6, 'BL', '2019-11-19 05:35:58', 1);
@@ -29067,7 +29095,7 @@ CREATE TABLE IF NOT EXISTS `t_daftar` (
   PRIMARY KEY (`idreg`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.t_daftar: ~1 rows (approximately)
+-- Dumping data for table mcu.t_daftar: ~2 rows (approximately)
 /*!40000 ALTER TABLE `t_daftar` DISABLE KEYS */;
 INSERT INTO `t_daftar` (`idreg`, `noreg`, `nomr`, `baru`, `kddokter`, `kdpoli`, `kdbayar`, `rujukan`, `kdrujuk`, `tglreg`, `id_users`) VALUES
 	(3, 191000003, '000003', 'Y', 1, 1, 1, 'Y', 0, '2019-10-25 12:41:25', 1),
