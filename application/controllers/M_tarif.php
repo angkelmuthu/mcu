@@ -10,16 +10,17 @@ class M_tarif extends CI_Controller
         parent::__construct();
         is_login();
         $this->load->model('M_tarif_model');
-        $this->load->library('form_validation');        
-	$this->load->library('datatables');
+        $this->load->library('form_validation');
+        $this->load->library('datatables');
     }
 
     public function index()
     {
-        $this->template->load('template','m_tarif/m_tarif_list');
+        $this->template->load('template', 'm_tarif/m_tarif_list');
     }
 
-    public function json() {
+    public function json()
+    {
         header('Content-Type: application/json');
         echo $this->M_tarif_model->json();
     }
@@ -29,14 +30,14 @@ class M_tarif extends CI_Controller
         $row = $this->M_tarif_model->get_by_id($id);
         if ($row) {
             $data = array(
-		'kdtarif' => $row->kdtarif,
-		'nmtarif' => $row->nmtarif,
-		'kdtarifgroup' => $row->kdtarifgroup,
-		'harga' => $row->harga,
-		'tglinput' => $row->tglinput,
-		'id_users' => $row->id_users,
-	    );
-            $this->template->load('template','m_tarif/m_tarif_read', $data);
+                'kdtarif' => $row->kdtarif,
+                'nmtarif' => $row->nmtarif,
+                'kdpoli' => $row->kdpoli,
+                'harga' => $row->harga,
+                'tglinput' => $row->tglinput,
+                'id_users' => $row->id_users,
+            );
+            $this->template->load('template', 'm_tarif/m_tarif_read', $data);
         } else {
             $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -51,14 +52,14 @@ class M_tarif extends CI_Controller
         $data = array(
             'button' => 'Create',
             'action' => site_url('m_tarif/create_action'),
-	    'kdtarif' => set_value('kdtarif'),
-	    'nmtarif' => set_value('nmtarif'),
-	    'kdtarifgroup' => set_value('kdtarifgroup'),
-	    'harga' => set_value('harga'),
-	    'tglinput' => set_value('tglinput'),
-	    'id_users' => set_value('id_users'),
-	);
-        $this->template->load('template','m_tarif/m_tarif_form', $data);
+            'kdtarif' => set_value('kdtarif'),
+            'nmtarif' => set_value('nmtarif'),
+            'kdpoli' => set_value('kdpoli'),
+            'harga' => set_value('harga'),
+            'tglinput' => set_value('tglinput'),
+            'id_users' => set_value('id_users'),
+        );
+        $this->template->load('template', 'm_tarif/m_tarif_form', $data);
     }
 
     public function create_action()
@@ -69,12 +70,12 @@ class M_tarif extends CI_Controller
             $this->create();
         } else {
             $data = array(
-		'nmtarif' => $this->input->post('nmtarif',TRUE),
-		'kdtarifgroup' => $this->input->post('kdtarifgroup',TRUE),
-		'harga' => $this->input->post('harga',TRUE),
-		'tglinput' => $this->input->post('tglinput',TRUE),
-		'id_users' => $this->input->post('id_users',TRUE),
-	    );
+                'nmtarif' => $this->input->post('nmtarif', TRUE),
+                'kdpoli' => $this->input->post('kdpoli', TRUE),
+                'harga' => $this->input->post('harga', TRUE),
+                'tglinput' => $this->input->post('tglinput', TRUE),
+                'id_users' => $this->input->post('id_users', TRUE),
+            );
 
             $this->M_tarif_model->insert($data);
             $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
@@ -93,14 +94,14 @@ class M_tarif extends CI_Controller
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('m_tarif/update_action'),
-		'kdtarif' => set_value('kdtarif', $row->kdtarif),
-		'nmtarif' => set_value('nmtarif', $row->nmtarif),
-		'kdtarifgroup' => set_value('kdtarifgroup', $row->kdtarifgroup),
-		'harga' => set_value('harga', $row->harga),
-		'tglinput' => set_value('tglinput', $row->tglinput),
-		'id_users' => set_value('id_users', $row->id_users),
-	    );
-            $this->template->load('template','m_tarif/m_tarif_form', $data);
+                'kdtarif' => set_value('kdtarif', $row->kdtarif),
+                'nmtarif' => set_value('nmtarif', $row->nmtarif),
+                'kdpoli' => set_value('kdpoli', $row->kdpoli),
+                'harga' => set_value('harga', $row->harga),
+                'tglinput' => set_value('tglinput', $row->tglinput),
+                'id_users' => set_value('id_users', $row->id_users),
+            );
+            $this->template->load('template', 'm_tarif/m_tarif_form', $data);
         } else {
             $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -118,12 +119,12 @@ class M_tarif extends CI_Controller
             $this->update($this->input->post('kdtarif', TRUE));
         } else {
             $data = array(
-		'nmtarif' => $this->input->post('nmtarif',TRUE),
-		'kdtarifgroup' => $this->input->post('kdtarifgroup',TRUE),
-		'harga' => $this->input->post('harga',TRUE),
-		'tglinput' => $this->input->post('tglinput',TRUE),
-		'id_users' => $this->input->post('id_users',TRUE),
-	    );
+                'nmtarif' => $this->input->post('nmtarif', TRUE),
+                'kdpoli' => $this->input->post('kdpoli', TRUE),
+                'harga' => $this->input->post('harga', TRUE),
+                'tglinput' => $this->input->post('tglinput', TRUE),
+                'id_users' => $this->input->post('id_users', TRUE),
+            );
 
             $this->M_tarif_model->update($this->input->post('kdtarif', TRUE), $data);
             $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
@@ -156,16 +157,15 @@ class M_tarif extends CI_Controller
 
     public function _rules()
     {
-	$this->form_validation->set_rules('nmtarif', 'nmtarif', 'trim|required');
-	$this->form_validation->set_rules('kdtarifgroup', 'kdtarifgroup', 'trim|required');
-	$this->form_validation->set_rules('harga', 'harga', 'trim|required');
-	$this->form_validation->set_rules('tglinput', 'tglinput', 'trim|required');
-	$this->form_validation->set_rules('id_users', 'id users', 'trim|required');
+        $this->form_validation->set_rules('nmtarif', 'nmtarif', 'trim|required');
+        $this->form_validation->set_rules('kdpoli', 'kdpoli', 'trim|required');
+        $this->form_validation->set_rules('harga', 'harga', 'trim|required');
+        $this->form_validation->set_rules('tglinput', 'tglinput', 'trim|required');
+        $this->form_validation->set_rules('id_users', 'id users', 'trim|required');
 
-	$this->form_validation->set_rules('kdtarif', 'kdtarif', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+        $this->form_validation->set_rules('kdtarif', 'kdtarif', 'trim');
+        $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
-
 }
 
 /* End of file M_tarif.php */

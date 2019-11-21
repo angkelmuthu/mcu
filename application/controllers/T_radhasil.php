@@ -3,31 +3,31 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class T_labhasil extends CI_Controller
+class T_radhasil extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
         is_login();
-        $this->load->model('T_labhasil_model');
+        $this->load->model('T_radhasil_model');
         $this->load->library('form_validation');
         $this->load->library('datatables');
     }
 
     public function index()
     {
-        $this->template->load('template', 't_labhasil/t_labhasil_list');
+        $this->template->load('template', 't_radhasil/t_radhasil_list');
     }
 
     public function json()
     {
         header('Content-Type: application/json');
-        echo $this->T_labhasil_model->json();
+        echo $this->T_radhasil_model->json();
     }
 
     public function read($noreg)
     {
-        $row = $this->T_labhasil_model->get_by_id($noreg);
+        $row = $this->T_radhasil_model->get_by_id($noreg);
         if ($row) {
             $data = array(
                 'nama' => $row->nama,
@@ -36,144 +36,141 @@ class T_labhasil extends CI_Controller
                 'alamat' => $row->alamat,
                 'tglinput' => $row->tglinput,
                 'id_users' => $row->id_users,
-                'list_lab' => $this->T_labhasil_model->get_tindakan_lab($noreg),
+                'list_rad' => $this->T_radhasil_model->get_tindakan_rad($noreg),
             );
-            $this->template->load('template', 't_labhasil/t_labhasil_read', $data);
+            $this->template->load('template', 't_radhasil/t_radhasil_read', $data);
         } else {
             $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true"><i class="fal fa-times"></i></span>
             </button><strong> Record Not Found</strong></div>');
-            redirect(site_url('t_labhasil'));
+            redirect(site_url('t_radhasil'));
         }
     }
 
-    public function create($noreg)
+    public function create()
     {
         $data = array(
             'button' => 'Create',
-            'action' => site_url('t_labhasil/create_action'),
+            'action' => site_url('t_radhasil/create_action'),
             'nobill' => set_value('nobill'),
             'noreg' => set_value('noreg'),
-            'kdtarif' => set_value('kdlab'),
-            'nilai' => set_value('nilai'),
+            'kdtarif' => set_value('kdtarif'),
+            'hasil' => set_value('hasil'),
             'tglinput' => set_value('tglinput'),
             'id_users' => set_value('id_users'),
         );
-        $this->template->load('template', 't_labhasil/read/' . $noreg, $data);
+        $this->template->load('template', 't_radhasil/t_radhasil_form', $data);
     }
 
     public function create_action()
     {
-        //$this->_rules();
+        $this->_rules();
 
-        //if ($this->form_validation->run() == FALSE) {
-        //$this->create();
-        //} else {
-        $data = array(
-            'nobill' => $this->input->post('nobill', TRUE),
-            'noreg' => $this->input->post('noreg', TRUE),
-            'kdlab' => $this->input->post('kdlab', TRUE),
-            'nilai' => $this->input->post('nilai', TRUE),
-            'tglinput' => $this->input->post('tglinput', TRUE),
-            'id_users' => $this->input->post('id_users', TRUE),
-        );
-        $noreg = $this->input->post('noreg');
-        $this->T_labhasil_model->insert($data);
-        $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
+        if ($this->form_validation->run() == FALSE) {
+            $this->create();
+        } else {
+            $data = array(
+                'noreg' => $this->input->post('noreg', TRUE),
+                'kdtarif' => $this->input->post('kdtarif', TRUE),
+                'hasil' => $this->input->post('hasil', TRUE),
+                'tglinput' => $this->input->post('tglinput', TRUE),
+                'id_users' => $this->input->post('id_users', TRUE),
+            );
+
+            $this->T_radhasil_model->insert($data);
+            $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true"><i class="fal fa-times"></i></span>
             </button><strong> Create Record Success 2</strong></div>');
-        redirect(site_url('t_labhasil/read/' . $noreg));
-        //}
+            redirect(site_url('t_radhasil'));
+        }
     }
 
-    public function update($noreg)
+    public function update($id)
     {
-        $row = $this->T_labhasil_model->get_by_id($noreg);
+        $row = $this->T_radhasil_model->get_by_id($id);
 
         if ($row) {
             $data = array(
                 'button' => 'Update',
-                'action' => site_url('t_labhasil/update_action'),
+                'action' => site_url('t_radhasil/update_action'),
                 'nobill' => set_value('nobill', $row->nobill),
                 'noreg' => set_value('noreg', $row->noreg),
                 'kdtarif' => set_value('kdtarif', $row->kdtarif),
-                'nilai' => set_value('nilai', $row->nilai),
+                'hasil' => set_value('hasil', $row->hasil),
                 'tglinput' => set_value('tglinput', $row->tglinput),
                 'id_users' => set_value('id_users', $row->id_users),
             );
-            $this->template->load('template', 't_labhasil/t_labhasil_form', $data);
+            $this->template->load('template', 't_radhasil/t_radhasil_form', $data);
         } else {
             $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true"><i class="fal fa-times"></i></span>
             </button><strong> Record Not Found</strong></div>');
-            redirect(site_url('t_labhasil/read/' . $noreg));
+            redirect(site_url('t_radhasil'));
         }
     }
 
-    public function update_action($noreg)
+    public function update_action()
     {
-        //$this->_rules();
+        $this->_rules();
 
-        //if ($this->form_validation->run() == FALSE) {
-        //$this->update($this->input->post('', TRUE));
-        //} else {
-        $data = array(
-            'nobill' => $this->input->post('nobill', TRUE),
-            'noreg' => $this->input->post('noreg', TRUE),
-            'kdlab' => $this->input->post('kdlab', TRUE),
-            'nilai' => $this->input->post('nilai', TRUE),
-            'tglinput' => $this->input->post('tglinput', TRUE),
-            'id_users' => $this->input->post('id_users', TRUE),
-        );
+        if ($this->form_validation->run() == FALSE) {
+            $this->update($this->input->post('nobill', TRUE));
+        } else {
+            $data = array(
+                'noreg' => $this->input->post('noreg', TRUE),
+                'kdtarif' => $this->input->post('kdtarif', TRUE),
+                'hasil' => $this->input->post('hasil', TRUE),
+                'tglinput' => $this->input->post('tglinput', TRUE),
+                'id_users' => $this->input->post('id_users', TRUE),
+            );
 
-        $this->T_labhasil_model->update($this->input->post('nobill', TRUE), $data);
-        $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
+            $this->T_radhasil_model->update($this->input->post('nobill', TRUE), $data);
+            $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true"><i class="fal fa-times"></i></span>
             </button><strong> Update Record Success</strong></div>');
-        redirect(site_url('t_labhasil/read/' . $noreg));
-        //}
+            redirect(site_url('t_radhasil'));
+        }
     }
 
     public function delete($id)
     {
-        $row = $this->T_labhasil_model->get_by_id($id);
+        $row = $this->T_radhasil_model->get_by_id($id);
 
         if ($row) {
-            $this->T_labhasil_model->delete($id);
+            $this->T_radhasil_model->delete($id);
             $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true"><i class="fal fa-times"></i></span>
             </button><strong> Delete Record Success</strong></div>');
-            redirect(site_url('t_labhasil'));
+            redirect(site_url('t_radhasil'));
         } else {
             $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true"><i class="fal fa-times"></i></span>
             </button><strong> Record Not Found</strong></div>');
-            redirect(site_url('t_labhasil'));
+            redirect(site_url('t_radhasil'));
         }
     }
 
     public function _rules()
     {
-        $this->form_validation->set_rules('nobill', 'nobill', 'trim|required');
         $this->form_validation->set_rules('noreg', 'noreg', 'trim|required');
-        $this->form_validation->set_rules('kdlab', 'kdlab', 'trim|required');
-        $this->form_validation->set_rules('nilai', 'nilai', 'trim|required');
+        $this->form_validation->set_rules('kdtarif', 'kdtarif', 'trim|required');
+        $this->form_validation->set_rules('hasil', 'hasil', 'trim|required');
         $this->form_validation->set_rules('tglinput', 'tglinput', 'trim|required');
         $this->form_validation->set_rules('id_users', 'id users', 'trim|required');
 
-        $this->form_validation->set_rules('', '', 'trim');
+        $this->form_validation->set_rules('nobill', 'nobill', 'trim');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 }
 
-/* End of file T_labhasil.php */
-/* Location: ./application/controllers/T_labhasil.php */
+/* End of file T_radhasil.php */
+/* Location: ./application/controllers/T_radhasil.php */
 /* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2019-11-19 07:44:03 */
+/* Generated by Harviacode Codeigniter CRUD Generator 2019-11-21 06:44:33 */
 /* http://harviacode.com */

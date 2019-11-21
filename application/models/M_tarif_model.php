@@ -47,7 +47,7 @@ class M_tarif_model extends CI_Model
     {
         $this->db->like('kdtarif', $q);
         $this->db->or_like('nmtarif', $q);
-        $this->db->or_like('kdtarifgroup', $q);
+        $this->db->or_like('kdpoli', $q);
         $this->db->or_like('harga', $q);
         $this->db->or_like('tglinput', $q);
         $this->db->or_like('id_users', $q);
@@ -61,7 +61,7 @@ class M_tarif_model extends CI_Model
         $this->db->order_by($this->id, $this->order);
         $this->db->like('kdtarif', $q);
         $this->db->or_like('nmtarif', $q);
-        $this->db->or_like('kdtarifgroup', $q);
+        $this->db->or_like('kdpoli', $q);
         $this->db->or_like('harga', $q);
         $this->db->or_like('tglinput', $q);
         $this->db->or_like('id_users', $q);

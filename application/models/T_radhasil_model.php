@@ -3,11 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class T_labhasil_model extends CI_Model
+class T_radhasil_model extends CI_Model
 {
 
-    public $table = 't_labhasil';
-    public $id = '';
+    public $table = 't_radhasil';
+    public $id = 'nobill';
     public $order = 'DESC';
 
     function __construct()
@@ -18,33 +18,21 @@ class T_labhasil_model extends CI_Model
     // datatables
     function json()
     {
-        $this->datatables->select('nobill,noreg,kdtarif,nilai,tglinput,id_users');
-        $this->datatables->from('t_labhasil');
+        $this->datatables->select('nobill,noreg,kdtarif,hasil,tglinput,id_users');
+        $this->datatables->from('t_radhasil');
         //add this line for join
-        //$this->datatables->join('table2', 't_labhasil.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('t_labhasil/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
-            " . anchor(site_url('t_labhasil/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
-                " . anchor(site_url('t_labhasil/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), '');
+        //$this->datatables->join('table2', 't_radhasil.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('t_radhasil/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
+            " . anchor(site_url('t_radhasil/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
+                " . anchor(site_url('t_radhasil/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'nobill');
         return $this->datatables->generate();
     }
+
     // get all
     function get_all()
     {
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
-    }
-
-    function get_tindakan_lab($noreg)
-    {
-        $qry = "SELECT a.noreg,d.*,e.nobill as labbill,e.nilai FROM t_billrajal a
-        LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
-        LEFT JOIN m_labgroup c ON b.kdtarif=c.kdtarif
-        LEFT JOIN m_lab d ON c.kdlab=d.kdlab
-        LEFT JOIN t_labhasil e ON e.kdlab=d.kdlab
-        WHERE b.kdpoli='5' and a.noreg='$noreg'";
-        $hasil = $this->db->query($qry);
-        return $hasil->result();
-        //return $this->db->get()->row();
     }
 
     // get data by id
@@ -58,14 +46,24 @@ class T_labhasil_model extends CI_Model
         return $this->db->get()->row();
     }
 
+    function get_tindakan_rad($noreg)
+    {
+        $qry = "SELECT a.noreg,b.kdtarif,b.nmtarif,e.nobill as labbill,e.hasil FROM t_billrajal a
+        LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
+        LEFT JOIN t_radhasil e ON e.kdtarif=b.kdtarif
+        WHERE b.kdpoli='4' and a.noreg='$noreg'";
+        $hasil = $this->db->query($qry);
+        return $hasil->result();
+        //return $this->db->get()->row();
+    }
+
     // get total rows
     function total_rows($q = NULL)
     {
-        $this->db->like('', $q);
-        $this->db->or_like('nobill', $q);
+        $this->db->like('nobill', $q);
         $this->db->or_like('noreg', $q);
         $this->db->or_like('kdtarif', $q);
-        $this->db->or_like('nilai', $q);
+        $this->db->or_like('hasil', $q);
         $this->db->or_like('tglinput', $q);
         $this->db->or_like('id_users', $q);
         $this->db->from($this->table);
@@ -76,11 +74,10 @@ class T_labhasil_model extends CI_Model
     function get_limit_data($limit, $start = 0, $q = NULL)
     {
         $this->db->order_by($this->id, $this->order);
-        $this->db->like('', $q);
-        $this->db->or_like('nobill', $q);
+        $this->db->like('nobill', $q);
         $this->db->or_like('noreg', $q);
         $this->db->or_like('kdtarif', $q);
-        $this->db->or_like('nilai', $q);
+        $this->db->or_like('hasil', $q);
         $this->db->or_like('tglinput', $q);
         $this->db->or_like('id_users', $q);
         $this->db->limit($limit, $start);
@@ -94,9 +91,9 @@ class T_labhasil_model extends CI_Model
     }
 
     // update data
-    function update($nobill, $data)
+    function update($id, $data)
     {
-        $this->db->where('nobill', $nobill);
+        $this->db->where($this->id, $id);
         $this->db->update($this->table, $data);
     }
 
@@ -108,8 +105,8 @@ class T_labhasil_model extends CI_Model
     }
 }
 
-/* End of file T_labhasil_model.php */
-/* Location: ./application/models/T_labhasil_model.php */
+/* End of file T_radhasil_model.php */
+/* Location: ./application/models/T_radhasil_model.php */
 /* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2019-11-19 07:44:03 */
+/* Generated by Harviacode Codeigniter CRUD Generator 2019-11-21 06:44:33 */
 /* http://harviacode.com */

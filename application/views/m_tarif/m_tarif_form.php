@@ -21,8 +21,8 @@
                                     <td><input type="text" class="form-control" name="nmtarif" id="nmtarif" placeholder="Nmtarif" value="<?php echo $nmtarif; ?>" /></td>
                                 </tr>
                                 <tr>
-                                    <td width='200'>Kdtarifgroup <?php echo form_error('kdtarifgroup') ?></td>
-                                    <td><?php echo cmb_dinamis('kdtarifgroup', 'm_tarifgroup', 'tarifgroup', 'kdtarifgroup') ?></td>
+                                    <td width='200'>Poli <?php echo form_error('kdpoli') ?></td>
+                                    <td><?php echo cmb_dinamis('kdpoli', 'm_poli', 'poli', 'kdpoli') ?></td>
                                 </tr>
                                 <tr>
                                     <td width='200'>Harga <?php echo form_error('harga') ?></td>

@@ -20,14 +20,14 @@
                                     <th width="30px">No</th>
                                     <th>NoReg</th>
                                     <th>Nomr</th>
+                                    <th>Nama</th>
+                                    <th>TGL Lahir</th>
                                     <th>Baru</th>
-                                    <th>Kddokter</th>
-                                    <th>Kdpoli</th>
-                                    <th>Kdbayar</th>
-                                    <th>Rujukan</th>
-                                    <th>Kdrujuk</th>
+                                    <th>dokter</th>
+                                    <th>poli</th>
+                                    <th>bayar</th>
                                     <th>Tglreg</th>
-                                    <th>Id Users</th>
+                                    <th>Users</th>
                                     <th width="200px">Action</th>
                                 </tr>
                             </thead>
@@ -85,21 +85,21 @@
                 }, {
                     "data": "nomr"
                 }, {
+                    "data": "nama"
+                }, {
+                    "data": "tgllhr"
+                }, {
                     "data": "baru"
                 }, {
                     "data": "kddokter"
                 }, {
-                    "data": "kdpoli"
+                    "data": "poli"
                 }, {
                     "data": "kdbayar"
                 }, {
-                    "data": "rujukan"
-                }, {
-                    "data": "kdrujuk"
-                }, {
                     "data": "tglreg"
                 }, {
-                    "data": "id_users"
+                    "data": "petugas"
                 },
                 {
                     "data": "action",

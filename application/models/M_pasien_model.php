@@ -18,15 +18,12 @@ class M_pasien_model extends CI_Model
     // datatables
     function json()
     {
-        $this->datatables->select('nomr,nik,nama,DATE_FORMAT(tgllhr, "%d/%m/%Y") as tgllhr,alamat,kodepos,kelamin,kawin,hp,foto,DATE_FORMAT(tglinput, "%d/%m/%Y") as tglinput,full_name');
-        $this->datatables->from('m_pasien');
+        $this->datatables->select('nomr,nik,nama,tgllhr,alamat,kodepos,kdklmn,kdkawin,hp,tglinput,kelamin,kawin,full_name');
+        $this->datatables->from('v_pasien');
         //add this line for join
-        $this->datatables->join('m_kelamin', 'm_pasien.kdklmn = m_kelamin.kdklmn');
-        $this->datatables->join('m_kawin', 'm_pasien.kdkawin = m_kawin.kdkawin');
-        $this->datatables->join('tbl_user', 'm_pasien.id_users = tbl_user.id_users');
-        $this->datatables->add_column('action', anchor(site_url('m_pasien/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
-            " . anchor(site_url('m_pasien/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
-                " . anchor(site_url('m_pasien/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'nomr');
+        $this->datatables->add_column('action', anchor(site_url('m_pasien/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-xs waves-effect waves-themed')) . "
+            " . anchor(site_url('m_pasien/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-xs waves-effect waves-themed')) . "
+                " . anchor(site_url('m_pasien/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-xs waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'nomr');
         return $this->datatables->generate();
     }
 

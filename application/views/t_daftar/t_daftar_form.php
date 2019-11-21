@@ -42,8 +42,8 @@
                                     <td><input type="text" class="form-control" name="baru" id="baru" placeholder="Baru" value="<?php echo $this->uri->segment(3); ?>" readonly /></td>
                                 </tr>
                                 <tr>
-                                    <td width='200'>Kdpoli <?php echo form_error('kdpoli') ?></td>
-                                    <td><input type="text" class="form-control" name="kdpoli" id="kdpoli" placeholder="Kdpoli" value="<?php echo $kdpoli; ?>" /></td>
+                                    <td width='200'>Poliklinik <?php echo form_error('kdpoli') ?></td>
+                                    <td><?php echo cmb_dinamis('kdpoli', 'm_poli', 'poli', 'kdpoli') ?></td>
                                 </tr>
                                 <tr>
                                     <td width='200'>Kddokter <?php echo form_error('kddokter') ?></td>

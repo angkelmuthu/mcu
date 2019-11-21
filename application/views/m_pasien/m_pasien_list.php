@@ -27,7 +27,6 @@
                                     <th>Kdklmn</th>
                                     <th>Kdkawin</th>
                                     <th>Hp</th>
-                                    <th>Foto</th>
                                     <th>Tglinput</th>
                                     <th>Id Users</th>
                                     <th width="200px">Action</th>
@@ -100,8 +99,6 @@
                     "data": "kawin"
                 }, {
                     "data": "hp"
-                }, {
-                    "data": "foto"
                 }, {
                     "data": "tglinput"
                 }, {

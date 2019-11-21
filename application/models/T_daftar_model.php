@@ -18,8 +18,8 @@ class T_daftar_model extends CI_Model
     // datatables
     function json()
     {
-        $this->datatables->select('idreg,noreg,nomr,baru,kddokter,kdpoli,kdbayar,rujukan,kdrujuk,tglreg,id_users');
-        $this->datatables->from('t_daftar');
+        $this->datatables->select('*');
+        $this->datatables->from('v_pendaftaran');
         //add this line for join
         //$this->datatables->join('table2', 't_daftar.field = table2.field');
         $this->datatables->add_column('action', anchor(site_url('t_daftar/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
