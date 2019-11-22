@@ -18,7 +18,7 @@ class T_daftar_model extends CI_Model
     // datatables
     function json()
     {
-        $this->datatables->select('*');
+        $this->datatables->select('idreg,noreg,baru,dokter,bayar,rujukan,kdrujuk,tglreg,full_name as petugas,nomr,nik,nama,tgllhr,alamat,kodepos,kdklmn,kdkawin,hp,tglinput,kelamin,kawin,poli,unit');
         $this->datatables->from('v_pendaftaran');
         //add this line for join
         //$this->datatables->join('table2', 't_daftar.field = table2.field');
@@ -38,7 +38,7 @@ class T_daftar_model extends CI_Model
     // get data by id
     function get_by_id($id)
     {
-        $this->db->select('a.idreg,a.noreg,a.nomr,b.nik,b.nama,b.tgllhr,a.baru,a.kddokter,a.kdpoli,a.kdbayar,a.rujukan,a.kdrujuk,a.tglreg,a.id_users');
+        $this->db->select('idreg,a.noreg,a.nomr,b.nik,b.nama,b.tgllhr,a.baru,a.kddokter,a.kdpoli,a.kdbayar,a.rujukan,a.kdrujuk,a.tglreg,a.id_users');
         $this->db->from('t_daftar a');
         $this->db->join('m_pasien b', 'a.nomr = b.nomr', 'left');
         $this->db->where('a.idreg', $id);

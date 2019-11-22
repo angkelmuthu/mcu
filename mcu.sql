@@ -11,6 +11,44 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
+-- Dumping structure for table mcu.m_bayar
+DROP TABLE IF EXISTS `m_bayar`;
+CREATE TABLE IF NOT EXISTS `m_bayar` (
+  `kdbayar` int(11) NOT NULL AUTO_INCREMENT,
+  `bayar` varchar(50) NOT NULL,
+  `kdmetodebayar` int(11) NOT NULL,
+  `aktif` enum('Y','N') NOT NULL,
+  `tglinput` datetime NOT NULL,
+  `id_users` int(11) NOT NULL,
+  PRIMARY KEY (`kdbayar`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table mcu.m_bayar: ~3 rows (approximately)
+/*!40000 ALTER TABLE `m_bayar` DISABLE KEYS */;
+INSERT INTO `m_bayar` (`kdbayar`, `bayar`, `kdmetodebayar`, `aktif`, `tglinput`, `id_users`) VALUES
+	(1, 'BPJS', 1, 'Y', '2019-11-22 04:27:54', 1),
+	(2, 'KJS', 1, 'Y', '2019-11-22 04:28:22', 1),
+	(3, 'Tunai', 2, 'Y', '2019-11-22 04:28:33', 1);
+/*!40000 ALTER TABLE `m_bayar` ENABLE KEYS */;
+
+-- Dumping structure for table mcu.m_bayar_metode
+DROP TABLE IF EXISTS `m_bayar_metode`;
+CREATE TABLE IF NOT EXISTS `m_bayar_metode` (
+  `kdmetodebayar` int(11) NOT NULL AUTO_INCREMENT,
+  `metode` varchar(50) NOT NULL,
+  `keterangan` tinytext NOT NULL,
+  `aktif` enum('Y','N') NOT NULL,
+  PRIMARY KEY (`kdmetodebayar`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table mcu.m_bayar_metode: ~3 rows (approximately)
+/*!40000 ALTER TABLE `m_bayar_metode` DISABLE KEYS */;
+INSERT INTO `m_bayar_metode` (`kdmetodebayar`, `metode`, `keterangan`, `aktif`) VALUES
+	(1, 'Jaminan Sosial', 'BPJS, KJS, ASKES', 'Y'),
+	(2, 'TUNAI', 'Pembayaran Cash atau Langsung', 'Y'),
+	(3, 'ASURANSI', 'PRUDENT, AXA, MNCLIFE DLL', 'Y');
+/*!40000 ALTER TABLE `m_bayar_metode` ENABLE KEYS */;
+
 -- Dumping structure for table mcu.m_dokter
 DROP TABLE IF EXISTS `m_dokter`;
 CREATE TABLE IF NOT EXISTS `m_dokter` (
@@ -41,9 +79,9 @@ CREATE TABLE IF NOT EXISTS `m_dokterjadwal` (
   `tglinput` datetime NOT NULL,
   `id_users` int(11) NOT NULL,
   PRIMARY KEY (`kdjadwal`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.m_dokterjadwal: ~0 rows (approximately)
+-- Dumping data for table mcu.m_dokterjadwal: ~3 rows (approximately)
 /*!40000 ALTER TABLE `m_dokterjadwal` DISABLE KEYS */;
 INSERT INTO `m_dokterjadwal` (`kdjadwal`, `kddokter`, `kdpoli`, `hari`, `jam_mulai`, `jam_akhir`, `tglinput`, `id_users`) VALUES
 	(1, 3, 3, 5, '08:00:00', '12:00:00', '2019-11-21 16:15:43', 1),
@@ -254,7 +292,7 @@ CREATE TABLE IF NOT EXISTS `m_pasien` (
   PRIMARY KEY (`nomr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.m_pasien: ~4 rows (approximately)
+-- Dumping data for table mcu.m_pasien: ~2 rows (approximately)
 /*!40000 ALTER TABLE `m_pasien` DISABLE KEYS */;
 INSERT INTO `m_pasien` (`nomr`, `nik`, `nama`, `tgllhr`, `alamat`, `kodepos`, `kdklmn`, `kdkawin`, `hp`, `foto`, `tglinput`, `id_users`) VALUES
 	('000003', 1431431, 'rifai achmad', '2019-10-01', 'JL A YANI RT 011 / RW 005 NO. 23 KEL PISANGAN TIMUR KEC PULOGADUNG , JAKARTA TIMUR', 12710, 1, 1, '08158340900', '', '2019-10-25', 1),
@@ -387,9 +425,9 @@ CREATE TABLE IF NOT EXISTS `tbl_hak_akses` (
   `id_user_level` int(11) NOT NULL,
   `id_menu` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_hak_akses: ~39 rows (approximately)
+-- Dumping data for table mcu.tbl_hak_akses: ~41 rows (approximately)
 /*!40000 ALTER TABLE `tbl_hak_akses` DISABLE KEYS */;
 INSERT INTO `tbl_hak_akses` (`id`, `id_user_level`, `id_menu`) VALUES
 	(15, 1, 1),
@@ -430,7 +468,9 @@ INSERT INTO `tbl_hak_akses` (`id`, `id_user_level`, `id_menu`) VALUES
 	(59, 1, 38),
 	(60, 1, 39),
 	(61, 1, 40),
-	(62, 1, 41);
+	(62, 1, 41),
+	(63, 1, 43),
+	(64, 1, 42);
 /*!40000 ALTER TABLE `tbl_hak_akses` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_kodepos
@@ -446,7 +486,7 @@ CREATE TABLE IF NOT EXISTS `tbl_kodepos` (
   KEY `ixkodepos` (`kodepos`)
 ) ENGINE=InnoDB AUTO_INCREMENT=28457 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_kodepos: ~28.962 rows (approximately)
+-- Dumping data for table mcu.tbl_kodepos: ~28,741 rows (approximately)
 /*!40000 ALTER TABLE `tbl_kodepos` DISABLE KEYS */;
 INSERT INTO `tbl_kodepos` (`id`, `kelurahan`, `kecamatan`, `kabupaten`, `provinsi`, `kodepos`) VALUES
 	(1, 'GAMBIR', 'GAMBIR', 'JAKARTA PUSAT', 'DKI JAKARTA', '10110'),
@@ -28919,9 +28959,9 @@ CREATE TABLE IF NOT EXISTS `tbl_menu` (
   `is_main_menu` int(11) NOT NULL,
   `is_aktif` enum('y','n') NOT NULL COMMENT 'y=yes,n=no',
   PRIMARY KEY (`id_menu`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_menu: ~30 rows (approximately)
+-- Dumping data for table mcu.tbl_menu: ~32 rows (approximately)
 /*!40000 ALTER TABLE `tbl_menu` DISABLE KEYS */;
 INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_aktif`) VALUES
 	(1, 'KELOLA MENU', 'kelolamenu', 'fal fa-server', 15, 'y'),
@@ -28953,7 +28993,9 @@ INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_a
 	(38, 'Pasien Lab', 'T_labhasil', 'fal fa-align-justify', 0, 'y'),
 	(39, 'Pasien Radiologi', 'T_radhasil', 'fal fa-align-justify', 0, 'y'),
 	(40, 'Dokter', 'M_dokter', 'fal fa-align-justify', 0, 'y'),
-	(41, 'Jadwal Dokter', 'M_dokterjadwal', 'fal fa-align-justify', 0, 'y');
+	(41, 'Jadwal Dokter', 'M_dokterjadwal', 'fal fa-align-justify', 0, 'y'),
+	(42, 'Metode Pembayaran', 'M_bayar_metode', 'far address-card', 0, 'y'),
+	(43, 'Cara Bayar', 'M_bayar', 'far address-card', 0, 'y');
 /*!40000 ALTER TABLE `tbl_menu` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_setting
@@ -29093,13 +29135,14 @@ CREATE TABLE IF NOT EXISTS `t_daftar` (
   `tglreg` datetime NOT NULL,
   `id_users` int(11) NOT NULL,
   PRIMARY KEY (`idreg`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.t_daftar: ~2 rows (approximately)
+-- Dumping data for table mcu.t_daftar: ~3 rows (approximately)
 /*!40000 ALTER TABLE `t_daftar` DISABLE KEYS */;
 INSERT INTO `t_daftar` (`idreg`, `noreg`, `nomr`, `baru`, `kddokter`, `kdpoli`, `kdbayar`, `rujukan`, `kdrujuk`, `tglreg`, `id_users`) VALUES
 	(3, 191000003, '000003', 'Y', 1, 1, 1, 'Y', 0, '2019-10-25 12:41:25', 1),
-	(4, 191100004, '000004', 'Y', 2, 1, 1, 'N', 76786, '2019-11-19 08:36:57', 1);
+	(4, 191100004, '000004', 'Y', 2, 1, 1, 'N', 76786, '2019-11-19 08:36:57', 1),
+	(5, 191100005, '000004', 'N', 3, 1, 1, 'N', 0, '2019-11-22 04:36:07', 1);
 /*!40000 ALTER TABLE `t_daftar` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_emr
@@ -29197,9 +29240,7 @@ CREATE TABLE `v_pendaftaran` (
 	`idreg` INT(11) NOT NULL,
 	`noreg` INT(11) NOT NULL,
 	`baru` ENUM('Y','N') NOT NULL COLLATE 'utf8_general_ci',
-	`kddokter` INT(11) NOT NULL,
 	`kdpoli` INT(11) NOT NULL,
-	`kdbayar` INT(11) NOT NULL,
 	`rujukan` ENUM('Y','N') NOT NULL COLLATE 'utf8_general_ci',
 	`kdrujuk` INT(11) NOT NULL,
 	`tglreg` DATETIME NOT NULL,
@@ -29220,7 +29261,9 @@ CREATE TABLE `v_pendaftaran` (
 	`kawin` VARCHAR(50) NULL COLLATE 'utf8_general_ci',
 	`full_name` VARCHAR(50) NULL COLLATE 'latin1_swedish_ci',
 	`poli` VARCHAR(50) NULL COLLATE 'utf8_general_ci',
-	`unit` VARCHAR(50) NULL COLLATE 'utf8_general_ci'
+	`unit` VARCHAR(50) NULL COLLATE 'utf8_general_ci',
+	`dokter` VARCHAR(100) NULL COLLATE 'utf8_general_ci',
+	`bayar` VARCHAR(50) NULL COLLATE 'utf8_general_ci'
 ) ENGINE=MyISAM;
 
 -- Dumping structure for view mcu.v_obatdetail
@@ -29248,11 +29291,13 @@ LEFT JOIN tbl_user d ON a.id_users = d.id_users ;
 DROP VIEW IF EXISTS `v_pendaftaran`;
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `v_pendaftaran`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_pendaftaran` AS SELECT a.idreg,a.noreg,a.baru,a.kddokter,a.kdpoli,a.kdbayar,a.rujukan,a.kdrujuk,a.tglreg,e.full_name as petugas,b.*,c.poli,d.unit FROM t_daftar a
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_pendaftaran` AS SELECT a.idreg,a.noreg,a.baru,a.kdpoli,a.rujukan,a.kdrujuk,a.tglreg,e.full_name as petugas,b.*,c.poli,d.unit,f.dokter,g.bayar FROM t_daftar a
 LEFT JOIN v_pasien b ON a.nomr=b.nomr
 LEFT JOIN m_poli c ON a.kdpoli=c.kdpoli
 LEFT JOIN m_unit d ON c.kdunit=d.unit
-LEFT JOIN tbl_user e ON a.id_users=e.id_users ;
+LEFT JOIN tbl_user e ON a.id_users=e.id_users
+LEFT JOIN m_dokter f ON a.kddokter=f.kddokter
+LEFT JOIN m_bayar g ON a.kdbayar=g.kdbayar ;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

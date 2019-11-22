@@ -46,7 +46,7 @@
                                     <td><?php echo cmb_dinamis('kdpoli', 'm_poli', 'poli', 'kdpoli') ?></td>
                                 </tr>
                                 <tr>
-                                    <td width='200'>Kddokter <?php echo form_error('kddokter') ?></td>
+                                    <td width='200'>Dokter <?php echo form_error('kddokter') ?></td>
                                     <td>
                                         <div class="form-group">
                                             <select name="kddokter" id="kddokter" class="select2 form-control w-100 select2-hidden-accessible" id="single-default" data-select2-id="single-default" tabindex="-1" aria-hidden="true">
@@ -68,8 +68,8 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width='200'>Kdbayar <?php echo form_error('kdbayar') ?></td>
-                                    <td><input type="text" class="form-control" name="kdbayar" id="kdbayar" placeholder="Kdbayar" value="<?php echo $kdbayar; ?>" /></td>
+                                    <td width='200'>Cara Bayar <?php echo form_error('kdbayar') ?></td>
+                                    <td><?php echo cmb_dinamis('kdbayar', 'm_bayar', 'bayar', 'kdbayar') ?></td>
                                 </tr>
                                 <tr>
                                     <td width='200'>Rujukan <?php echo form_error('rujukan') ?></td>
