@@ -29078,17 +29078,19 @@ CREATE TABLE IF NOT EXISTS `t_billobat` (
   `nobill` int(11) NOT NULL AUTO_INCREMENT,
   `noreg` int(11) NOT NULL,
   `kdobat` int(11) NOT NULL,
+  `hargaobat` int(11) NOT NULL,
   `qty` int(11) NOT NULL,
   `status` varchar(50) NOT NULL,
   `tglinput` datetime NOT NULL,
   `id_users` int(11) NOT NULL,
   PRIMARY KEY (`nobill`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.t_billobat: ~0 rows (approximately)
+-- Dumping data for table mcu.t_billobat: ~2 rows (approximately)
 /*!40000 ALTER TABLE `t_billobat` DISABLE KEYS */;
-INSERT INTO `t_billobat` (`nobill`, `noreg`, `kdobat`, `qty`, `status`, `tglinput`, `id_users`) VALUES
-	(6, 191000003, 2, 6, 'BL', '2019-11-19 05:35:58', 1);
+INSERT INTO `t_billobat` (`nobill`, `noreg`, `kdobat`, `hargaobat`, `qty`, `status`, `tglinput`, `id_users`) VALUES
+	(6, 191000003, 2, 0, 6, 'BL', '2019-11-19 05:35:58', 1),
+	(7, 191100005, 2, 750, 8, 'BL', '2019-11-25 08:28:33', 1);
 /*!40000 ALTER TABLE `t_billobat` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_billrajal
@@ -29099,25 +29101,26 @@ CREATE TABLE IF NOT EXISTS `t_billrajal` (
   `paket` enum('Y','N') NOT NULL,
   `kdpaket` int(11) DEFAULT NULL,
   `kdtarif` int(11) NOT NULL,
+  `harga` int(11) NOT NULL,
   `qty` int(3) NOT NULL,
-  `status` int(1) NOT NULL,
+  `status` set('BL','L','BT') NOT NULL DEFAULT 'BL',
+  `tglinput` datetime NOT NULL,
+  `id_users` int(11) NOT NULL,
   PRIMARY KEY (`nobill`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.t_billrajal: ~11 rows (approximately)
+-- Dumping data for table mcu.t_billrajal: ~0 rows (approximately)
 /*!40000 ALTER TABLE `t_billrajal` DISABLE KEYS */;
-INSERT INTO `t_billrajal` (`nobill`, `noreg`, `paket`, `kdpaket`, `kdtarif`, `qty`, `status`) VALUES
-	(1, 191000003, 'Y', 1, 5, 2, 0),
-	(2, 191000003, 'Y', 1, 4, 2, 0),
-	(3, 191000003, 'Y', 2, 1, 2, 0),
-	(4, 191000003, 'Y', 2, 5, 2, 0),
-	(5, 191000003, 'Y', 2, 6, 2, 0),
-	(6, 191000003, 'N', 0, 5, 2, 0),
-	(7, 191000003, 'N', 0, 4, 2, 0),
-	(8, 191000003, 'N', 0, 1, 2, 0),
-	(9, 191100004, 'N', 0, 6, 1, 0),
-	(10, 191100004, 'N', 0, 5, 1, 0),
-	(11, 191000003, 'N', 0, 7, 1, 0);
+INSERT INTO `t_billrajal` (`nobill`, `noreg`, `paket`, `kdpaket`, `kdtarif`, `harga`, `qty`, `status`, `tglinput`, `id_users`) VALUES
+	(1, 191100005, 'N', 0, 2, 25000, 2, 'BL', '2019-11-25 09:16:50', 1),
+	(2, 191100005, 'N', 0, 3, 5000, 1, 'BL', '2019-11-25 09:16:30', 1),
+	(3, 191100005, 'N', 0, 1, 10000, 1, 'BL', '2019-11-25 09:19:00', 1),
+	(4, 191100005, 'N', 0, 6, 210000, 1, 'BL', '2019-11-25 09:19:02', 1),
+	(7, 191100005, 'Y', 2, 1, 370000, 3, 'BL', '2019-11-25 09:49:04', 1),
+	(8, 191100005, 'Y', 2, 5, 370000, 3, 'BL', '2019-11-25 09:49:04', 1),
+	(9, 191100005, 'Y', 2, 6, 370000, 3, 'BL', '2019-11-25 09:49:04', 1),
+	(10, 191100005, 'Y', 1, 5, 160000, 2, 'BL', '2019-11-25 09:48:49', 1),
+	(11, 191100005, 'Y', 1, 4, 160000, 2, 'BL', '2019-11-25 09:48:49', 1);
 /*!40000 ALTER TABLE `t_billrajal` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_daftar

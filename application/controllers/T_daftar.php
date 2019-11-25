@@ -78,20 +78,23 @@ class T_daftar extends CI_Controller
         $paket = $this->input->post('paket');
         $kdpaket = $this->input->post('kdpaket');
         $kdtarif = $this->input->post('kdtarif');
+        $harga = $this->input->post('harga');
         $qty = $this->input->post('qty');
+        $id_users = $this->session->userdata('id_users');
+        $tgl = date('Y-m-d H:i:s');
         // cek bill //
         if ($paket == 'N') {
-            $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and paket='N' and kdtarif='$kdtarif'");
+            $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and paket='N' and kdtarif='$kdtarif' and status='BL'");
         } else {
-            $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and paket='Y' and kdpaket='$kdpaket'");
+            $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and paket='Y' and kdpaket='$kdpaket' and status='BL'");
         }
         $rows = $cek->num_rows();
         $dt = $cek->row_array();
         if ($rows > 0) {
             $qty = $dt['qty'] + $qty;
-            $data = $this->T_daftar_model->update_barang($noreg, $paket, $kdpaket, $kdtarif, $qty);
+            $data = $this->T_daftar_model->update_barang($noreg, $paket, $kdpaket, $kdtarif, $harga, $qty, $id_users, $tgl);
         } else {
-            $data = $this->T_daftar_model->simpan_barang($noreg, $paket, $kdpaket, $kdtarif, $qty);
+            $data = $this->T_daftar_model->simpan_barang($noreg, $paket, $kdpaket, $kdtarif, $harga, $qty, $id_users, $tgl);
         }
         echo json_encode($data);
     }
@@ -111,7 +114,7 @@ class T_daftar extends CI_Controller
         $kdtarif = $this->input->post('kdtarif');
         $qty = $this->input->post('qty');
         // cek bill //
-        $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and kdpaket='$kdpaket'");
+        $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and kdpaket='$kdpaket' and status='BL'");
         $rows = $cek->num_rows();
         $dt = $cek->row_array();
         if ($rows > 0) {
@@ -133,18 +136,20 @@ class T_daftar extends CI_Controller
         $noreg = $this->input->post('noreg');
         $user = $this->input->post('user');
         $kdobat = $this->input->post('kdobat');
+        $hargaobat = $this->input->post('hargaobat');
         $qty = $this->input->post('qty');
+        $id_users = $this->session->userdata('id_users');
         // cek bill //
-        $cek = $this->db->query("SELECT * from t_billobat where noreg='$noreg' and kdobat='$kdobat'");
+        $cek = $this->db->query("SELECT * from t_billobat where noreg='$noreg' and kdobat='$kdobat' and status='BL'");
         $rows = $cek->num_rows();
         $dt = $cek->row_array();
         $tgl = date('Y-m-d H:i:s');
         $status = 'BL';
         if ($rows > 0) {
             $qty = $dt['qty'] + $qty;
-            $data = $this->T_daftar_model->update_obat($noreg, $kdobat, $qty, $status, $tgl, $user);
+            $data = $this->T_daftar_model->update_obat($noreg, $kdobat, $hargaobat, $qty, $status, $tgl, $id_users);
         } else {
-            $data = $this->T_daftar_model->simpan_obat($noreg, $kdobat, $qty, $status, $tgl, $user);
+            $data = $this->T_daftar_model->simpan_obat($noreg, $kdobat, $hargaobat, $qty, $status, $tgl, $id_users);
         }
         echo json_encode($data);
     }

@@ -432,6 +432,7 @@
                 var paket = 'N';
                 var kdpaket = '0';
                 var kdtarif = '<?php echo $row->kdtarif ?>';
+                var harga = '<?php echo $row->harga ?>';
                 var qty = '1';
                 $.ajax({
                     type: "POST",
@@ -442,6 +443,7 @@
                         paket: paket,
                         kdpaket: kdpaket,
                         kdtarif: kdtarif,
+                        harga: harga,
                         qty: qty
                     },
                     success: function(data) {
@@ -508,6 +510,7 @@
                 var noreg = $('#noreg<?php echo $row->kdtarifpaket ?>').val();
                 var paket = 'Y';
                 var kdpaket = '<?php echo $row->kdtarifpaket ?>';
+                var harga = '<?php echo $row->harga ?>';
                 var kdtarif = '0';
                 var qty = '1';
                 $.ajax({
@@ -519,6 +522,7 @@
                         paket: paket,
                         kdpaket: kdpaket,
                         kdtarif: kdtarif,
+                        harga: harga,
                         qty: qty
                     },
                     success: function(data) {
@@ -587,8 +591,9 @@
         <?php foreach ($listobat as $obat) { ?>
             $('#btn_simpanobat<?php echo $obat->kdobat ?>').on('click', function() {
                 var noreg = $('#noreg<?php echo $obat->kdobat ?>').val();
-                var user = $('#user<?php echo $obat->kdobat ?>').val();
+                var user = $('#user<?php echo $this->session->userdata('id_users'); ?>').val();
                 var kdobat = '<?php echo $obat->kdobat ?>';
+                var hargaobat = '<?php echo $obat->hargaobat ?>';
                 var qty = '1';
                 $.ajax({
                     type: "POST",
@@ -598,6 +603,7 @@
                         noreg: noreg,
                         user: user,
                         kdobat: kdobat,
+                        hargaobat: hargaobat,
                         qty: qty
                     },
                     success: function(data) {
