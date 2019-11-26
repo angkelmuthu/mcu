@@ -7,7 +7,7 @@
                     <div class="col-12">
                         <div class="d-flex flex-column align-items-center justify-content-center p-4">
                             <img src="<?php echo base_url() ?>assets/smartadmin/img/demo/avatars/avatar-admin-lg.png" class="rounded-circle shadow-2 img-thumbnail" alt="">
-                            <h5 class="mb-0 fw-700 text-center mt-3">
+                            <h5 class="mb-0 fw-700 text-center mt-3" style="text-transform: uppercase;">
                                 <?php echo $nama ?>
                                 <!-- <small class="text-muted mb-0"><?php echo $nomr ?></small> -->
                             </h5>
@@ -17,19 +17,35 @@
                                     <tbody>
                                         <tr>
                                             <td>NOMR:</td>
-                                            <td><?php echo $nomr ?></td>
+                                            <td><b><?php echo $nomr ?></b></td>
                                         </tr>
                                         <tr>
                                             <td>NIK:</td>
-                                            <td><?php echo $nik ?></td>
+                                            <td><b><?php echo $nik ?></b></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jenis Kelamin:</td>
+                                            <td><b><?php echo $kelamin ?></b></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Status:</td>
+                                            <td><b><?php echo $kawin ?></b></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Poli:</td>
+                                            <td><b><?php echo $poli ?></b></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Dokter:</td>
+                                            <td><b><?php echo $dokter ?></b></td>
                                         </tr>
                                         <tr>
                                             <td>Pembayaran:</td>
-                                            <td><?php echo $kdbayar ?></td>
+                                            <td><b><?php echo $bayar ?></b></td>
                                         </tr>
                                         <tr>
                                             <td>Rujukan:</td>
-                                            <td><?php echo $rujukan ?></td>
+                                            <td><b><?php echo $rujukan ?></b></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -434,6 +450,7 @@
                 var kdtarif = '<?php echo $row->kdtarif ?>';
                 var harga = '<?php echo $row->harga ?>';
                 var qty = '1';
+                var kdbayar = '<?php echo $kdbayar ?>';
                 $.ajax({
                     type: "POST",
                     url: "<?php echo base_url('index.php/t_daftar/simpan_barang') ?>",
@@ -444,7 +461,8 @@
                         kdpaket: kdpaket,
                         kdtarif: kdtarif,
                         harga: harga,
-                        qty: qty
+                        qty: qty,
+                        kdbayar: kdbayar
                     },
                     success: function(data) {
                         $('#ModalaAdd').modal('hide');
@@ -513,6 +531,7 @@
                 var harga = '<?php echo $row->harga ?>';
                 var kdtarif = '0';
                 var qty = '1';
+                var kdbayar = '<?php echo $kdbayar ?>';
                 $.ajax({
                     type: "POST",
                     url: "<?php echo base_url('index.php/t_daftar/simpan_barang') ?>",
@@ -523,7 +542,8 @@
                         kdpaket: kdpaket,
                         kdtarif: kdtarif,
                         harga: harga,
-                        qty: qty
+                        qty: qty,
+                        kdbayar: kdbayar
                     },
                     success: function(data) {
                         $('#ModalaAdd').modal('hide');
@@ -595,6 +615,7 @@
                 var kdobat = '<?php echo $obat->kdobat ?>';
                 var hargaobat = '<?php echo $obat->hargaobat ?>';
                 var qty = '1';
+                var kdbayar = '<?php echo $kdbayar ?>';
                 $.ajax({
                     type: "POST",
                     url: "<?php echo base_url('index.php/t_daftar/simpan_obat') ?>",
@@ -604,7 +625,8 @@
                         user: user,
                         kdobat: kdobat,
                         hargaobat: hargaobat,
-                        qty: qty
+                        qty: qty,
+                        kdbayar: kdbayar
                     },
                     success: function(data) {
                         tampil_obat();
