@@ -59,7 +59,7 @@
             <div id="panel-7" class="panel">
                 <div class="panel-hdr">
                     <h2>
-                        Table <span class="fw-300"><i>Small</i></span>
+                        Billing <span class="fw-300"><i>#<?php echo $noreg ?></i></span>
                     </h2>
                     <div class="panel-toolbar">
                         <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
@@ -69,7 +69,9 @@
                 </div>
                 <div class="panel-container show">
                     <div class="panel-content">
-                        <div class="frame-wrap">
+                        <button id="print" class="btn btn-sm btn-success" type="button"> <span><i class="fa fa-print"></i> Print</span> </button>
+                        <div class="frame-wrap printableArea">
+
                             <table class="table m-0">
                                 <thead class="bg-primary-500">
                                     <tr>
@@ -132,37 +134,37 @@
                                         <td></td>
                                         <td class="text-right"><b>Total</b></td>
                                         <td class="text-center">:</td>
-                                        <td class="text-right"><b>Rp. 43242432</b></td>
+                                        <td class="text-right"><b>Rp. <?php echo number_format($bill_total + $bill_paket_total + $bill_obat_total) ?></b></td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td></td>
                                         <td class="text-right"><b>Potongan</b></td>
                                         <td class="text-center">:</td>
-                                        <td class="text-right"><b>Rp. 43242432</b></td>
+                                        <td class="text-right"><b>Rp. 0</b></td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td></td>
                                         <td class="text-right"><b>Keringanan</b></td>
                                         <td class="text-center">:</td>
-                                        <td class="text-right"><b>Rp. 43242432</b></td>
+                                        <td class="text-right"><b>Rp. 0</b></td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td></td>
                                         <td class="text-right"><b>Grand Total</b></td>
                                         <td class="text-center">:</td>
-                                        <td class="text-right"><b>Rp. 43242432</b></td>
+                                        <td class="text-right"><b>Rp. 0</b></td>
                                     </tr>
                                 </tbody>
                             </table>
+                            </divdata-size="A4class="frame-wrap>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </main>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/vendors.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/app.bundle.js"></script>
@@ -172,4 +174,27 @@
     $(document).ready(function() {
         $('table.display').DataTable();
     });
+</script>
+<script src="<?php echo base_url('assets/smartadmin/js/jquery.PrintArea.js') ?>" type="text/JavaScript"></script>
+<script>
+    $(document).ready(function() {
+        $("#print").click(function() {
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = {
+                mode: mode,
+                popClose: close
+            };
+            $("div.printableArea").printArea(options);
+        });
+    });
+</script>
+<script type="text/javascript">
+    function PrintDiv() {
+        var divToPrint = document.getElementById('divToPrint');
+        var popupWin = window.open('', '_blank', 'width=300,height=300');
+        popupWin.document.open();
+        popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</html>');
+        popupWin.document.close();
+    }
 </script>

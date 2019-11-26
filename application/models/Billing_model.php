@@ -38,7 +38,7 @@ class Billing_model extends CI_Model
     function billing_total($noreg)
     {
         $hasil = $this->db->query("SELECT SUM(a.harga*qty) as total FROM t_billrajal a LEFT JOIN m_tarif b on a.kdtarif=b.kdtarif LEFT JOIN m_poli c on b.kdpoli=c.kdpoli where a.noreg='$noreg' and a.paket='N'");
-        return $hasil->result();
+        return $hasil->row();
     }
     function billing_paket($noreg)
     {
@@ -48,9 +48,9 @@ class Billing_model extends CI_Model
     }
     function billing_paket_total($noreg)
     {
-        $hasil = $this->db->query("SELECT SUM(a.harga*qty) as total FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
+        $hasil = $this->db->query("SELECT SUM(b.harga*qty) as total FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
             LEFT JOIN m_tarifpaket c ON c.kdtarifpaket=a.kdpaket WHERE a.paket='Y' and a.noreg='$noreg'");
-        return $hasil->result();
+        return $hasil->row();
     }
     //////////////////////obat////////////////////////////////////
     function billing_obat($noreg)
@@ -58,6 +58,12 @@ class Billing_model extends CI_Model
         $hasil = $this->db->query("SELECT a.*,b.nmobat FROM t_billobat a
                 LEFT JOIN m_obat b ON a.kdobat=b.kdobat where a.noreg='$noreg'");
         return $hasil->result();
+    }
+    function billing_obat_total($noreg)
+    {
+        $hasil = $this->db->query("SELECT SUM(a.hargaobat*qty) as total FROM t_billobat a
+                LEFT JOIN m_obat b ON a.kdobat=b.kdobat where a.noreg='$noreg'");
+        return $hasil->row();
     }
 }
 

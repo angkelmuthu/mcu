@@ -26,6 +26,9 @@ class Billing extends CI_Controller
     public function read($noreg)
     {
         $row = $this->billing_model->get_by_id($noreg);
+        $bill_total = $this->billing_model->billing_total($noreg);
+        $bill_paket_total = $this->billing_model->billing_paket_total($noreg);
+        $bill_obat_total = $this->billing_model->billing_obat_total($noreg);
         if ($row) {
             $data = array(
                 'idreg' => $row->idreg,
@@ -45,9 +48,11 @@ class Billing extends CI_Controller
                 'kdrujuk' => $row->kdrujuk,
                 'tglreg' => $row->tglreg,
                 'petugas' => $row->id_users,
+                'bill_total' => $bill_total->total,
+                'bill_paket_total' => $bill_paket_total->total,
+                'bill_obat_total' => $bill_obat_total->total,
                 'billing' => $this->billing_model->billing($noreg),
-                'billing_total' => $this->billing_model->billing_total($noreg),
-                'billing_paket_total' => $this->billing_model->billing_paket_total($noreg),
+                'billing_paket' => $this->billing_model->billing_paket($noreg),
                 'billing_obat' => $this->billing_model->billing_obat($noreg),
 
             );
