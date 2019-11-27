@@ -13,42 +13,45 @@
                             </h5>
                             <hr>
                             <div class="table-responsive">
-                                <table class="table table-clean table-sm align-self-end">
+                                <table class="table table-sm align-self-end">
                                     <tbody>
                                         <tr>
-                                            <td>NOMR:</td>
+                                            <td>NOMR</td>
                                             <td><b><?php echo $nomr ?></b></td>
                                         </tr>
                                         <tr>
-                                            <td>NIK:</td>
+                                            <td>NIK</td>
                                             <td><b><?php echo $nik ?></b></td>
                                         </tr>
                                         <tr>
-                                            <td>Jenis Kelamin:</td>
+                                            <td>Jenis Kelamin</td>
                                             <td><b><?php echo $kelamin ?></b></td>
                                         </tr>
                                         <tr>
-                                            <td>Status:</td>
+                                            <td>Status</td>
                                             <td><b><?php echo $kawin ?></b></td>
                                         </tr>
                                         <tr>
-                                            <td>Poli:</td>
+                                            <td>Poli</td>
                                             <td><b><?php echo $poli ?></b></td>
                                         </tr>
                                         <tr>
-                                            <td>Dokter:</td>
+                                            <td>Dokter</td>
                                             <td><b><?php echo $dokter ?></b></td>
                                         </tr>
                                         <tr>
-                                            <td>Pembayaran:</td>
+                                            <td>Pembayaran</td>
                                             <td><b><?php echo $bayar ?></b></td>
                                         </tr>
                                         <tr>
-                                            <td>Rujukan:</td>
+                                            <td>Rujukan</td>
                                             <td><b><?php echo $rujukan ?></b></td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <button class="btn btn-block btn-warning" type="button"> <span><i class="fal fa-clone"></i> <b>Split Pembayaran</b></span> </button>
+                                <button class="btn btn-block btn-success" type="button"> <span><i class="fal fa-money-bill"></i> <b>Pembayaran</b></span> </button>
+                                <button id="print" class="btn btn-block btn-info" type="button"> <span><i class="fal fa-print"></i> <b>Print</b></span> </button>
                             </div>
                         </div>
                     </div>
@@ -69,97 +72,145 @@
                 </div>
                 <div class="panel-container show">
                     <div class="panel-content">
-                        <button id="print" class="btn btn-sm btn-success" type="button"> <span><i class="fa fa-print"></i> Print</span> </button>
                         <div class="frame-wrap printableArea">
-
-                            <table class="table m-0">
-                                <thead class="bg-primary-500">
-                                    <tr>
-                                        <th width="3%">No.</th>
-                                        <th>Nama Tindakan</th>
-                                        <th class="text-right">Harga</th>
-                                        <th class="text-center">Qty</th>
-                                        <th class="text-right">Total</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="6"><b>TINDAKAN</b></td>
-                                    </tr>
-                                    <?php $no = 1;
-                                    foreach ($billing as $bill) { ?>
-                                        <tr>
-                                            <td><?php echo $no ?></td>
-                                            <td style="text-transform: uppercase;"><?php echo $bill->nmtarif ?></td>
-                                            <td class="text-right">Rp. <?php echo number_format($bill->harga) ?></td>
-                                            <td class="text-center"><?php echo number_format($bill->qty) ?></td>
-                                            <td class="text-right">Rp. <?php echo number_format($bill->harga * $bill->qty) ?></td>
-                                            <td></td>
-                                        </tr>
-                                    <?php $no++;
-                                    } ?>
-                                    <tr>
-                                        <td colspan="6"><b>PAKET TINDAKAN</b></td>
-                                    </tr>
-                                    <?php $no = 1;
-                                    foreach ($billing_paket as $billpaket) { ?>
-                                        <tr>
-                                            <td><?php echo $no ?></td>
-                                            <td style="text-transform: uppercase;"><?php echo $billpaket->nmpaket ?> | <?php echo $billpaket->nmtarif ?></td>
-                                            <td class="text-right">Rp. <?php echo number_format($billpaket->harga) ?></td>
-                                            <td class="text-center"><?php echo number_format($billpaket->qty) ?></td>
-                                            <td class="text-right">Rp. <?php echo number_format($billpaket->harga * $billpaket->qty) ?></td>
-                                            <td></td>
-                                        </tr>
-                                    <?php $no++;
-                                    } ?>
-                                    <tr>
-                                        <td colspan="6"><b>RESEP</b></td>
-                                    </tr>
-                                    <?php $no = 1;
-                                    foreach ($billing_obat as $billobat) { ?>
-                                        <tr>
-                                            <td><?php echo $no ?></td>
-                                            <td style="text-transform: uppercase;"><?php echo $billobat->nmobat ?></td>
-                                            <td class="text-right">Rp. <?php echo number_format($billobat->hargaobat) ?></td>
-                                            <td class="text-center"><?php echo number_format($billobat->qty) ?></td>
-                                            <td class="text-right">Rp. <?php echo number_format($billobat->hargaobat * $billobat->qty) ?></td>
-                                            <td></td>
-                                        </tr>
-                                    <?php $no++;
-                                    } ?>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-right"><b>Total</b></td>
-                                        <td class="text-center">:</td>
-                                        <td class="text-right"><b>Rp. <?php echo number_format($bill_total + $bill_paket_total + $bill_obat_total) ?></b></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-right"><b>Potongan</b></td>
-                                        <td class="text-center">:</td>
-                                        <td class="text-right"><b>Rp. 0</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-right"><b>Keringanan</b></td>
-                                        <td class="text-center">:</td>
-                                        <td class="text-right"><b>Rp. 0</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="text-right"><b>Grand Total</b></td>
-                                        <td class="text-center">:</td>
-                                        <td class="text-right"><b>Rp. 0</b></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            </divdata-size="A4class="frame-wrap>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="table-responsive">
+                                        <table class="table mt-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center border-top-0 table-scale-border-bottom fw-700"></th>
+                                                    <th class="border-top-0 table-scale-border-bottom fw-700">Nama Tindakan</th>
+                                                    <th class="text-center border-top-0 table-scale-border-bottom fw-700">Pembayaran</th>
+                                                    <th class="text-right border-top-0 table-scale-border-bottom fw-700">Unit Cost</th>
+                                                    <th class="text-center border-top-0 table-scale-border-bottom fw-700">Qty</th>
+                                                    <th class="text-right border-top-0 table-scale-border-bottom fw-700">Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="6"><b>TINDAKAN</b></td>
+                                                </tr>
+                                                <?php $no = 1;
+                                                foreach ($billing as $bill) {
+                                                    if ($bill->kdmetodebayar == 1) {
+                                                        $badge = 'success';
+                                                        $coret = ' style="text-decoration: line-through;"';
+                                                    } elseif ($bill->kdmetodebayar == 2) {
+                                                        $badge = 'primary';
+                                                        $coret = '';
+                                                    } elseif ($bill->kdmetodebayar == 3) {
+                                                        $badge = 'warning';
+                                                        $coret = ' style="text-decoration: line-through;"';
+                                                    } elseif ($bill->kdmetodebayar == 4) {
+                                                        $badge = 'secondary';
+                                                        $coret = ' style="text-decoration: line-through;"';
+                                                    } ?>
+                                                    <tr>
+                                                        <td class="text-center fw-700"><?php echo $no ?></td>
+                                                        <td style="text-transform: uppercase;"><?php echo $bill->nmtarif ?></td>
+                                                        <td class="text-center"><span class="badge badge-<?php echo $badge ?>"><?php echo $bill->bayar ?></span></td>
+                                                        <td class="text-right">Rp. <?php echo number_format($bill->harga) ?></td>
+                                                        <td class="text-center"><?php echo number_format($bill->qty) ?></td>
+                                                        <td class="text-right" <?php echo $coret ?>>Rp. <?php echo number_format($bill->harga * $bill->qty) ?></td>
+                                                    </tr>
+                                                <?php $no++;
+                                                } ?>
+                                                <tr>
+                                                    <td colspan="6"><b>PAKET TINDAKAN</b></td>
+                                                </tr>
+                                                <?php $no = 1;
+                                                foreach ($billing_paket as $billpaket) {
+                                                    if ($billpaket->kdmetodebayar == 1) {
+                                                        $badge = 'success';
+                                                        $coret = ' style="text-decoration: line-through;"';
+                                                    } elseif ($billpaket->kdmetodebayar == 2) {
+                                                        $badge = 'primary';
+                                                        $coret = '';
+                                                    } elseif ($billpaket->kdmetodebayar == 3) {
+                                                        $badge = 'warning';
+                                                        $coret = ' style="text-decoration: line-through;"';
+                                                    } elseif ($billpaket->kdmetodebayar == 4) {
+                                                        $badge = 'secondary';
+                                                        $coret = ' style="text-decoration: line-through;"';
+                                                    } ?>
+                                                    <tr>
+                                                        <td class="text-center fw-700"><?php echo $no ?></td>
+                                                        <td class="text-left strong" style="text-transform: uppercase;"><?php echo $billpaket->nmpaket ?> | <?php echo $billpaket->nmtarif ?></td>
+                                                        <td class="text-center"><span class="badge badge-<?php echo $badge ?>"><?php echo $billpaket->bayar ?></span></td>
+                                                        <td class="text-right">Rp. <?php echo number_format($billpaket->harga) ?></td>
+                                                        <td class="text-center"><?php echo number_format($billpaket->qty) ?></td>
+                                                        <td class="text-right" <?php echo $coret ?>>Rp. <?php echo number_format($billpaket->harga * $billpaket->qty) ?></td>
+                                                    </tr>
+                                                <?php $no++;
+                                                } ?>
+                                                <tr>
+                                                    <td colspan="6"><b>RESEP</b></td>
+                                                </tr>
+                                                <?php $no = 1;
+                                                foreach ($billing_obat as $billobat) {
+                                                    if ($billobat->kdmetodebayar == 1) {
+                                                        $badge = 'success';
+                                                        $coret = ' style="text-decoration: line-through;"';
+                                                    } elseif ($billobat->kdmetodebayar == 2) {
+                                                        $badge = 'primary';
+                                                        $coret = '';
+                                                    } elseif ($billobat->kdmetodebayar == 3) {
+                                                        $badge = 'warning';
+                                                        $coret = ' style="text-decoration: line-through;"';
+                                                    } elseif ($billobat->kdmetodebayar == 4) {
+                                                        $badge = 'secondary';
+                                                        $coret = ' style="text-decoration: line-through;"';
+                                                    } ?>
+                                                    <tr>
+                                                        <td class="text-center fw-700"><?php echo $no ?></td>
+                                                        <td style="text-transform: uppercase;"><?php echo $billobat->nmobat ?></td>
+                                                        <td class="text-center"><span class="badge badge-<?php echo $badge ?>"><?php echo $billobat->bayar ?></span></td>
+                                                        <td class="text-right">Rp. <?php echo number_format($billobat->hargaobat) ?></td>
+                                                        <td class="text-center"><?php echo number_format($billobat->qty) ?></td>
+                                                        <td class="text-right" <?php echo $coret ?>>Rp. <?php echo number_format($billobat->hargaobat * $billobat->qty) ?></td>
+                                                    </tr>
+                                                <?php $no++;
+                                                } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 ml-sm-auto">
+                                    <table class="table table-clean">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-left">
+                                                    <strong>Subtotal</strong>
+                                                </td>
+                                                <td class="text-right">Rp. <?php echo number_format($bill_total + $bill_paket_total + $bill_obat_total) ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">
+                                                    <strong>Discount (20%)</strong>
+                                                </td>
+                                                <td class="text-right">$1,699.40</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left">
+                                                    <strong>VAT (10%)</strong>
+                                                </td>
+                                                <td class="text-right">$679.76</td>
+                                            </tr>
+                                            <tr class="table-scale-border-top border-left-0 border-right-0 border-bottom-0">
+                                                <td class="text-left keep-print-font">
+                                                    <h4 class="m-0 fw-700 h2 keep-print-font color-primary-700">Total</h4>
+                                                </td>
+                                                <td class="text-right keep-print-font">
+                                                    <h4 class="m-0 fw-700 h2 keep-print-font">$7,477.36</h4>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
