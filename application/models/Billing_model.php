@@ -42,14 +42,17 @@ class Billing_model extends CI_Model
     }
     function billing_paket($noreg)
     {
-        $hasil = $this->db->query("SELECT * FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
-            LEFT JOIN m_tarifpaket c ON c.kdtarifpaket=a.kdpaket LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar WHERE a.paket='Y' and a.noreg='$noreg'");
+        // $hasil = $this->db->query("SELECT * FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
+        //     LEFT JOIN m_tarifpaket c ON c.kdtarifpaket=a.kdpaket LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar WHERE a.paket='Y' and a.noreg='$noreg'");
+        $hasil = $this->db->query("SELECT *,SUM(b.harga) AS hargapaket FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
+        LEFT JOIN m_tarifpaket c ON c.kdtarifpaket=a.kdpaket LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar WHERE a.paket='Y' and a.noreg='$noreg'
+        GROUP BY a.kdpaket");
         return $hasil->result();
     }
     function billing_paket_total($noreg)
     {
-        $hasil = $this->db->query("SELECT SUM(b.harga*qty) as total FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
-            LEFT JOIN m_tarifpaket c ON c.kdtarifpaket=a.kdpaket LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar WHERE a.paket='Y' and a.noreg='$noreg' and d.kdmetodebayar='2'");
+        $hasil = $this->db->query("SELECT SUM(b.harga*qty)-(c.potongan*qty) as total FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
+            LEFT JOIN m_tarifpaket c ON c.kdtarifpaket=a.kdpaket LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar WHERE a.paket='Y' and a.noreg='$noreg' and d.kdmetodebayar='2' GROUP BY a.kdpaket");
         return $hasil->row();
     }
     //////////////////////obat////////////////////////////////////

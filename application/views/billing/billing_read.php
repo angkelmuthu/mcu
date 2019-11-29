@@ -136,11 +136,13 @@
                                                     } ?>
                                                     <tr>
                                                         <td class="text-center fw-700"><?php echo $no ?></td>
-                                                        <td class="text-left strong" style="text-transform: uppercase;"><?php echo $billpaket->nmpaket ?> | <?php echo $billpaket->nmtarif ?></td>
+                                                        <td class="text-left strong" style="text-transform: uppercase;"><?php echo $billpaket->nmpaket ?></td>
                                                         <td class="text-center"><span class="badge badge-<?php echo $badge ?>"><?php echo $billpaket->bayar ?></span></td>
-                                                        <td class="text-right">Rp. <?php echo number_format($billpaket->harga) ?></td>
+                                                        <td class="text-right">
+                                                            <px style="text-decoration: line-through;"> Rp. <?php echo number_format($billpaket->hargapaket) ?></px> Rp. <?php echo number_format($billpaket->hargapaket - $billpaket->potongan) ?>
+                                                        </td>
                                                         <td class="text-center"><?php echo number_format($billpaket->qty) ?></td>
-                                                        <td class="text-right" <?php echo $coret ?>>Rp. <?php echo number_format($billpaket->harga * $billpaket->qty) ?></td>
+                                                        <td class="text-right" <?php echo $coret ?>>Rp. <?php echo number_format(($billpaket->hargapaket - $billpaket->potongan) * $billpaket->qty) ?></td>
                                                     </tr>
                                                 <?php $no++;
                                                 } ?>
