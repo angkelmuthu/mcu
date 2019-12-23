@@ -89,7 +89,7 @@ class T_daftar_model extends CI_Model
         return $hasil->result();
     }
 
-    function simpan_barang($noreg, $paket, $kdpaket, $kdtarif, $harga, $qty, $kdbayar, $id_users, $tgl)
+    function simpan_barang($nobill, $noreg, $paket, $kdpaket, $kdtarif, $harga, $qty, $kdbayar, $id_users, $tgl)
     {
         if ($paket == 'Y') {
             $qry = "SELECT '" . $noreg . "' AS noreg,'Y' AS paket,a.kdtarifpaket as kdpaket,a.kdtarif,b.harga,'" . $qty . "' AS qty, 'BL' AS status FROM m_tarifpaketdetail a
@@ -99,6 +99,7 @@ class T_daftar_model extends CI_Model
             $hasil = array();
             foreach ($query->result() as $dat) {
                 $hasil[] = array(
+                    'nobill'   => $nobill,
                     'noreg'   => $dat->noreg,
                     'paket'   => $dat->paket,
                     'kdpaket'   => $dat->kdpaket,
@@ -114,11 +115,11 @@ class T_daftar_model extends CI_Model
             $this->db->insert_batch('t_billrajal', $hasil);
             return $hasil;
         } else {
-            $hasil = $this->db->query("INSERT INTO t_billrajal (noreg,paket,kdpaket,kdtarif,harga,qty,kdbayar,tglinput,id_users)VALUES('$noreg','$paket','$kdpaket','$kdtarif','$harga','$qty','$kdbayar','$tgl', '$id_users')");
+            $hasil = $this->db->query("INSERT INTO t_billrajal (nobill,noreg,paket,kdpaket,kdtarif,harga,qty,kdbayar,tglinput,id_users)VALUES('$nobill','$noreg','$paket','$kdpaket','$kdtarif','$harga','$qty','$kdbayar','$tgl', '$id_users')");
             return $hasil;
         }
     }
-    function update_barang($noreg, $paket, $kdpaket, $kdtarif, $harga, $qty, $kdbayar, $id_users, $tgl)
+    function update_barang($nobill, $noreg, $paket, $kdpaket, $kdtarif, $harga, $qty, $kdbayar, $id_users, $tgl)
     {
         if ($paket == 'Y') {
             //$hasil = $this->db->query("update t_billrajal set qty='$qty' where noreg='$noreg' and kdpaket='$kdpaket'");
@@ -128,6 +129,7 @@ class T_daftar_model extends CI_Model
             $hasil = array();
             foreach ($query->result() as $dat) {
                 $hasil[] = array(
+                    'nobill'   => $nobill,
                     'noreg'   => $dat->noreg,
                     'paket'   => $dat->paket,
                     'kdpaket'   => $dat->kdpaket,
@@ -143,16 +145,17 @@ class T_daftar_model extends CI_Model
             $this->db->where('kdpaket', $kdpaket);
             $this->db->where('paket', 'Y');
             $this->db->where('noreg', $noreg);
+            $this->db->where('nobill', $nobill);
             $this->db->update_batch('t_billrajal', $hasil, 'kdtarif');
             return $hasil;
         } else {
-            $hasil = $this->db->query("update t_billrajal set qty='$qty',kdbayar='$kdbayar',tglinput='$tgl',id_users='$id_users' where noreg='$noreg' and paket='N' and kdtarif='$kdtarif'");
+            $hasil = $this->db->query("update t_billrajal set qty='$qty',kdbayar='$kdbayar',tglinput='$tgl',id_users='$id_users' where noreg='$noreg' and nobill='$nobill' and paket='N' and kdtarif='$kdtarif'");
             return $hasil;
         }
     }
-    function hapus_barang($nobill)
+    function hapus_barang($idbill)
     {
-        $hasil = $this->db->query("DELETE FROM t_billrajal WHERE nobill='$nobill'");
+        $hasil = $this->db->query("DELETE FROM t_billrajal WHERE idbill='$idbill'");
         return $hasil;
     }
     /////////////////////Paket tarif//////////////////////////
@@ -174,19 +177,19 @@ class T_daftar_model extends CI_Model
         return $hasil->result();
     }
 
-    function simpan_obat($noreg, $kdobat, $hargaobat, $qty, $kdbayar, $status, $tgl, $user)
+    function simpan_obat($nobill, $noreg, $kdobat, $hargaobat, $qty, $kdbayar, $status, $tgl, $user)
     {
-        $hasil = $this->db->query("INSERT INTO t_billobat (noreg, kdobat, hargaobat, qty, kdbayar, status, tglinput, id_users)VALUES('$noreg','$kdobat',$hargaobat,'$qty', '$kdbayar','$status','$tgl','$user')");
+        $hasil = $this->db->query("INSERT INTO t_billobat (nobill, noreg, kdobat, hargaobat, qty, kdbayar, status, tglinput, id_users)VALUES('$nobill','$noreg','$kdobat',$hargaobat,'$qty', '$kdbayar','$status','$tgl','$user')");
         return $hasil;
     }
-    function update_obat($noreg, $kdobat, $hargaobat, $qty, $kdbayar, $status, $tgl, $user)
+    function update_obat($nobill, $noreg, $kdobat, $hargaobat, $qty, $kdbayar, $status, $tgl, $user)
     {
-        $hasil = $this->db->query("update t_billobat set hargaobat='$hargaobat',qty='$qty', kdbayar='$kdbayar',id_users='$user' where noreg='$noreg' and kdobat='$kdobat'");
+        $hasil = $this->db->query("update t_billobat set hargaobat='$hargaobat',qty='$qty', kdbayar='$kdbayar',id_users='$user' where noreg='$noreg' and nobill='$nobill' and kdobat='$kdobat'");
         return $hasil;
     }
-    function hapus_obat($nobill)
+    function hapus_obat($idbill)
     {
-        $hasil = $this->db->query("DELETE FROM t_billobat WHERE nobill='$nobill'");
+        $hasil = $this->db->query("DELETE FROM t_billobat WHERE idbill='$idbill'");
         return $hasil;
     }
     // get total rows

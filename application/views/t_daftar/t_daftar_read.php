@@ -144,7 +144,7 @@
                                             <form class="form-horizontal">
                                                 <div class="modal-body">
 
-                                                    <input type="hidden" name="nobill" id="textnobill" value="">
+                                                    <input type="hidden" name="idbill" id="textidbill" value="">
                                                     <div class="alert alert-warning">
                                                         <p>Apakah Anda yakin mau memhapus barang ini?</p>
                                                     </div>
@@ -170,7 +170,7 @@
                                             <form class="form-horizontal">
                                                 <div class="modal-body">
 
-                                                    <input type="hidden" name="nobillpaket" id="textnobillpaket" value="">
+                                                    <input type="text" name="idbillpaket" id="textidbillpaket" value="">
                                                     <div class="alert alert-warning">
                                                         <p>Apakah Anda yakin mau memhapus barang ini?</p>
                                                     </div>
@@ -421,7 +421,7 @@
                             '<td align="center">' + data[i].qty + '</td>' +
                             '<td align="right">' + parseInt(data[i].harga * data[i].qty).toLocaleString() + '</td>' +
                             '<td style="text-align:center;">' +
-                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].nobill + '"><i class="fal fa-trash"></i></a>' +
+                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].idbill + '"><i class="fal fa-trash"></i></a>' +
                             '</td>' +
                             '</tr>';
                     }
@@ -433,7 +433,7 @@
         $('#show_data').on('click', '.item_hapus', function() {
             var id = $(this).attr('data');
             $('#ModalHapus').modal('show');
-            $('[name="nobill"]').val(id);
+            $('[name="idbill"]').val(id);
         });
 
         //Simpan Barang
@@ -475,13 +475,13 @@
 
         //Hapus Barang
         $('#btn_hapus').on('click', function() {
-            var nobill = $('#textnobill').val();
+            var idbill = $('#textidbill').val();
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url('index.php/t_daftar/hapus_barang') ?>",
                 dataType: "JSON",
                 data: {
-                    nobill: nobill
+                    idbill: idbill
                 },
                 success: function(data) {
                     $('#ModalHapus').modal('hide');
@@ -512,7 +512,7 @@
                             '<td align="center">' + data[i].qty + '</td>' +
                             '<td align="right">' + parseInt(data[i].harga * data[i].qty).toLocaleString() + '</td>' +
                             '<td style="text-align:center;">' +
-                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus_paket" data="' + data[i].nobill + '"><i class="fal fa-trash"></i></a>' +
+                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus_paket" data="' + data[i].idbill + '"><i class="fal fa-trash"></i></a>' +
                             '</td>' +
                             '</tr>';
                     }
@@ -557,18 +557,18 @@
         $('#show_paket').on('click', '.item_hapus_paket', function() {
             var id = $(this).attr('data');
             $('#ModalHapusPaket').modal('show');
-            $('[name="nobillpaket"]').val(id);
+            $('[name="idbillpaket"]').val(id);
         });
 
         //Hapus Barang
         $('#btn_hapus_paket').on('click', function() {
-            var nobill = $('#textnobillpaket').val();
+            var idbill = $('#textidbillpaket').val();
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url('index.php/t_daftar/hapus_barang') ?>",
                 dataType: "JSON",
                 data: {
-                    nobill: nobill
+                    idbill: idbill
                 },
                 success: function(data) {
                     $('#ModalHapusPaket').modal('hide');

@@ -12,6 +12,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 -- Dumping structure for table mcu.m_bayar
+DROP TABLE IF EXISTS `m_bayar`;
 CREATE TABLE IF NOT EXISTS `m_bayar` (
   `kdbayar` int(11) NOT NULL AUTO_INCREMENT,
   `bayar` varchar(50) NOT NULL,
@@ -22,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `m_bayar` (
   PRIMARY KEY (`kdbayar`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.m_bayar: ~3 rows (approximately)
+-- Dumping data for table mcu.m_bayar: ~2 rows (approximately)
 /*!40000 ALTER TABLE `m_bayar` DISABLE KEYS */;
 INSERT INTO `m_bayar` (`kdbayar`, `bayar`, `kdmetodebayar`, `aktif`, `tglinput`, `id_users`) VALUES
 	(1, 'BPJS', 1, 'Y', '2019-11-22 04:27:54', 1),
@@ -31,6 +32,7 @@ INSERT INTO `m_bayar` (`kdbayar`, `bayar`, `kdmetodebayar`, `aktif`, `tglinput`,
 /*!40000 ALTER TABLE `m_bayar` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_bayar_metode
+DROP TABLE IF EXISTS `m_bayar_metode`;
 CREATE TABLE IF NOT EXISTS `m_bayar_metode` (
   `kdmetodebayar` int(11) NOT NULL AUTO_INCREMENT,
   `metode` varchar(50) NOT NULL,
@@ -39,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `m_bayar_metode` (
   PRIMARY KEY (`kdmetodebayar`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.m_bayar_metode: ~3 rows (approximately)
+-- Dumping data for table mcu.m_bayar_metode: ~2 rows (approximately)
 /*!40000 ALTER TABLE `m_bayar_metode` DISABLE KEYS */;
 INSERT INTO `m_bayar_metode` (`kdmetodebayar`, `metode`, `keterangan`, `aktif`) VALUES
 	(1, 'Jaminan Sosial', 'BPJS, KJS, ASKES', 'Y'),
@@ -48,6 +50,7 @@ INSERT INTO `m_bayar_metode` (`kdmetodebayar`, `metode`, `keterangan`, `aktif`) 
 /*!40000 ALTER TABLE `m_bayar_metode` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_dokter
+DROP TABLE IF EXISTS `m_dokter`;
 CREATE TABLE IF NOT EXISTS `m_dokter` (
   `kddokter` int(11) NOT NULL AUTO_INCREMENT,
   `NIP` int(20) NOT NULL,
@@ -65,6 +68,7 @@ INSERT INTO `m_dokter` (`kddokter`, `NIP`, `dokter`, `aktif`) VALUES
 /*!40000 ALTER TABLE `m_dokter` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_dokterjadwal
+DROP TABLE IF EXISTS `m_dokterjadwal`;
 CREATE TABLE IF NOT EXISTS `m_dokterjadwal` (
   `kdjadwal` int(11) NOT NULL AUTO_INCREMENT,
   `kddokter` int(11) NOT NULL,
@@ -86,6 +90,7 @@ INSERT INTO `m_dokterjadwal` (`kdjadwal`, `kddokter`, `kdpoli`, `hari`, `jam_mul
 /*!40000 ALTER TABLE `m_dokterjadwal` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_kawin
+DROP TABLE IF EXISTS `m_kawin`;
 CREATE TABLE IF NOT EXISTS `m_kawin` (
   `kdkawin` int(11) NOT NULL AUTO_INCREMENT,
   `kawin` varchar(50) DEFAULT NULL,
@@ -102,6 +107,7 @@ INSERT INTO `m_kawin` (`kdkawin`, `kawin`) VALUES
 /*!40000 ALTER TABLE `m_kawin` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_kelamin
+DROP TABLE IF EXISTS `m_kelamin`;
 CREATE TABLE IF NOT EXISTS `m_kelamin` (
   `kdklmn` int(11) NOT NULL AUTO_INCREMENT,
   `kelamin` varchar(50) NOT NULL,
@@ -116,6 +122,7 @@ INSERT INTO `m_kelamin` (`kdklmn`, `kelamin`) VALUES
 /*!40000 ALTER TABLE `m_kelamin` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_lab
+DROP TABLE IF EXISTS `m_lab`;
 CREATE TABLE IF NOT EXISTS `m_lab` (
   `kdlab` int(11) NOT NULL AUTO_INCREMENT,
   `nmlab` varchar(70) NOT NULL,
@@ -138,6 +145,7 @@ INSERT INTO `m_lab` (`kdlab`, `nmlab`, `deskripsi`, `nilai_min`, `nilai_max`, `n
 /*!40000 ALTER TABLE `m_lab` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_labgroup
+DROP TABLE IF EXISTS `m_labgroup`;
 CREATE TABLE IF NOT EXISTS `m_labgroup` (
   `kdlabgroup` int(11) NOT NULL AUTO_INCREMENT,
   `kdtarif` int(11) NOT NULL,
@@ -155,6 +163,7 @@ INSERT INTO `m_labgroup` (`kdlabgroup`, `kdtarif`, `kdlab`, `tglinput`, `id_user
 /*!40000 ALTER TABLE `m_labgroup` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_obat
+DROP TABLE IF EXISTS `m_obat`;
 CREATE TABLE IF NOT EXISTS `m_obat` (
   `kdobat` int(11) NOT NULL AUTO_INCREMENT,
   `kdkatalog` int(11) NOT NULL,
@@ -181,6 +190,7 @@ INSERT INTO `m_obat` (`kdobat`, `kdkatalog`, `kdfornas`, `generik`, `nmobat`, `k
 /*!40000 ALTER TABLE `m_obat` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_obatcara
+DROP TABLE IF EXISTS `m_obatcara`;
 CREATE TABLE IF NOT EXISTS `m_obatcara` (
   `kdobatcara` int(11) NOT NULL AUTO_INCREMENT,
   `obatcara` varchar(50) NOT NULL,
@@ -196,6 +206,7 @@ INSERT INTO `m_obatcara` (`kdobatcara`, `obatcara`) VALUES
 /*!40000 ALTER TABLE `m_obatcara` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_obatjenis
+DROP TABLE IF EXISTS `m_obatjenis`;
 CREATE TABLE IF NOT EXISTS `m_obatjenis` (
   `kdobatjenis` int(11) NOT NULL AUTO_INCREMENT,
   `obatjenis` varchar(50) NOT NULL,
@@ -211,6 +222,7 @@ INSERT INTO `m_obatjenis` (`kdobatjenis`, `obatjenis`) VALUES
 /*!40000 ALTER TABLE `m_obatjenis` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_obatpakai
+DROP TABLE IF EXISTS `m_obatpakai`;
 CREATE TABLE IF NOT EXISTS `m_obatpakai` (
   `kdobatpakai` int(11) NOT NULL AUTO_INCREMENT,
   `obatpakai` varchar(50) NOT NULL,
@@ -227,6 +239,7 @@ INSERT INTO `m_obatpakai` (`kdobatpakai`, `obatpakai`, `waktu`, `makan`) VALUES
 /*!40000 ALTER TABLE `m_obatpakai` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_obatsatuan
+DROP TABLE IF EXISTS `m_obatsatuan`;
 CREATE TABLE IF NOT EXISTS `m_obatsatuan` (
   `kdobatsatuan` int(11) NOT NULL AUTO_INCREMENT,
   `obatsatuan` varchar(50) NOT NULL,
@@ -241,6 +254,7 @@ INSERT INTO `m_obatsatuan` (`kdobatsatuan`, `obatsatuan`) VALUES
 /*!40000 ALTER TABLE `m_obatsatuan` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_obatstok
+DROP TABLE IF EXISTS `m_obatstok`;
 CREATE TABLE IF NOT EXISTS `m_obatstok` (
   `idstok` int(11) NOT NULL AUTO_INCREMENT,
   `nobatch` varchar(50) NOT NULL,
@@ -261,6 +275,7 @@ INSERT INTO `m_obatstok` (`idstok`, `nobatch`, `kdobat`, `expired`, `stok`, `tgl
 /*!40000 ALTER TABLE `m_obatstok` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_pasien
+DROP TABLE IF EXISTS `m_pasien`;
 CREATE TABLE IF NOT EXISTS `m_pasien` (
   `nomr` char(50) NOT NULL,
   `nik` bigint(20) DEFAULT NULL,
@@ -285,6 +300,7 @@ INSERT INTO `m_pasien` (`nomr`, `nik`, `nama`, `tgllhr`, `alamat`, `kodepos`, `k
 /*!40000 ALTER TABLE `m_pasien` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_poli
+DROP TABLE IF EXISTS `m_poli`;
 CREATE TABLE IF NOT EXISTS `m_poli` (
   `kdpoli` int(11) NOT NULL AUTO_INCREMENT,
   `poli` varchar(50) NOT NULL,
@@ -303,6 +319,7 @@ INSERT INTO `m_poli` (`kdpoli`, `poli`, `kdunit`) VALUES
 /*!40000 ALTER TABLE `m_poli` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_tarif
+DROP TABLE IF EXISTS `m_tarif`;
 CREATE TABLE IF NOT EXISTS `m_tarif` (
   `kdtarif` int(11) NOT NULL AUTO_INCREMENT,
   `nmtarif` varchar(150) NOT NULL DEFAULT '',
@@ -326,6 +343,7 @@ INSERT INTO `m_tarif` (`kdtarif`, `nmtarif`, `kdpoli`, `harga`, `tglinput`, `id_
 /*!40000 ALTER TABLE `m_tarif` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_tarifgroup
+DROP TABLE IF EXISTS `m_tarifgroup`;
 CREATE TABLE IF NOT EXISTS `m_tarifgroup` (
   `kdtarifgroup` int(11) NOT NULL AUTO_INCREMENT,
   `tarifgroup` varchar(50) NOT NULL,
@@ -343,6 +361,7 @@ INSERT INTO `m_tarifgroup` (`kdtarifgroup`, `tarifgroup`, `kdpoli`) VALUES
 /*!40000 ALTER TABLE `m_tarifgroup` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_tarifpaket
+DROP TABLE IF EXISTS `m_tarifpaket`;
 CREATE TABLE IF NOT EXISTS `m_tarifpaket` (
   `kdtarifpaket` int(11) NOT NULL AUTO_INCREMENT,
   `nmpaket` varchar(70) NOT NULL,
@@ -361,6 +380,7 @@ INSERT INTO `m_tarifpaket` (`kdtarifpaket`, `nmpaket`, `potongan`, `aktif`, `tgl
 /*!40000 ALTER TABLE `m_tarifpaket` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_tarifpaketdetail
+DROP TABLE IF EXISTS `m_tarifpaketdetail`;
 CREATE TABLE IF NOT EXISTS `m_tarifpaketdetail` (
   `kdpaketdetail` int(11) NOT NULL AUTO_INCREMENT,
   `kdtarifpaket` int(11) NOT NULL,
@@ -382,6 +402,7 @@ INSERT INTO `m_tarifpaketdetail` (`kdpaketdetail`, `kdtarifpaket`, `kdtarif`, `t
 /*!40000 ALTER TABLE `m_tarifpaketdetail` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.m_unit
+DROP TABLE IF EXISTS `m_unit`;
 CREATE TABLE IF NOT EXISTS `m_unit` (
   `kdunit` int(11) NOT NULL AUTO_INCREMENT,
   `unit` varchar(50) NOT NULL,
@@ -398,6 +419,7 @@ INSERT INTO `m_unit` (`kdunit`, `unit`) VALUES
 /*!40000 ALTER TABLE `m_unit` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_hak_akses
+DROP TABLE IF EXISTS `tbl_hak_akses`;
 CREATE TABLE IF NOT EXISTS `tbl_hak_akses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_user_level` int(11) NOT NULL,
@@ -405,7 +427,7 @@ CREATE TABLE IF NOT EXISTS `tbl_hak_akses` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_hak_akses: ~42 rows (approximately)
+-- Dumping data for table mcu.tbl_hak_akses: ~39 rows (approximately)
 /*!40000 ALTER TABLE `tbl_hak_akses` DISABLE KEYS */;
 INSERT INTO `tbl_hak_akses` (`id`, `id_user_level`, `id_menu`) VALUES
 	(15, 1, 1),
@@ -453,6 +475,7 @@ INSERT INTO `tbl_hak_akses` (`id`, `id_user_level`, `id_menu`) VALUES
 /*!40000 ALTER TABLE `tbl_hak_akses` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_kodepos
+DROP TABLE IF EXISTS `tbl_kodepos`;
 CREATE TABLE IF NOT EXISTS `tbl_kodepos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `kelurahan` varchar(100) NOT NULL,
@@ -28928,6 +28951,7 @@ INSERT INTO `tbl_kodepos` (`id`, `kelurahan`, `kecamatan`, `kabupaten`, `provins
 /*!40000 ALTER TABLE `tbl_kodepos` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_menu
+DROP TABLE IF EXISTS `tbl_menu`;
 CREATE TABLE IF NOT EXISTS `tbl_menu` (
   `id_menu` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL,
@@ -28938,7 +28962,7 @@ CREATE TABLE IF NOT EXISTS `tbl_menu` (
   PRIMARY KEY (`id_menu`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mcu.tbl_menu: ~33 rows (approximately)
+-- Dumping data for table mcu.tbl_menu: ~30 rows (approximately)
 /*!40000 ALTER TABLE `tbl_menu` DISABLE KEYS */;
 INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_aktif`) VALUES
 	(1, 'KELOLA MENU', 'kelolamenu', 'fal fa-server', 15, 'y'),
@@ -28977,6 +29001,7 @@ INSERT INTO `tbl_menu` (`id_menu`, `title`, `url`, `icon`, `is_main_menu`, `is_a
 /*!40000 ALTER TABLE `tbl_menu` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_setting
+DROP TABLE IF EXISTS `tbl_setting`;
 CREATE TABLE IF NOT EXISTS `tbl_setting` (
   `id_setting` int(11) NOT NULL AUTO_INCREMENT,
   `nama_setting` varchar(50) NOT NULL,
@@ -28991,6 +29016,7 @@ INSERT INTO `tbl_setting` (`id_setting`, `nama_setting`, `value`) VALUES
 /*!40000 ALTER TABLE `tbl_setting` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_user
+DROP TABLE IF EXISTS `tbl_user`;
 CREATE TABLE IF NOT EXISTS `tbl_user` (
   `id_users` int(11) NOT NULL AUTO_INCREMENT,
   `full_name` varchar(50) NOT NULL,
@@ -29010,6 +29036,7 @@ INSERT INTO `tbl_user` (`id_users`, `full_name`, `email`, `password`, `images`, 
 /*!40000 ALTER TABLE `tbl_user` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.tbl_user_level
+DROP TABLE IF EXISTS `tbl_user_level`;
 CREATE TABLE IF NOT EXISTS `tbl_user_level` (
   `id_user_level` int(11) NOT NULL AUTO_INCREMENT,
   `nama_level` varchar(30) NOT NULL,
@@ -29024,6 +29051,7 @@ INSERT INTO `tbl_user_level` (`id_user_level`, `nama_level`) VALUES
 /*!40000 ALTER TABLE `tbl_user_level` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_asessment
+DROP TABLE IF EXISTS `t_asessment`;
 CREATE TABLE IF NOT EXISTS `t_asessment` (
   `noreg` int(11) NOT NULL,
   `bb` int(11) DEFAULT NULL COMMENT 'berat badan',
@@ -29047,8 +29075,10 @@ INSERT INTO `t_asessment` (`noreg`, `bb`, `tb`, `sb`, `sistole`, `diastole`, `na
 /*!40000 ALTER TABLE `t_asessment` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_billobat
+DROP TABLE IF EXISTS `t_billobat`;
 CREATE TABLE IF NOT EXISTS `t_billobat` (
-  `nobill` int(11) NOT NULL AUTO_INCREMENT,
+  `idbill` int(11) NOT NULL AUTO_INCREMENT,
+  `nobill` char(10) NOT NULL,
   `noreg` int(11) NOT NULL,
   `kdobat` int(11) NOT NULL,
   `hargaobat` int(11) NOT NULL,
@@ -29057,19 +29087,21 @@ CREATE TABLE IF NOT EXISTS `t_billobat` (
   `status` varchar(50) NOT NULL,
   `tglinput` datetime NOT NULL,
   `id_users` int(11) NOT NULL,
-  PRIMARY KEY (`nobill`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`idbill`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table mcu.t_billobat: ~2 rows (approximately)
 /*!40000 ALTER TABLE `t_billobat` DISABLE KEYS */;
-INSERT INTO `t_billobat` (`nobill`, `noreg`, `kdobat`, `hargaobat`, `qty`, `kdbayar`, `status`, `tglinput`, `id_users`) VALUES
-	(6, 191000003, 2, 0, 6, 0, 'BL', '2019-11-19 05:35:58', 1),
-	(7, 191100005, 2, 750, 11, 3, 'BL', '2019-11-25 08:28:33', 1);
+INSERT INTO `t_billobat` (`idbill`, `nobill`, `noreg`, `kdobat`, `hargaobat`, `qty`, `kdbayar`, `status`, `tglinput`, `id_users`) VALUES
+	(1, '000002', 191100004, 2, 750, 2, 1, 'BL', '2019-12-13 03:22:55', 1),
+	(2, '000001', 191000003, 2, 750, 1, 1, 'BL', '2019-12-13 07:44:05', 1);
 /*!40000 ALTER TABLE `t_billobat` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_billrajal
+DROP TABLE IF EXISTS `t_billrajal`;
 CREATE TABLE IF NOT EXISTS `t_billrajal` (
-  `nobill` int(11) NOT NULL AUTO_INCREMENT,
+  `idbill` int(11) NOT NULL AUTO_INCREMENT,
+  `nobill` char(10) NOT NULL,
   `noreg` int(11) NOT NULL,
   `paket` enum('Y','N') NOT NULL,
   `kdpaket` int(11) DEFAULT NULL,
@@ -29080,23 +29112,24 @@ CREATE TABLE IF NOT EXISTS `t_billrajal` (
   `status` set('BL','L','BT') NOT NULL DEFAULT 'BL',
   `tglinput` datetime NOT NULL,
   `id_users` int(11) NOT NULL,
-  PRIMARY KEY (`nobill`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`idbill`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.t_billrajal: ~8 rows (approximately)
+-- Dumping data for table mcu.t_billrajal: ~9 rows (approximately)
 /*!40000 ALTER TABLE `t_billrajal` DISABLE KEYS */;
-INSERT INTO `t_billrajal` (`nobill`, `noreg`, `paket`, `kdpaket`, `kdtarif`, `harga`, `qty`, `kdbayar`, `status`, `tglinput`, `id_users`) VALUES
-	(2, 191100005, 'N', 0, 3, 5000, 1, 3, 'BL', '2019-11-26 04:00:55', 1),
-	(3, 191100005, 'Y', 1, 5, 160000, 2, 3, 'BL', '2019-11-26 04:04:28', 1),
-	(4, 191100005, 'Y', 1, 4, 160000, 2, 3, 'BL', '2019-11-26 04:04:28', 1),
-	(5, 191100005, 'N', 0, 2, 25000, 1, 3, 'BL', '2019-11-26 06:14:23', 1),
-	(6, 191100005, 'N', 0, 1, 10000, 1, 3, 'BL', '2019-11-26 06:14:26', 1),
-	(7, 191100005, 'N', 0, 7, 75000, 1, 3, 'BL', '2019-11-26 06:14:27', 1),
-	(8, 191100005, 'N', 0, 4, 10000, 1, 3, 'BL', '2019-11-26 06:14:28', 1),
-	(9, 191100005, 'N', 0, 5, 150000, 1, 3, 'BL', '2019-11-26 06:14:29', 1);
+INSERT INTO `t_billrajal` (`idbill`, `nobill`, `noreg`, `paket`, `kdpaket`, `kdtarif`, `harga`, `qty`, `kdbayar`, `status`, `tglinput`, `id_users`) VALUES
+	(1, '000001', 191000003, 'N', 0, 2, 25000, 2, 1, 'BL', '2019-12-13 02:57:27', 1),
+	(3, '000001', 191000003, 'Y', 2, 1, 370000, 2, 1, 'BL', '2019-12-13 02:58:18', 1),
+	(4, '000001', 191000003, 'Y', 2, 5, 370000, 2, 1, 'BL', '2019-12-13 02:58:18', 1),
+	(5, '000001', 191000003, 'Y', 2, 6, 370000, 2, 1, 'BL', '2019-12-13 02:58:18', 1),
+	(6, '000001', 191000003, 'Y', 1, 5, 150000, 1, 1, 'BL', '2019-12-13 02:58:25', 1),
+	(7, '000001', 191000003, 'Y', 1, 4, 10000, 1, 1, 'BL', '2019-12-13 02:58:25', 1),
+	(10, '000002', 191100004, 'N', 0, 1, 10000, 1, 1, 'BL', '2019-12-13 02:58:40', 1),
+	(11, '000002', 191100004, 'N', 0, 6, 210000, 1, 1, 'BL', '2019-12-13 02:58:41', 1);
 /*!40000 ALTER TABLE `t_billrajal` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_daftar
+DROP TABLE IF EXISTS `t_daftar`;
 CREATE TABLE IF NOT EXISTS `t_daftar` (
   `idreg` int(11) NOT NULL AUTO_INCREMENT,
   `noreg` int(11) NOT NULL,
@@ -29112,7 +29145,7 @@ CREATE TABLE IF NOT EXISTS `t_daftar` (
   PRIMARY KEY (`idreg`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table mcu.t_daftar: ~3 rows (approximately)
+-- Dumping data for table mcu.t_daftar: ~2 rows (approximately)
 /*!40000 ALTER TABLE `t_daftar` DISABLE KEYS */;
 INSERT INTO `t_daftar` (`idreg`, `noreg`, `nomr`, `baru`, `kddokter`, `kdpoli`, `kdbayar`, `rujukan`, `kdrujuk`, `tglreg`, `id_users`) VALUES
 	(3, 191000003, '000003', 'Y', 1, 1, 1, 'Y', 0, '2019-10-25 12:41:25', 1),
@@ -29121,6 +29154,7 @@ INSERT INTO `t_daftar` (`idreg`, `noreg`, `nomr`, `baru`, `kddokter`, `kdpoli`, 
 /*!40000 ALTER TABLE `t_daftar` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_emr
+DROP TABLE IF EXISTS `t_emr`;
 CREATE TABLE IF NOT EXISTS `t_emr` (
   `idemr` int(11) NOT NULL AUTO_INCREMENT,
   `noreg` int(11) NOT NULL,
@@ -29140,6 +29174,7 @@ INSERT INTO `t_emr` (`idemr`, `noreg`, `subjek`, `objek`, `asessment`, `plann`, 
 /*!40000 ALTER TABLE `t_emr` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_labhasil
+DROP TABLE IF EXISTS `t_labhasil`;
 CREATE TABLE IF NOT EXISTS `t_labhasil` (
   `nobill` int(11) NOT NULL AUTO_INCREMENT,
   `noreg` int(11) NOT NULL,
@@ -29148,7 +29183,7 @@ CREATE TABLE IF NOT EXISTS `t_labhasil` (
   `tglinput` datetime NOT NULL,
   `id_users` int(11) NOT NULL,
   PRIMARY KEY (`nobill`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table mcu.t_labhasil: ~2 rows (approximately)
 /*!40000 ALTER TABLE `t_labhasil` DISABLE KEYS */;
@@ -29158,6 +29193,7 @@ INSERT INTO `t_labhasil` (`nobill`, `noreg`, `kdlab`, `nilai`, `tglinput`, `id_u
 /*!40000 ALTER TABLE `t_labhasil` ENABLE KEYS */;
 
 -- Dumping structure for table mcu.t_radhasil
+DROP TABLE IF EXISTS `t_radhasil`;
 CREATE TABLE IF NOT EXISTS `t_radhasil` (
   `nobill` int(11) NOT NULL AUTO_INCREMENT,
   `noreg` int(11) NOT NULL,
@@ -29166,13 +29202,14 @@ CREATE TABLE IF NOT EXISTS `t_radhasil` (
   `tglinput` datetime NOT NULL,
   `id_users` int(11) NOT NULL,
   PRIMARY KEY (`nobill`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- Dumping data for table mcu.t_radhasil: ~0 rows (approximately)
 /*!40000 ALTER TABLE `t_radhasil` DISABLE KEYS */;
 /*!40000 ALTER TABLE `t_radhasil` ENABLE KEYS */;
 
 -- Dumping structure for view mcu.v_obatdetail
+DROP VIEW IF EXISTS `v_obatdetail`;
 -- Creating temporary table to overcome VIEW dependency errors
 CREATE TABLE `v_obatdetail` (
 	`kdobat` INT(11) NOT NULL,
@@ -29184,6 +29221,7 @@ CREATE TABLE `v_obatdetail` (
 ) ENGINE=MyISAM;
 
 -- Dumping structure for view mcu.v_pasien
+DROP VIEW IF EXISTS `v_pasien`;
 -- Creating temporary table to overcome VIEW dependency errors
 CREATE TABLE `v_pasien` (
 	`nomr` CHAR(50) NOT NULL COLLATE 'utf8_general_ci',
@@ -29204,6 +29242,7 @@ CREATE TABLE `v_pasien` (
 ) ENGINE=MyISAM;
 
 -- Dumping structure for view mcu.v_pendaftaran
+DROP VIEW IF EXISTS `v_pendaftaran`;
 -- Creating temporary table to overcome VIEW dependency errors
 CREATE TABLE `v_pendaftaran` (
 	`idreg` INT(11) NOT NULL,
@@ -29238,6 +29277,7 @@ CREATE TABLE `v_pendaftaran` (
 ) ENGINE=MyISAM;
 
 -- Dumping structure for view mcu.v_obatdetail
+DROP VIEW IF EXISTS `v_obatdetail`;
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `v_obatdetail`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_obatdetail` AS SELECT a.kdobat,if(a.generik='Y','GENERIK','Non GENERIK') AS generik,concat(a.nmobat,' ',c.obatjenis,' ',a.dosis,d.obatsatuan,' ',e.obatcara) AS obat,concat(f.obatpakai,' ',f.waktu) AS rute,ifnull(SUM(stok),0) AS stok,a.hargaobat FROM m_obat a
@@ -29249,6 +29289,7 @@ LEFT JOIN m_obatpakai f ON a.kdobatpakai=f.kdobatpakai
 GROUP BY a.kdobat ;
 
 -- Dumping structure for view mcu.v_pasien
+DROP VIEW IF EXISTS `v_pasien`;
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `v_pasien`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_pasien` AS SELECT a.*,b.kelamin,c.kawin,d.full_name FROM m_pasien a
@@ -29257,6 +29298,7 @@ LEFT JOIN m_kawin c ON a.kdkawin = c.kdkawin
 LEFT JOIN tbl_user d ON a.id_users = d.id_users ;
 
 -- Dumping structure for view mcu.v_pendaftaran
+DROP VIEW IF EXISTS `v_pendaftaran`;
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `v_pendaftaran`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_pendaftaran` AS SELECT a.idreg,a.noreg,a.baru,a.kdpoli,a.kddokter,a.kdbayar,a.rujukan,a.kdrujuk,a.tglreg,e.full_name as petugas,b.*,c.poli,d.unit,f.dokter,g.bayar FROM t_daftar a
