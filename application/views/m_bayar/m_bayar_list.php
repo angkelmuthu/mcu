@@ -20,6 +20,7 @@
                     <th width="30px">No</th>
 		    <th>Bayar</th>
 		    <th>Kdmetodebayar</th>
+		    <th>Piutang</th>
 		    <th>Aktif</th>
 		    <th>Tglinput</th>
 		    <th>Id Users</th>
@@ -74,7 +75,7 @@
                         {
                             "data": "kdbayar",
                             "orderable": false
-                        },{"data": "bayar"},{"data": "kdmetodebayar"},{"data": "aktif"},{"data": "tglinput"},{"data": "id_users"},
+                        },{"data": "bayar"},{"data": "kdmetodebayar"},{"data": "piutang"},{"data": "aktif"},{"data": "tglinput"},{"data": "id_users"},
                         {
                             "data" : "action",
                             "orderable": false,

@@ -49,9 +49,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <button class="btn btn-block btn-warning" type="button"> <span><i class="fal fa-clone"></i> <b>Split Pembayaran</b></span> </button>
-                                <button class="btn btn-block btn-success" type="button"> <span><i class="fal fa-money-bill"></i> <b>Pembayaran</b></span> </button>
-                                <button id="print" class="btn btn-block btn-info" type="button"> <span><i class="fal fa-print"></i> <b>Print</b></span> </button>
+
                             </div>
                         </div>
                     </div>
@@ -112,7 +110,8 @@
                                                         <td class="text-center"><span class="badge badge-<?php echo $badge ?>"><?php echo $bill->bayar ?></span></td>
                                                         <td class="text-right">Rp. <?php echo number_format($bill->harga) ?></td>
                                                         <td class="text-center"><?php echo number_format($bill->qty) ?></td>
-                                                        <td class="text-right" <?php echo $coret ?>>Rp. <?php echo number_format($bill->harga * $bill->qty) ?></td>
+                                                        <td class="text-right" <?php //echo $coret
+                                                                                ?>>Rp. <?php echo number_format($bill->harga * $bill->qty) ?></td>
                                                     </tr>
                                                 <?php $no++;
                                                 } ?>
@@ -142,7 +141,8 @@
                                                             <px style="text-decoration: line-through;"> Rp. <?php echo number_format($billpaket->hargapaket) ?></px> Rp. <?php echo number_format($billpaket->hargapaket - $billpaket->potongan) ?>
                                                         </td>
                                                         <td class="text-center"><?php echo number_format($billpaket->qty) ?></td>
-                                                        <td class="text-right" <?php echo $coret ?>>Rp. <?php echo number_format(($billpaket->hargapaket - $billpaket->potongan) * $billpaket->qty) ?></td>
+                                                        <td class="text-right" <?php //echo $coret
+                                                                                ?>>Rp. <?php echo number_format(($billpaket->hargapaket - $billpaket->potongan) * $billpaket->qty) ?></td>
                                                     </tr>
                                                 <?php $no++;
                                                 } ?>
@@ -170,7 +170,8 @@
                                                         <td class="text-center"><span class="badge badge-<?php echo $badge ?>"><?php echo $billobat->bayar ?></span></td>
                                                         <td class="text-right">Rp. <?php echo number_format($billobat->hargaobat) ?></td>
                                                         <td class="text-center"><?php echo number_format($billobat->qty) ?></td>
-                                                        <td class="text-right" <?php echo $coret ?>>Rp. <?php echo number_format($billobat->hargaobat * $billobat->qty) ?></td>
+                                                        <td class="text-right" <?php //echo $coret
+                                                                                ?>>Rp. <?php echo number_format($billobat->hargaobat * $billobat->qty) ?></td>
                                                     </tr>
                                                 <?php $no++;
                                                 } ?>
@@ -180,33 +181,38 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-4 ml-sm-auto">
+                                <div class="col-sm-6 ml-sm-auto">
+                                    <button class="btn btn-warning" type="button"> <span><i class="fal fa-clone"></i> <b>Split Pembayaran</b></span> </button>
+                                    <button class="btn btn-success" type="button"> <span><i class="fal fa-money-bill"></i> <b>Pembayaran</b></span> </button>
+                                    <button id="print" class="btn btn-info" type="button"> <span><i class="fal fa-print"></i> <b>Print</b></span> </button>
+                                </div>
+                                <div class="col-sm-6 ml-sm-auto">
                                     <table class="table table-clean">
                                         <tbody>
                                             <tr>
                                                 <td class="text-left">
-                                                    <strong>Subtotal</strong>
+                                                    <strong>Total</strong>
                                                 </td>
                                                 <td class="text-right">Rp. <?php echo number_format($bill_total + $bill_paket_total + $bill_obat_total) ?></td>
                                             </tr>
                                             <tr>
                                                 <td class="text-left">
-                                                    <strong>Discount (20%)</strong>
+                                                    <strong>Potongan</strong>
                                                 </td>
-                                                <td class="text-right">$1,699.40</td>
+                                                <td class="text-right"></td>
                                             </tr>
                                             <tr>
                                                 <td class="text-left">
-                                                    <strong>VAT (10%)</strong>
+                                                    <strong>Jumlah Yang ditangguhkan</strong>
                                                 </td>
-                                                <td class="text-right">$679.76</td>
+                                                <td class="text-right"></td>
                                             </tr>
                                             <tr class="table-scale-border-top border-left-0 border-right-0 border-bottom-0">
                                                 <td class="text-left keep-print-font">
-                                                    <h4 class="m-0 fw-700 h2 keep-print-font color-primary-700">Total</h4>
+                                                    <h4 class="m-0 fw-700 h2 keep-print-font color-primary-700">Jumlah Yang dibayar</h4>
                                                 </td>
                                                 <td class="text-right keep-print-font">
-                                                    <h4 class="m-0 fw-700 h2 keep-print-font">$7,477.36</h4>
+                                                    <h4 class="m-0 fw-700 h2 keep-print-font"></h4>
                                                 </td>
                                             </tr>
                                         </tbody>

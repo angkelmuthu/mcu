@@ -17,12 +17,16 @@
                             <table class='table table-striped'>
 
                                 <tr>
-                                    <td width='200'>Cara Bayar <?php echo form_error('bayar') ?></td>
+                                    <td width='200'>Bayar <?php echo form_error('bayar') ?></td>
                                     <td><input type="text" class="form-control" name="bayar" id="bayar" placeholder="Bayar" value="<?php echo $bayar; ?>" /></td>
                                 </tr>
                                 <tr>
-                                    <td width='200'>Metode Bayar <?php echo form_error('kdmetodebayar') ?></td>
-                                    <td><?php echo cmb_dinamis('kdmetodebayar', 'm_bayar_metode', 'metode', 'kdmetodebayar') ?></td>
+                                    <td width='200'>Kdmetodebayar <?php echo form_error('kdmetodebayar') ?></td>
+                                    <td><input type="text" class="form-control" name="kdmetodebayar" id="kdmetodebayar" placeholder="Kdmetodebayar" value="<?php echo $kdmetodebayar; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td width='200'>Piutang <?php echo form_error('piutang') ?></td>
+                                    <td><input type="text" class="form-control" name="piutang" id="piutang" placeholder="Piutang" value="<?php echo $piutang; ?>" /></td>
                                 </tr>
                                 <tr>
                                     <td width='200'>Aktif <?php echo form_error('aktif') ?></td>

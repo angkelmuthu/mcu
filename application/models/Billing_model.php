@@ -37,7 +37,7 @@ class Billing_model extends CI_Model
     }
     function billing_total($noreg)
     {
-        $hasil = $this->db->query("SELECT SUM(a.harga*qty) as total FROM t_billrajal a LEFT JOIN m_tarif b on a.kdtarif=b.kdtarif LEFT JOIN m_poli c on b.kdpoli=c.kdpoli LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar where a.noreg='$noreg' and a.paket='N' and d.kdmetodebayar='2'");
+        $hasil = $this->db->query("SELECT SUM(a.harga*qty) as total FROM t_billrajal a LEFT JOIN m_tarif b on a.kdtarif=b.kdtarif LEFT JOIN m_poli c on b.kdpoli=c.kdpoli LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar where a.noreg='$noreg' and a.paket='N'");
         return $hasil->row();
     }
     function billing_paket($noreg)
@@ -51,8 +51,7 @@ class Billing_model extends CI_Model
     }
     function billing_paket_total($noreg)
     {
-        $hasil = $this->db->query("SELECT SUM(b.harga*qty)-(c.potongan*qty) as total FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
-            LEFT JOIN m_tarifpaket c ON c.kdtarifpaket=a.kdpaket LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar WHERE a.paket='Y' and a.noreg='$noreg' and d.kdmetodebayar='2' GROUP BY a.kdpaket");
+        $hasil = $this->db->query("SELECT ifnull(SUM(b.harga*qty)-(c.potongan*qty),0) as total FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif and a.paket='Y' LEFT JOIN m_tarifpaket c ON c.kdtarifpaket=a.kdpaket LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar WHERE a.noreg='$noreg' GROUP BY a.kdpaket");
         return $hasil->row();
     }
     //////////////////////obat////////////////////////////////////
@@ -65,7 +64,7 @@ class Billing_model extends CI_Model
     function billing_obat_total($noreg)
     {
         $hasil = $this->db->query("SELECT SUM(a.hargaobat*qty) as total FROM t_billobat a
-                LEFT JOIN m_obat b ON a.kdobat=b.kdobat LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar where a.noreg='$noreg' and d.kdmetodebayar='2'");
+                LEFT JOIN m_obat b ON a.kdobat=b.kdobat LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar where a.noreg='$noreg'");
         return $hasil->row();
     }
 }

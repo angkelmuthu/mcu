@@ -15,6 +15,7 @@
         <table class="table table-striped">
 	    <tr><td>Bayar</td><td><?php echo $bayar; ?></td></tr>
 	    <tr><td>Kdmetodebayar</td><td><?php echo $kdmetodebayar; ?></td></tr>
+	    <tr><td>Piutang</td><td><?php echo $piutang; ?></td></tr>
 	    <tr><td>Aktif</td><td><?php echo $aktif; ?></td></tr>
 	    <tr><td>Tglinput</td><td><?php echo $tglinput; ?></td></tr>
 	    <tr><td>Id Users</td><td><?php echo $id_users; ?></td></tr>
