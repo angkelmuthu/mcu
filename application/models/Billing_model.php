@@ -19,6 +19,7 @@ class Billing_model extends CI_Model
     {
         $this->db->select('idreg,noreg,baru,dokter,bayar,rujukan,kdrujuk,tglreg,full_name as petugas,nomr,nik,nama,tgllhr,alamat,kodepos,kdklmn,kdkawin,hp,tglinput,kelamin,kawin,poli,unit');
         $this->db->from('v_pendaftaran');
+        $this->db->group_by('noreg');
         return $this->db->get()->result();
     }
 
@@ -29,30 +30,40 @@ class Billing_model extends CI_Model
         $this->db->where('noreg', $noreg);
         return $this->db->get()->row();
     }
+    function get_carabayar()
+    {
+        $hasil = $this->db->query("SELECT a.kdbayar,a.bayar,a.kdmetodebayar,b.metode FROM m_bayar a
+        LEFT JOIN m_bayar_metode b ON a.kdmetodebayar=b.kdmetodebayar
+        WHERE a.aktif='Y' AND b.aktif='Y'");
+        return $hasil->result();
+    }
     //////////////////////////////////////////////
+    // function billing($noreg)
+    // {
+    //     $hasil = $this->db->query("SELECT *,a.harga as hargas,d.* FROM t_billrajal a LEFT JOIN m_tarif b on a.kdtarif=b.kdtarif LEFT JOIN m_tarif bb ON bb.kdtarif=b.kdtarif LEFT JOIN m_poli c on b.kdpoli=c.kdpoli LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar where a.noreg='$noreg'");
+    //     return $hasil->result();
+    // }
     function billing($noreg)
     {
-        $hasil = $this->db->query("SELECT *,a.harga as hargas,d.* FROM t_billrajal a LEFT JOIN m_tarif b on a.kdtarif=b.kdtarif LEFT JOIN m_poli c on b.kdpoli=c.kdpoli LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar where a.noreg='$noreg' and a.paket='N'");
-        return $hasil->result();
+        $this->db->from('v_bill');
+        $this->db->where('noreg', $noreg);
+        return $this->db->get()->result();
     }
     function billing_total($noreg)
     {
-        $hasil = $this->db->query("SELECT SUM(a.harga*qty) as total FROM t_billrajal a LEFT JOIN m_tarif b on a.kdtarif=b.kdtarif LEFT JOIN m_poli c on b.kdpoli=c.kdpoli LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar where a.noreg='$noreg' and a.paket='N'");
-        return $hasil->row();
+        $this->db->select('kdmetodebayar,bayar,sum(ttl) as ttl');
+        $this->db->from('v_billtotal');
+        $this->db->where('noreg', $noreg);
+        $this->db->group_by('kdbayar');
+        return $this->db->get()->result();
     }
-    function billing_paket($noreg)
+    function billing_bayar($noreg)
     {
-        // $hasil = $this->db->query("SELECT * FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
-        //     LEFT JOIN m_tarifpaket c ON c.kdtarifpaket=a.kdpaket LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar WHERE a.paket='Y' and a.noreg='$noreg'");
-        $hasil = $this->db->query("SELECT *,SUM(b.harga) AS hargapaket FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
-        LEFT JOIN m_tarifpaket c ON c.kdtarifpaket=a.kdpaket LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar WHERE a.paket='Y' and a.noreg='$noreg'
-        GROUP BY a.kdpaket");
-        return $hasil->result();
-    }
-    function billing_paket_total($noreg)
-    {
-        $hasil = $this->db->query("SELECT ifnull(SUM(b.harga*qty)-(c.potongan*qty),0) as total FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif and a.paket='Y' LEFT JOIN m_tarifpaket c ON c.kdtarifpaket=a.kdpaket LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar WHERE a.noreg='$noreg' GROUP BY a.kdpaket");
-        return $hasil->row();
+        $this->db->select('nobill,noreg,kdmetodebayar,bayar,sum(ttl) as ttl');
+        $this->db->from('v_billtotal');
+        $this->db->where('noreg', $noreg);
+        $this->db->where_not_in('kdmetodebayar', '1');
+        return $this->db->get()->result();
     }
     //////////////////////obat////////////////////////////////////
     function billing_obat($noreg)
@@ -66,6 +77,21 @@ class Billing_model extends CI_Model
         $hasil = $this->db->query("SELECT SUM(a.hargaobat*qty) as total FROM t_billobat a
                 LEFT JOIN m_obat b ON a.kdobat=b.kdobat LEFT JOIN m_bayar d ON a.kdbayar=d.kdbayar where a.noreg='$noreg'");
         return $hasil->row();
+    }
+    function updatecarabayar($nobill, $noreg, $kdbayar, $kode, $resep)
+    {
+        if ($resep == 'N') {
+            $hasil = $this->db->query("update t_billrajal set kdbayar='$kdbayar' where noreg='$noreg' and nobill='$nobill' and kdtarif='$kode'");
+        } else {
+            $hasil = $this->db->query("update t_billobat set kdbayar='$kdbayar' where noreg='$noreg' and nobill='$nobill' and kdobat='$kode'");
+        }
+        return $hasil;
+    }
+    function ins_billbayar($nobill, $noreg, $jmlbayar, $tglinput, $id_users)
+    {
+        $hasil = $this->db->query("INSERT INTO t_billbayar (nobill, noreg, jmlbayar, status,tglinput, id_users)VALUES('$nobill','$noreg','$jmlbayar','L','$tglinput','$id_users')");
+        $hasil = $this->db->query("update t_billrajal set status='L' where noreg='$noreg' and nobill='$nobill'");
+        return $hasil;
     }
 }
 

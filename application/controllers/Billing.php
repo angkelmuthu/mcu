@@ -26,9 +26,6 @@ class Billing extends CI_Controller
     public function read($noreg)
     {
         $row = $this->billing_model->get_by_id($noreg);
-        $bill_total = $this->billing_model->billing_total($noreg);
-        $bill_paket_total = $this->billing_model->billing_paket_total($noreg);
-        $bill_obat_total = $this->billing_model->billing_obat_total($noreg);
         if ($row) {
             $data = array(
                 'idreg' => $row->idreg,
@@ -48,17 +45,14 @@ class Billing extends CI_Controller
                 'kdrujuk' => $row->kdrujuk,
                 'tglreg' => $row->tglreg,
                 'petugas' => $row->id_users,
-                'bill_total' => $bill_total->total,
-                'bill_paket_total' => $bill_paket_total->total,
-                'bill_obat_total' => $bill_obat_total->total,
+                'billing_bayar' => $this->billing_model->billing_bayar($noreg),
+                'billing_total' => $this->billing_model->billing_total($noreg),
                 'billing' => $this->billing_model->billing($noreg),
-                'billing_paket' => $this->billing_model->billing_paket($noreg),
                 'billing_obat' => $this->billing_model->billing_obat($noreg),
+                'get_carabayar' => $this->billing_model->get_carabayar(),
 
             );
             $this->template->load('template', 'billing/billing_read', $data);
-
-            //$this->template->load('template', 'billing/billing_read',);
         } else {
             $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -66,6 +60,26 @@ class Billing extends CI_Controller
             </button><strong> Record Not Found</strong></div>');
             redirect(site_url('billing'));
         }
+    }
+    public function updatecrbayar()
+    {
+        $noreg = $this->input->post('noreg');
+        $resep = $this->input->post('resep');
+        $kode = $this->input->post('kode');
+        $kdbayar = $this->input->post('kdbayar');
+        $nobill = $this->input->post('nobill');
+        $data = $this->billing_model->updatecarabayar($nobill, $noreg, $kdbayar, $kode, $resep);
+        redirect(site_url('billing/read/' . $noreg));
+    }
+    public function bayar()
+    {
+        $noreg = $this->input->post('noreg');
+        $nobill = $this->input->post('nobill');
+        $jmlbayar = $this->input->post('jmlbayar');
+        $tglinput = $this->input->post('tglinput');
+        $id_users = $this->input->post('id_users');
+        $data = $this->billing_model->ins_billbayar($nobill, $noreg, $jmlbayar, $tglinput, $id_users);
+        redirect(site_url('billing/read/' . $noreg));
     }
 }
 

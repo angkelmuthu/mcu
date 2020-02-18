@@ -15,13 +15,21 @@
                         <form action="<?php echo $action; ?>" method="post">
                             <?php
                             $action = $this->uri->segment(2);
+                            $nomr = $this->uri->segment(4);
                             if ($action == 'create') {
-                                $user = $this->db->query("SELECT max(idreg) as max_idreg from t_daftar")->row_array();
-                                if (is_null($user['max_idreg'])) {
-                                    $noreg_max = '00001';
+                                $cekreg = $this->db->query("SELECT * from t_daftar where nomr='$nomr'");
+                                $reg = $cekreg->row_array();
+                                $num = $cekreg->num_rows();
+                                if ($num > 0) {
+                                    $noreg_max = $reg['noreg'];
                                 } else {
-                                    $noreg_hash = $user['max_idreg'] + 1;
-                                    $noreg_max = str_pad($noreg_hash, 5, '0', STR_PAD_LEFT);
+                                    $user = $this->db->query("SELECT max(idreg) as max_idreg from t_daftar")->row_array();
+                                    if (is_null($user['max_idreg'])) {
+                                        $noreg_max = '00001';
+                                    } else {
+                                        $noreg_hash = $user['max_idreg'] + 1;
+                                        $noreg_max = str_pad($noreg_hash, 5, '0', STR_PAD_LEFT);
+                                    }
                                 }
                             } else {
                                 $noreg_max = $noreg;
@@ -60,7 +68,7 @@
                                                     } else {
                                                         $disable = 'disabled';
                                                     }
-                                                    ?>
+                                                ?>
                                                     <option value="<?php echo $dok->kddokter ?>" <?php echo $disable ?>><?php echo $dok->dokter ?></option>
                                                 <?php } ?>
                                             </select>

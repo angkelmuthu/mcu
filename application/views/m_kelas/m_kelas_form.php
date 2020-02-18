@@ -3,7 +3,7 @@
     <div class="col-xl-12">
         <div id="panel-1" class="panel">
             <div class="panel-hdr">
-                <h2>M_tarifpaket Read</h2>
+                <h2>INPUT DATA M_KELAS</h2>
                 <div class="panel-toolbar">
                     <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
                     <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
@@ -12,14 +12,16 @@
             </div>
             <div class="panel-container show">
                 <div class="panel-content">
-        <table class="table table-striped">
-	    <tr><td>Kdtarif</td><td><?php echo $kdtarif; ?></td></tr>
-	    <tr><td>Kdsubtarif</td><td><?php echo $kdsubtarif; ?></td></tr>
-	    <tr><td>Tglinput</td><td><?php echo $tglinput; ?></td></tr>
-	    <tr><td>Id Users</td><td><?php echo $id_users; ?></td></tr>
-	    <tr><td></td><td><a href="<?php echo site_url('m_tarifpaket') ?>" class="btn btn-primary waves-effect waves-themed">Kembali</a></td></tr>
-	</table>
-</div>
+            <form action="<?php echo $action; ?>" method="post">
+
+<table class='table table-striped'>
+
+	    <tr><td width='200'>Kelas <?php echo form_error('kelas') ?></td><td><input type="text" class="form-control" name="kelas" id="kelas" placeholder="Kelas" value="<?php echo $kelas; ?>" /></td></tr>
+	    <tr><td width='200'>Aktif <?php echo form_error('aktif') ?></td><td><input type="text" class="form-control" name="aktif" id="aktif" placeholder="Aktif" value="<?php echo $aktif; ?>" /></td></tr>
+	    <tr><td></td><td><input type="hidden" name="kdkelas" value="<?php echo $kdkelas; ?>" /> 
+	    <button type="submit" class="btn btn-warning waves-effect waves-themed"><i class="fal fa-save"></i> <?php echo $button ?></button> 
+	    <a href="<?php echo site_url('m_kelas') ?>" class="btn btn-info waves-effect waves-themed"><i class="fal fa-sign-out"></i> Kembali</a></td></tr>
+	</table></form>        </div>
 </div>
 
             </div>

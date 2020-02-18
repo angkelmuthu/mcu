@@ -3,7 +3,7 @@
     <div class="col-xl-12">
         <div id="panel-1" class="panel">
             <div class="panel-hdr">
-                <h2>KELOLA DATA M_TARIFPAKET</h2>
+                <h2>KELOLA DATA M_KELAS</h2>
                 <div class="panel-toolbar">
                     <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
                     <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
@@ -13,15 +13,14 @@
             <div class="panel-container show">
                 <div class="panel-content">
                     <div class="text-center">
-        <?php echo anchor(site_url('m_tarifpaket/create'), '<i class="fal fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-primary btn-sm waves-effect waves-themed"'); ?></div>
+        <?php echo anchor(site_url('m_kelas/create'), '<i class="fal fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-primary btn-sm waves-effect waves-themed"'); ?>
+		<?php echo anchor(site_url('m_kelas/excel'), '<i class="fal fa-file-excel" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-outline-success btn-sm waves-effect waves-themed"'); ?></div>
         <table class="table table-bordered table-hover table-striped w-100" id="dt-basic-example">
             <thead>
                 <tr>
                     <th width="30px">No</th>
-		    <th>Kdtarif</th>
-		    <th>Kdsubtarif</th>
-		    <th>Tglinput</th>
-		    <th>Id Users</th>
+		    <th>Kelas</th>
+		    <th>Aktif</th>
 		    <th width="200px">Action</th>
                 </tr>
             </thead>
@@ -68,12 +67,12 @@
                     },
                     processing: true,
                     serverSide: true,
-                    ajax: {"url": "m_tarifpaket/json", "type": "POST"},
+                    ajax: {"url": "m_kelas/json", "type": "POST"},
                     columns: [
                         {
-                            "data": "kdtarifpaket",
+                            "data": "kdkelas",
                             "orderable": false
-                        },{"data": "kdtarif"},{"data": "kdsubtarif"},{"data": "tglinput"},{"data": "id_users"},
+                        },{"data": "kelas"},{"data": "aktif"},
                         {
                             "data" : "action",
                             "orderable": false,

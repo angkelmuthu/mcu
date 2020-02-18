@@ -45,12 +45,19 @@ class T_daftar_model extends CI_Model
         return $this->db->get()->row();
     }
     ////tarif
-    function get_tarif()
+    function get_tarif($kdpoli)
     {
-        $this->db->select('*');
-        $this->db->from('m_tarif a');
-        $this->db->join('m_poli b', 'a.kdpoli = b.kdpoli');
-        return $this->db->get()->result();
+        $qry = "SELECT a.*,b.*,c.harga from m_tarif a LEFT JOIN m_poli b ON a.kdpoli = b.kdpoli
+        LEFT JOIN m_tarifkelas c ON a.kdtarif = c.kdtarif and c.kdkelas=1
+        where a.kdpoli IN ('4','5','$kdpoli')";
+        $query = $this->db->query($qry);
+        return $query->result();
+        // $this->db->select('a.*,b.*,c.harga');
+        // $this->db->from('m_tarif a');
+        // $this->db->join('m_poli b', 'a.kdpoli = b.kdpoli', 'LEFT');
+        // $this->db->join('m_tarifkelas c', 'a.kdtarif = c.kdtarif and c.kdkelas=1', 'LEFT');
+        // $this->db->where('a.kdpoli', $kdpoli);
+        //return $this->db->get()->result();
     }
     function get_dokter()
     {
@@ -60,131 +67,50 @@ class T_daftar_model extends CI_Model
         $query = $this->db->query($qry);
         return $query->result();
     }
-    /////tarif paket
-    function get_tarifpaket()
-    {
-        $hasil = $this->db->query("SELECT a.kdtarifpaket,a.nmpaket,c.kdtarif,c.nmtarif,sum(c.harga) as harga FROM m_tarifpaket a
-        INNER JOIN m_tarifpaketdetail b ON a.kdtarifpaket=b.kdtarifpaket
-        LEFT JOIN m_tarif c ON b.kdtarif=c.kdtarif GROUP BY a.kdtarifpaket");
-        return $hasil->result();
-    }
     ///////obat
     function get_obat()
     {
         $this->db->from('v_obatdetail');
         return $this->db->get()->result();
     }
-
-
     //////////////////////////////////////////////
-    function barang_list($noreg)
+    function barang_list($noreg, $kddokter)
     {
-        $hasil = $this->db->query("SELECT *,a.harga as hargas FROM t_billrajal a LEFT JOIN m_tarif b on a.kdtarif=b.kdtarif LEFT JOIN m_poli c on b.kdpoli=c.kdpoli where a.noreg='$noreg' and a.paket='N'");
-        return $hasil->result();
-    }
-    function paket_bill_list($noreg)
-    {
-        $hasil = $this->db->query("SELECT * FROM t_billrajal a LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
-        LEFT JOIN m_tarifpaket c ON c.kdtarifpaket=a.kdpaket WHERE a.paket='Y' and a.noreg='$noreg'");
+        $hasil = $this->db->query("SELECT *,a.harga as hargas FROM t_billrajal a LEFT JOIN m_tarif b on a.kdtarif=b.kdtarif where a.noreg='$noreg' and a.kddokter='$kddokter'");
         return $hasil->result();
     }
 
-    function simpan_barang($nobill, $noreg, $paket, $kdpaket, $kdtarif, $harga, $qty, $kdbayar, $id_users, $tgl)
+    function simpan_barang($nobill, $noreg, $kdpoli, $kddokter, $paket, $kdtarif, $harga, $qty, $kdbayar, $id_users, $tgl)
     {
-        if ($paket == 'Y') {
-            $qry = "SELECT '" . $noreg . "' AS noreg,'Y' AS paket,a.kdtarifpaket as kdpaket,a.kdtarif,b.harga,'" . $qty . "' AS qty, 'BL' AS status FROM m_tarifpaketdetail a
-            LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif WHERE a.kdtarifpaket='" . $kdpaket . "'";
-            //$qry = "SELECT kdtarifpaket as kdpaket,kdtarif FROM m_tarifpaketdetail WHERE kdtarifpaket=" . $kdpaket;
-            $query = $this->db->query($qry);
-            $hasil = array();
-            foreach ($query->result() as $dat) {
-                $hasil[] = array(
-                    'nobill'   => $nobill,
-                    'noreg'   => $dat->noreg,
-                    'paket'   => $dat->paket,
-                    'kdpaket'   => $dat->kdpaket,
-                    'kdtarif'   => $dat->kdtarif,
-                    'harga'   => $dat->harga,
-                    'qty'   => $dat->qty,
-                    'kdbayar'   => $kdbayar,
-                    'status'   => $dat->status,
-                    'tglinput'   => $tgl,
-                    'id_users'   => $id_users
-                );
-            }
-            $this->db->insert_batch('t_billrajal', $hasil);
-            return $hasil;
-        } else {
-            $hasil = $this->db->query("INSERT INTO t_billrajal (nobill,noreg,paket,kdpaket,kdtarif,harga,qty,kdbayar,tglinput,id_users)VALUES('$nobill','$noreg','$paket','$kdpaket','$kdtarif','$harga','$qty','$kdbayar','$tgl', '$id_users')");
-            return $hasil;
-        }
+        $hasil = $this->db->query("INSERT INTO t_billrajal (nobill,noreg,kdpoli,kddokter,paket,kdtarif,harga,qty,kdbayar,tglinput,id_users)VALUES('$nobill','$noreg','$kdpoli','$kddokter','$paket','$kdtarif','$harga','$qty','$kdbayar','$tgl', '$id_users')");
+        return $hasil;
     }
-    function update_barang($nobill, $noreg, $paket, $kdpaket, $kdtarif, $harga, $qty, $kdbayar, $id_users, $tgl)
+    function update_barang($nobill, $noreg, $kdpoli, $kddokter, $paket, $kdtarif, $harga, $qty, $kdbayar, $id_users, $tgl)
     {
-        if ($paket == 'Y') {
-            //$hasil = $this->db->query("update t_billrajal set qty='$qty' where noreg='$noreg' and kdpaket='$kdpaket'");
-            $qry = "SELECT '" . $noreg . "' AS noreg,'Y' AS paket,kdtarifpaket as kdpaket,kdtarif,'" . $qty . "' AS qty, '" . $kdbayar . "' as kdbayar, 'BL' AS status FROM m_tarifpaketdetail
-            WHERE kdtarifpaket='" . $kdpaket . "'";
-            $query = $this->db->query($qry);
-            $hasil = array();
-            foreach ($query->result() as $dat) {
-                $hasil[] = array(
-                    'nobill'   => $nobill,
-                    'noreg'   => $dat->noreg,
-                    'paket'   => $dat->paket,
-                    'kdpaket'   => $dat->kdpaket,
-                    'kdtarif'   => $dat->kdtarif,
-                    'harga'   => $harga,
-                    'qty'   => $dat->qty,
-                    'kdbayar'   => $dat->kdbayar,
-                    'status'   => $dat->status,
-                    'tglinput'   => $tgl,
-                    'id_users'   => $id_users
-                );
-            }
-            $this->db->where('kdpaket', $kdpaket);
-            $this->db->where('paket', 'Y');
-            $this->db->where('noreg', $noreg);
-            $this->db->where('nobill', $nobill);
-            $this->db->update_batch('t_billrajal', $hasil, 'kdtarif');
-            return $hasil;
-        } else {
-            $hasil = $this->db->query("update t_billrajal set qty='$qty',kdbayar='$kdbayar',tglinput='$tgl',id_users='$id_users' where noreg='$noreg' and nobill='$nobill' and paket='N' and kdtarif='$kdtarif'");
-            return $hasil;
-        }
+        $hasil = $this->db->query("update t_billrajal set qty='$qty',kdbayar='$kdbayar',tglinput='$tgl',id_users='$id_users' where noreg='$noreg' and nobill='$nobill' and kdtarif='$kdtarif' and kdpoli='$kdpoli' and kddokter='$kddokter'");
+        return $hasil;
     }
     function hapus_barang($idbill)
     {
         $hasil = $this->db->query("DELETE FROM t_billrajal WHERE idbill='$idbill'");
         return $hasil;
     }
-    /////////////////////Paket tarif//////////////////////////
-    function addpaket($noreg, $paket, $kdpaket, $kdtarif, $qty)
-    {
-        $hasil = $this->db->query("INSERT INTO t_billrajal (noreg,paket,kdpaket,kdtarif,qty)VALUES('$noreg','$paket','$kdpaket','$kdtarif','$qty')");
-        return $hasil;
-    }
-    function savepaket($noreg, $paket, $kdpaket, $kdtarif, $qty)
-    {
-        $hasil = $this->db->query("INSERT INTO t_billrajal (noreg,paket,kdpaket,kdtarif,qty)VALUES('$noreg','$paket','$kdpaket','$kdtarif','$qty')");
-        return $hasil;
-    }
     //////////////////////obat////////////////////////////////////
-    function obat_bill_list($noreg)
+    function obat_bill_list($noreg, $kddokter)
     {
         $hasil = $this->db->query("SELECT a.*,b.nmobat FROM t_billobat a
-            LEFT JOIN m_obat b ON a.kdobat=b.kdobat where a.noreg='$noreg'");
+            LEFT JOIN m_obat b ON a.kdobat=b.kdobat where a.noreg='$noreg' and a.kddokter='$kddokter'");
         return $hasil->result();
     }
 
-    function simpan_obat($nobill, $noreg, $kdobat, $hargaobat, $qty, $kdbayar, $status, $tgl, $user)
+    function simpan_obat($nobill, $noreg, $kdpoli, $kddokter, $kdobat, $hargaobat, $qty, $kdbayar, $status, $tgl, $user)
     {
-        $hasil = $this->db->query("INSERT INTO t_billobat (nobill, noreg, kdobat, hargaobat, qty, kdbayar, status, tglinput, id_users)VALUES('$nobill','$noreg','$kdobat',$hargaobat,'$qty', '$kdbayar','$status','$tgl','$user')");
+        $hasil = $this->db->query("INSERT INTO t_billobat (nobill, noreg, kdpoli, kddokter, kdobat, hargaobat, qty, kdbayar, status, tglinput, id_users)VALUES('$nobill','$noreg','$kdpoli','$kddokter','$kdobat',$hargaobat,'$qty', '$kdbayar','$status','$tgl','$user')");
         return $hasil;
     }
-    function update_obat($nobill, $noreg, $kdobat, $hargaobat, $qty, $kdbayar, $status, $tgl, $user)
+    function update_obat($nobill, $noreg, $kdpoli, $kddokter, $kdobat, $hargaobat, $qty, $kdbayar, $status, $tgl, $user)
     {
-        $hasil = $this->db->query("update t_billobat set hargaobat='$hargaobat',qty='$qty', kdbayar='$kdbayar',id_users='$user' where noreg='$noreg' and nobill='$nobill' and kdobat='$kdobat'");
+        $hasil = $this->db->query("update t_billobat set hargaobat='$hargaobat',qty='$qty', kdbayar='$kdbayar',id_users='$user' where noreg='$noreg' and nobill='$nobill' and kdobat='$kdobat' and kdpoli='$kdpoli' and kddokter='$kddokter'");
         return $hasil;
     }
     function hapus_obat($idbill)
