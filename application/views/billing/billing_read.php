@@ -148,7 +148,7 @@
                         <div class="frame-wrap printableArea">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <div class="table-responsive" style="/*background-color: #f3f1f5;*/">
+                                    <div class="table-responsive">
                                         <table class="table mt-0">
                                             <thead>
                                                 <tr>
@@ -318,8 +318,6 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
-
                                                                 <?php } ?>
                                                             </div>
                                                             <div class="modal-footer">
