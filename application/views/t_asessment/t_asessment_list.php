@@ -31,33 +31,32 @@
                                 </tr>
                             </thead>
                             <tbody><?php
-                                    $sql_t_asessment = "SELECT a.noreg,a.nomr,b.nama,b.tgllhr,a.baru,a.kddokter,a.kdpoli ,c.tglinput,c.id_users FROM t_daftar a
-                                        LEFT JOIN m_pasien b ON a.nomr=b.nomr
-                                        LEFT JOIN t_asessment c ON a.noreg=c.noreg";
+                                    $sql_t_asessment = "SELECT a.noreg,a.nomr,a.nama,a.tgllhr,a.baru,a.dokter,a.poli,b.tglinput,b.id_users FROM v_pendaftaran a
+                                        LEFT JOIN t_asessment b ON a.noreg=b.noreg";
                                     $t_asessment_data = $this->db->query($sql_t_asessment)->result();
                                     foreach ($t_asessment_data as $t_asessment) {
-                                        ?>
+                                    ?>
                                     <tr>
                                         <td><?php echo $t_asessment->noreg ?></td>
                                         <td><?php echo $t_asessment->nomr ?></td>
                                         <td><?php echo $t_asessment->nama ?></td>
-                                        <td><?php echo $t_asessment->tgllhr ?></td>
+                                        <td><?php echo tanggal($t_asessment->tgllhr) ?></td>
                                         <td><?php echo $t_asessment->baru ?></td>
-                                        <td><?php echo $t_asessment->kddokter ?></td>
-                                        <td><?php echo $t_asessment->kdpoli ?></td>
+                                        <td><?php echo $t_asessment->dokter ?></td>
+                                        <td><?php echo $t_asessment->poli ?></td>
                                         <td><?php echo $t_asessment->tglinput ?></td>
                                         <td><?php echo $t_asessment->id_users ?></td>
                                         <td>
                                             <?php
-                                                if (is_null($t_asessment->id_users)) {
-                                                    echo anchor(site_url('t_asessment/create/' . $t_asessment->noreg), '<i class="fal fa-plus-square" aria-hidden="true"></i> Asessment', 'class="btn btn-primary btn-sm waves-effect waves-themed"');
-                                                } else {
-                                                    echo
-                                                        anchor(site_url('t_asessment/read/' . $t_asessment->noreg), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed'));
-                                                    echo
-                                                        anchor(site_url('t_asessment/update/' . $t_asessment->noreg), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed'));
-                                                }
-                                                ?>
+                                            if (is_null($t_asessment->id_users)) {
+                                                echo anchor(site_url('t_asessment/create/' . $t_asessment->noreg . '/' . $t_asessment->nomr), '<i class="fal fa-plus-square" aria-hidden="true"></i> Asessment', 'class="btn btn-primary btn-sm waves-effect waves-themed"');
+                                            } else {
+                                                echo
+                                                    anchor(site_url('t_asessment/read/' . $t_asessment->noreg . '/' . $t_asessment->nomr), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed'));
+                                                echo
+                                                    anchor(site_url('t_asessment/update/' . $t_asessment->noreg . '/' . $t_asessment->nomr), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed'));
+                                            }
+                                            ?>
                                         </td>
                                     </tr>
                                 <?php } ?>

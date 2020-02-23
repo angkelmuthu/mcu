@@ -33,6 +33,7 @@ class T_daftar extends CI_Controller
             $data = array(
                 'idreg' => $row->idreg,
                 'noreg' => $row->noreg,
+                'nobill' => $row->nobill,
                 'nomr' => $row->nomr,
                 'nama' => $row->nama,
                 'nik' => $row->nik,
@@ -75,6 +76,7 @@ class T_daftar extends CI_Controller
     function simpan_barang()
     {
         $noreg = $this->input->post('noreg');
+        $nobill = $this->input->post('nobill');
         $kdpoli = $this->input->post('kdpoli');
         $kddokter = $this->input->post('kddokter');
         $paket = $this->input->post('paket');
@@ -85,18 +87,18 @@ class T_daftar extends CI_Controller
         $id_users = $this->session->userdata('id_users');
         $tgl = date('Y-m-d H:i:s');
         // cek nobill //
-        $qcekbill = $this->db->query("SELECT nobill from t_billrajal where noreg='$noreg' and status='BL'");
-        $cekbill = $qcekbill->num_rows();
-        if ($cekbill > 0) {
-            $dtbill = $qcekbill->row_array();
-            $nobill = $dtbill['nobill'];
-        } else {
-            $qmaxbill = $this->db->query("SELECT max(nobill) as max_bill from t_billrajal")->row_array();
-            $billhash = $qmaxbill['max_bill'] + 1;
-            $nobill = str_pad($billhash, 6, '0', STR_PAD_LEFT);
-        }
+        // $qcekbill = $this->db->query("SELECT nobill from t_billrajal where noreg='$noreg' and status='BL'");
+        // $cekbill = $qcekbill->num_rows();
+        // if ($cekbill > 0) {
+        //     $dtbill = $qcekbill->row_array();
+        //     $nobill = $dtbill['nobill'];
+        // } else {
+        //     $qmaxbill = $this->db->query("SELECT max(nobill) as max_bill from t_billrajal")->row_array();
+        //     $billhash = $qmaxbill['max_bill'] + 1;
+        //     $nobill = str_pad($billhash, 6, '0', STR_PAD_LEFT);
+        // }
 
-        $cek = $this->db->query("SELECT * from t_billrajal where noreg='$noreg' and kdtarif='$kdtarif' and kddokter='$kddokter' and status='BL'");
+        $cek = $this->db->query("SELECT * from t_billrajal where kdtarif='$kdtarif' and kddokter='$kddokter' and nobill='$nobill' and status='BL'");
         $rows = $cek->num_rows();
         $dt = $cek->row_array();
         if ($rows > 0) {
@@ -168,6 +170,7 @@ class T_daftar extends CI_Controller
             'action' => site_url('t_daftar/create_action'),
             'idreg' => set_value('idreg'),
             'noreg' => set_value('noreg'),
+            'nobill' => set_value('nobill'),
             'nomr' => set_value('nomr'),
             'baru' => set_value('baru'),
             'kddokter' => set_value('kddokter'),
@@ -192,9 +195,11 @@ class T_daftar extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->create();
         } else {
+            $nobill = date("m.y", strtotime($this->input->post('tglreg'))) . "." . $this->input->post('kdpoli') . "." . $this->input->post('noreg');
             $data = array(
                 //'noreg' => $noregx,
                 'noreg' => $this->input->post('noreg', TRUE),
+                'nobill' => $nobill,
                 'nomr' => $this->input->post('nomr', TRUE),
                 'baru' => $this->input->post('baru', TRUE),
                 'kddokter' => $this->input->post('kddokter', TRUE),

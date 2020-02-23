@@ -1,6 +1,6 @@
 <?php
 $this->db->select('*');
-$this->db->from('t_emr');
+$this->db->from('t_soap');
 $this->db->where('noreg', $noreg);
 $query = $this->db->get();
 if ($query->num_rows() > 0) {

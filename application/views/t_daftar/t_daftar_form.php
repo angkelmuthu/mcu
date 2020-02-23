@@ -17,7 +17,7 @@
                             $action = $this->uri->segment(2);
                             $nomr = $this->uri->segment(4);
                             if ($action == 'create') {
-                                $cekreg = $this->db->query("SELECT * from t_daftar where nomr='$nomr'");
+                                $cekreg = $this->db->query("SELECT * from v_bill where nomr='$nomr' and status='BL'");
                                 $reg = $cekreg->row_array();
                                 $num = $cekreg->num_rows();
                                 if ($num > 0) {

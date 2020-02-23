@@ -6,7 +6,7 @@ if (!defined('BASEPATH'))
 class T_emr_model extends CI_Model
 {
 
-    public $table = 't_emr';
+    public $table = 't_soap';
     public $id = 'idemr';
     public $order = 'DESC';
 
@@ -16,14 +16,15 @@ class T_emr_model extends CI_Model
     }
 
     // datatables
-    function json() {
-        $this->datatables->select('idemr,noreg,subjek,objek,asessment,plann,tglinput,id_users');
-        $this->datatables->from('t_emr');
+    function json()
+    {
+        $this->datatables->select('idemr,noreg,subjek,objek,asessment,plann,instruksi,tglinput,id_users');
+        $this->datatables->from('t_soap');
         //add this line for join
         //$this->datatables->join('table2', 't_emr.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('t_emr/read/$1'),'<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed'))." 
-            ".anchor(site_url('t_emr/update/$1'),'<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed'))." 
-                ".anchor(site_url('t_emr/delete/$1'),'<i class="fal fa-trash" aria-hidden="true"></i>','class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idemr');
+        $this->datatables->add_column('action', anchor(site_url('t_emr/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
+            " . anchor(site_url('t_emr/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
+                " . anchor(site_url('t_emr/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idemr');
         return $this->datatables->generate();
     }
 
@@ -40,33 +41,37 @@ class T_emr_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
-    
+
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL)
+    {
         $this->db->like('idemr', $q);
-	$this->db->or_like('noreg', $q);
-	$this->db->or_like('subjek', $q);
-	$this->db->or_like('objek', $q);
-	$this->db->or_like('asessment', $q);
-	$this->db->or_like('plann', $q);
-	$this->db->or_like('tglinput', $q);
-	$this->db->or_like('id_users', $q);
-	$this->db->from($this->table);
+        $this->db->or_like('noreg', $q);
+        $this->db->or_like('subjek', $q);
+        $this->db->or_like('objek', $q);
+        $this->db->or_like('asessment', $q);
+        $this->db->or_like('plann', $q);
+        $this->db->or_like('instruksi', $q);
+        $this->db->or_like('tglinput', $q);
+        $this->db->or_like('id_users', $q);
+        $this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL) {
+    function get_limit_data($limit, $start = 0, $q = NULL)
+    {
         $this->db->order_by($this->id, $this->order);
         $this->db->like('idemr', $q);
-	$this->db->or_like('noreg', $q);
-	$this->db->or_like('subjek', $q);
-	$this->db->or_like('objek', $q);
-	$this->db->or_like('asessment', $q);
-	$this->db->or_like('plann', $q);
-	$this->db->or_like('tglinput', $q);
-	$this->db->or_like('id_users', $q);
-	$this->db->limit($limit, $start);
+        $this->db->or_like('noreg', $q);
+        $this->db->or_like('subjek', $q);
+        $this->db->or_like('objek', $q);
+        $this->db->or_like('asessment', $q);
+        $this->db->or_like('plann', $q);
+        $this->db->or_like('instruksi', $q);
+        $this->db->or_like('tglinput', $q);
+        $this->db->or_like('id_users', $q);
+        $this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
 
@@ -89,7 +94,6 @@ class T_emr_model extends CI_Model
         $this->db->where($this->id, $id);
         $this->db->delete($this->table);
     }
-
 }
 
 /* End of file T_emr_model.php */

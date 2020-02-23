@@ -26,6 +26,12 @@ class Billing extends CI_Controller
     public function read($noreg)
     {
         $row = $this->billing_model->get_by_id($noreg);
+        $cekringan = $this->billing_model->get_keringanan($noreg);
+        if (isset($cekringan)) {
+            $ringan = $cekringan->jml;
+        } else {
+            $ringan = 0;
+        }
         if ($row) {
             $data = array(
                 'idreg' => $row->idreg,
@@ -45,11 +51,13 @@ class Billing extends CI_Controller
                 'kdrujuk' => $row->kdrujuk,
                 'tglreg' => $row->tglreg,
                 'petugas' => $row->id_users,
+                'keringanan' => $ringan,
                 'billing_bayar' => $this->billing_model->billing_bayar($noreg),
                 'billing_total' => $this->billing_model->billing_total($noreg),
                 'billing' => $this->billing_model->billing($noreg),
                 'billing_obat' => $this->billing_model->billing_obat($noreg),
                 'get_carabayar' => $this->billing_model->get_carabayar(),
+                //'get_keringanan' => $this->billing_model->get_keringanan($noreg),
 
             );
             $this->template->load('template', 'billing/billing_read', $data);
@@ -73,12 +81,24 @@ class Billing extends CI_Controller
     }
     public function bayar()
     {
+        $nobayar = date("dmYhs", strtotime($this->input->post('tglinput'))) . $this->input->post('noreg');
         $noreg = $this->input->post('noreg');
-        $nobill = $this->input->post('nobill');
+        // $nobill = $this->input->post('nobill');
         $jmlbayar = $this->input->post('jmlbayar');
         $tglinput = $this->input->post('tglinput');
         $id_users = $this->input->post('id_users');
-        $data = $this->billing_model->ins_billbayar($nobill, $noreg, $jmlbayar, $tglinput, $id_users);
+        $data = $this->billing_model->ins_billbayar($nobayar, $nobill, $noreg, $jmlbayar, $tglinput, $id_users);
+        redirect(site_url('billing/read/' . $noreg));
+    }
+    public function keringanan()
+    {
+        $noreg = $this->input->post('noreg');
+        $kdkeringanan = $this->input->post('kdkeringanan');
+        $alasan = $this->input->post('alasan');
+        $jml = $this->input->post('jml');
+        $tglinput = $this->input->post('tglinput');
+        $id_users = $this->input->post('id_users');
+        $data = $this->billing_model->ins_keringanan($kdkeringanan, $alasan, $noreg, $jml, $tglinput, $id_users);
         redirect(site_url('billing/read/' . $noreg));
     }
 }

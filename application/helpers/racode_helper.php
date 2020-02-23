@@ -121,3 +121,42 @@ function tanggal($string)
     $tanggal = date("d/m/Y", strtotime($string));
     return $tanggal;
 }
+
+function penyebut($string)
+{
+    $string = abs($string);
+    $huruf = array("", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas");
+    $temp = "";
+    if ($string < 12) {
+        $temp = " " . $huruf[$string];
+    } else if ($string < 20) {
+        $temp = penyebut($string - 10) . " belas";
+    } else if ($string < 100) {
+        $temp = penyebut($string / 10) . " puluh" . penyebut($string % 10);
+    } else if ($string < 200) {
+        $temp = " seratus" . penyebut($string - 100);
+    } else if ($string < 1000) {
+        $temp = penyebut($string / 100) . " ratus" . penyebut($string % 100);
+    } else if ($string < 2000) {
+        $temp = " seribu" . penyebut($string - 1000);
+    } else if ($string < 1000000) {
+        $temp = penyebut($string / 1000) . " ribu" . penyebut($string % 1000);
+    } else if ($string < 1000000000) {
+        $temp = penyebut($string / 1000000) . " juta" . penyebut($string % 1000000);
+    } else if ($string < 1000000000000) {
+        $temp = penyebut($string / 1000000000) . " milyar" . penyebut(fmod($string, 1000000000));
+    } else if ($string < 1000000000000000) {
+        $temp = penyebut($string / 1000000000000) . " trilyun" . penyebut(fmod($string, 1000000000000));
+    }
+    return $temp;
+}
+
+function terbilang($string)
+{
+    if ($string < 0) {
+        $hasil = "minus " . trim(penyebut($string));
+    } else {
+        $hasil = trim(penyebut($string));
+    }
+    return $hasil;
+}

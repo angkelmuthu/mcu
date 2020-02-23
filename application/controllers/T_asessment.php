@@ -25,12 +25,14 @@ class T_asessment extends CI_Controller
         echo $this->T_asessment_model->json();
     }
 
-    public function read($id)
+    public function read($id, $nomr)
     {
         $row = $this->T_asessment_model->get_by_id($id);
+        $row2 = $this->T_asessment_model->get_pasien($id);
         if ($row) {
             $data = array(
                 'noreg' => $row->noreg,
+                'nomr' => $row2->nomr,
                 'bb' => $row->bb,
                 'tb' => $row->tb,
                 'sb' => $row->sb,
@@ -41,6 +43,12 @@ class T_asessment extends CI_Controller
                 'keterangan' => $row->keterangan,
                 'tglinput' => $row->tglinput,
                 'id_users' => $row->id_users,
+                'nama' => $row2->nama,
+                'tgllhr' => $row2->tgllhr,
+                'kelamin' => $row2->kelamin,
+                'kawin' => $row2->kawin,
+                'kawin' => $row2->kawin,
+                'getby_nomr' => $this->T_asessment_model->get_by_nomr($id, $nomr),
             );
             $this->template->load('template', 't_asessment/t_asessment_read', $data);
         } else {
@@ -58,6 +66,7 @@ class T_asessment extends CI_Controller
             'button' => 'Create',
             'action' => site_url('t_asessment/create_action'),
             'noreg' => set_value('noreg'),
+            'nomr' => set_value('nomr'),
             'bb' => set_value('bb'),
             'tb' => set_value('tb'),
             'sb' => set_value('sb'),
@@ -81,6 +90,7 @@ class T_asessment extends CI_Controller
         } else {
             $data = array(
                 'noreg' => $this->input->post('noreg', TRUE),
+                'nomr' => $this->input->post('nomr', TRUE),
                 'bb' => $this->input->post('bb', TRUE),
                 'tb' => $this->input->post('tb', TRUE),
                 'sb' => $this->input->post('sb', TRUE),
@@ -111,6 +121,7 @@ class T_asessment extends CI_Controller
                 'button' => 'Update',
                 'action' => site_url('t_asessment/update_action'),
                 'noreg' => set_value('noreg', $row->noreg),
+                'nomr' => set_value('nomr', $row->nomr),
                 'bb' => set_value('bb', $row->bb),
                 'tb' => set_value('tb', $row->tb),
                 'sb' => set_value('sb', $row->sb),
