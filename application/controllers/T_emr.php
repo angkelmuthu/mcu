@@ -36,6 +36,7 @@ class T_emr extends CI_Controller
                 'objek' => $row->objek,
                 'asessment' => $row->asessment,
                 'plann' => $row->plann,
+                'instruksi' => $row->instruksi,
                 'tglinput' => $row->tglinput,
                 'id_users' => $row->id_users,
             );
@@ -60,6 +61,7 @@ class T_emr extends CI_Controller
             'objek' => set_value('objek'),
             'asessment' => set_value('asessment'),
             'plann' => set_value('plann'),
+            'instruksi' => set_value('instruksi'),
             'tglinput' => set_value('tglinput'),
             'id_users' => set_value('id_users'),
         );
@@ -79,6 +81,7 @@ class T_emr extends CI_Controller
                 'objek' => $this->input->post('objek', TRUE),
                 'asessment' => $this->input->post('asessment', TRUE),
                 'plann' => $this->input->post('plann', TRUE),
+                'instruksi' => $this->input->post('instruksi', TRUE),
                 'tglinput' => $this->input->post('tglinput', TRUE),
                 'id_users' => $this->input->post('id_users', TRUE),
             );
@@ -108,6 +111,7 @@ class T_emr extends CI_Controller
                 'objek' => set_value('objek', $row->objek),
                 'asessment' => set_value('asessment', $row->asessment),
                 'plann' => set_value('plann', $row->plann),
+                'instruksi' => set_value('instruksi', $row->instruksi),
                 'tglinput' => set_value('tglinput', $row->tglinput),
                 'id_users' => set_value('id_users', $row->id_users),
             );
@@ -135,6 +139,7 @@ class T_emr extends CI_Controller
                 'objek' => $this->input->post('objek', TRUE),
                 'asessment' => $this->input->post('asessment', TRUE),
                 'plann' => $this->input->post('plann', TRUE),
+                'instruksi' => $this->input->post('instruksi', TRUE),
                 'tglinput' => $this->input->post('tglinput', TRUE),
                 'id_users' => $this->input->post('id_users', TRUE),
             );
@@ -175,6 +180,7 @@ class T_emr extends CI_Controller
         $this->form_validation->set_rules('objek', 'objek', 'trim|required');
         $this->form_validation->set_rules('asessment', 'asessment', 'trim|required');
         $this->form_validation->set_rules('plann', 'plann', 'trim|required');
+        $this->form_validation->set_rules('instruksi', 'instruksi', 'trim|required');
         $this->form_validation->set_rules('tglinput', 'tglinput', 'trim|required');
         $this->form_validation->set_rules('id_users', 'id users', 'trim|required');
 

@@ -37,6 +37,11 @@ class Billing_model extends CI_Model
         WHERE a.aktif='Y' AND b.aktif='Y'");
         return $hasil->result();
     }
+    function get_keringanan($noreg)
+    {
+        $hasil = $this->db->query("SELECT * from t_keringanan where noreg='$noreg'");
+        return $hasil->row();
+    }
     //////////////////////////////////////////////
     // function billing($noreg)
     // {
@@ -52,7 +57,7 @@ class Billing_model extends CI_Model
     function billing_total($noreg)
     {
         $this->db->select('kdmetodebayar,bayar,sum(ttl) as ttl');
-        $this->db->from('v_billtotal');
+        $this->db->from('v_bill');
         $this->db->where('noreg', $noreg);
         $this->db->group_by('kdbayar');
         return $this->db->get()->result();
@@ -60,7 +65,7 @@ class Billing_model extends CI_Model
     function billing_bayar($noreg)
     {
         $this->db->select('nobill,noreg,kdmetodebayar,bayar,sum(ttl) as ttl');
-        $this->db->from('v_billtotal');
+        $this->db->from('v_bill');
         $this->db->where('noreg', $noreg);
         $this->db->where_not_in('kdmetodebayar', '1');
         return $this->db->get()->result();
@@ -87,10 +92,17 @@ class Billing_model extends CI_Model
         }
         return $hasil;
     }
-    function ins_billbayar($nobill, $noreg, $jmlbayar, $tglinput, $id_users)
+    function ins_billbayar($nobayar, $nobill, $noreg, $jmlbayar, $tglinput, $id_users)
     {
-        $hasil = $this->db->query("INSERT INTO t_billbayar (nobill, noreg, jmlbayar, status,tglinput, id_users)VALUES('$nobill','$noreg','$jmlbayar','L','$tglinput','$id_users')");
-        $hasil = $this->db->query("update t_billrajal set status='L' where noreg='$noreg' and nobill='$nobill'");
+        $hasil = $this->db->query("INSERT INTO t_billbayar (nobayar,nobill, noreg, jmlbayar, status,tglinput, id_users)VALUES('$nobayar','$nobill','$noreg','$jmlbayar','L','$tglinput','$id_users')");
+        $hasil = $this->db->query("update t_billrajal set status='L',nobayar='$nobayar' where noreg='$noreg'");
+        $hasil = $this->db->query("update t_billobat set status='L',nobayar='$nobayar' where noreg='$noreg'");
+        $hasil = $this->db->query("update t_keringanan set nobayar='$nobayar' where noreg='$noreg'");
+        return $hasil;
+    }
+    function ins_keringanan($kdkeringanan, $alasan, $noreg, $jml, $tglinput, $id_users)
+    {
+        $hasil = $this->db->query("INSERT INTO t_keringanan (kdkeringanan,alasan, noreg, jml, tglinput, id_users)VALUES('$kdkeringanan','$alasan','$noreg','$jml','$tglinput','$id_users')");
         return $hasil;
     }
 }

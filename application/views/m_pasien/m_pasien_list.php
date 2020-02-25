@@ -27,9 +27,9 @@
                                     <th>Kdklmn</th>
                                     <th>Kdkawin</th>
                                     <th>Hp</th>
-                                    <th>Tglinput</th>
-                                    <th>Id Users</th>
-                                    <th width="200px">Action</th>
+                                    <!-- <th>Tglinput</th>
+                                    <th>Id Users</th> -->
+                                    <th width="130px">Action</th>
                                 </tr>
                             </thead>
 
@@ -75,7 +75,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                "url": "m_pasien/json",
+                "url": "json",
                 "type": "POST"
             },
             columns: [{
@@ -99,11 +99,12 @@
                     "data": "kawin"
                 }, {
                     "data": "hp"
-                }, {
-                    "data": "tglinput"
-                }, {
-                    "data": "full_name"
                 },
+                // }, {
+                //     "data": "tglinput"
+                // }, {
+                //     "data": "full_name"
+                // },
                 {
                     "data": "action",
                     "orderable": false,

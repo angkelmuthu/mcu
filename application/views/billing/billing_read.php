@@ -132,20 +132,25 @@
             </div>
         </div>
         <div class="col-lg-12 col-xl-9 order-lg-3 order-xl-2">
-            <div id="panel-7" class="panel">
-                <div class="panel-hdr">
-                    <h2>
-                        Billing <span class="fw-300"><i>#<?php echo $noreg ?></i></span>
-                    </h2>
-                    <div class="panel-toolbar">
-                        <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
-                        <button class="btn btn-panel waves-effect waves-themed" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
-                        <button class="btn btn-panel waves-effect waves-themed" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
+            <?php
+            $sql_bill = "SELECT a.noreg,a.nobill,b.poli FROM t_daftar a
+            LEFT JOIN m_poli b ON a.kdpoli=b.kdpoli where a.noreg='$noreg' order by nobill asc";
+            $billhead = $this->db->query($sql_bill)->result();
+            foreach ($billhead as $billh) {
+            ?>
+                <div id="panel-1" class="panel mb-1">
+                    <div class="panel-hdr">
+                        <h2>
+                            POLIKLINIK <?php echo $billh->poli ?>
+                            <span class="fw-300"><i>#<?php echo $billh->nobill ?></i> </span>
+                        </h2>
+                        <div class="panel-toolbar">
+                            <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
+                            <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
+                        </div>
                     </div>
-                </div>
-                <div class="panel-container show">
-                    <div class="panel-content">
-                        <div class="frame-wrap printableArea">
+                    <div class="panel-container collapse">
+                        <div class="panel-content">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="table-responsive">
@@ -163,11 +168,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- <tr>
-                                                    <td colspan="6"><b>TINDAKAN</b></td>
-                                                </tr> -->
                                                 <?php $no = 1;
-                                                foreach ($billing as $bill) {
+                                                $this->db->from('v_bill');
+                                                $this->db->where('noreg', $noreg);
+                                                $this->db->where('nobill', $billh->nobill);
+                                                $billsub = $this->db->get()->result();
+                                                foreach ($billsub as $bill) {
                                                     // if ($bill->resep == 'Y') {
                                                     //     echo '<tr><td colspan="6"><b>RESEP</b></td></tr>';
                                                     // }
@@ -179,14 +185,20 @@
                                                         $badge = 'warning';
                                                     } elseif ($bill->kdmetodebayar == 4) {
                                                         $badge = 'secondary';
+                                                    }
+                                                    if ($bill->status == 'L') {
+                                                        $modalbayar = $bill->bayar;
+                                                        $lunas = '<span class="badge badge-info">Lunas</span>';
+                                                    } else {
+                                                        $modalbayar = '<button type="button" class="btn btn-xs btn-' . $badge . '" data-toggle="modal" data-target=".carabayar-' . $bill->kode . '">' . $bill->bayar . '</button>';
+                                                        $lunas = '';
                                                     } ?>
                                                     <tr>
                                                         <td class="text-center"><?php echo $no ?></td>
                                                         <td><?php echo $bill->poli ?></td>
                                                         <td style="text-transform: uppercase;"><?php echo $bill->nama ?></td>
                                                         <td><?php echo $bill->dokter ?></td>
-                                                        <!-- <td class="text-center"><span class="badge badge-<?php echo $badge ?>"><?php echo $bill->bayar ?></span></td> -->
-                                                        <td class="text-center"><button type="button" class="btn btn-xs btn-<?php echo $badge ?>" data-toggle="modal" data-target=".carabayar-<?php echo $bill->kode ?>"><?php echo $bill->bayar ?></button></td>
+                                                        <td class="text-center"><?php echo $modalbayar; ?></td>
                                                         <td class="text-right"><?php echo angka($bill->harga) ?></td>
                                                         <td class="text-center"><?php echo angka($bill->qty) ?></td>
                                                         <td class="text-right" <?php //echo $coret
@@ -201,10 +213,10 @@
                                                                 </div>
                                                                 <form action="<?php echo site_url('billing/updatecrbayar'); ?>" method="post">
                                                                     <div class="modal-body">
-                                                                        <input type="text" name="nobill" value="<?php echo $bill->nobill ?>">
-                                                                        <input type="text" name="resep" value="<?php echo $bill->resep ?>">
-                                                                        <input type="text" name="kode" value="<?php echo $bill->kode ?>">
-                                                                        <input type="text" name="noreg" value="<?php echo $this->uri->segment('3'); ?>">
+                                                                        <input type="hidden" name="nobill" value="<?php echo $bill->nobill ?>">
+                                                                        <input type="hidden" name="resep" value="<?php echo $bill->resep ?>">
+                                                                        <input type="hidden" name="kode" value="<?php echo $bill->kode ?>">
+                                                                        <input type="hidden" name="noreg" value="<?php echo $this->uri->segment('3'); ?>">
                                                                         <?php
                                                                         foreach ($get_carabayar as $cb) {
                                                                             echo '
@@ -223,147 +235,198 @@
                                                     </div>
                                                 <?php $no++;
                                                 } ?>
-
-                                                <!-- <tr>
-                                                    <td colspan="6"><b>RESEP</b></td>
-                                                </tr> -->
-                                                <?php //$no = 1;
-                                                // foreach ($billing_obat as $billobat) {
-                                                //     if ($billobat->kdmetodebayar == 1) {
-                                                //         $badge = 'success';
-                                                //     } elseif ($billobat->kdmetodebayar == 2) {
-                                                //         $badge = 'primary';
-                                                //     } elseif ($billobat->kdmetodebayar == 3) {
-                                                //         $badge = 'warning';
-                                                //     } elseif ($billobat->kdmetodebayar == 4) {
-                                                //         $badge = 'secondary';
-                                                //     }
-                                                ?>
-                                                <!-- <tr>
-                                                        <td class="text-center fw-700"><?php echo $no ?></td>
-                                                        <td style="text-transform: uppercase;"><?php echo $billobat->nmobat ?></td>
-                                                        <!-- <td class="text-center"><span class="badge badge-<?php echo $badge ?>"><?php echo $billobat->bayar ?></span></td>
-                                                <td class="text-center"><button type="button" class="btn btn-xs btn-<?php echo $badge ?>" data-toggle="modal" data-target=".example-modal-centered-transparent"><?php echo $billobat->bayar ?></button></td>
-                                                <td class="text-right"><?php echo angka($billobat->hargaobat) ?></td>
-                                                <td class="text-center"><?php echo angka($billobat->qty) ?></td>
-                                                <td class="text-right"><?php echo angka($billobat->hargaobat * $billobat->qty) ?></td>
-                                                </tr> -->
-                                                <?php //$no++;}
-                                                ?>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-7 ml-sm-auto">
-                                    <div class="row">
-                                        <div class="col-sm-12 ml-sm-auto">
-                                            <!-- <button class="btn btn-warning" type="button"> <span><i class="fal fa-clone"></i> <b>Split Pembayaran</b></span> </button> -->
-                                            <h5 class="frame-heading">Default</h5>
-                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#default-example-modal">
-                                                <span><i class="fal fa-money-bill"></i> <b>Pembayaran</b>
-                                            </button>
-                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#default-example-modal">
-                                                <span><i class="fal fa-money-bill"></i> <b>Keringanan</b>
-                                            </button>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="default-example-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Pembayaran</h4>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                                                            </button>
-                                                        </div>
-                                                        <form action="<?php echo site_url('billing/bayar'); ?>" method="post">
-                                                            <div class="modal-body">
-                                                                <div class="alert border-warning bg-transparent fade show">
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="alert-icon">
-                                                                            <div class="alert-icon">
-                                                                                <i class="fal fa-exclamation-triangle"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="flex-1">
-                                                                            <span class="h5">PERHATIAN!!</span>
-                                                                            <br>
-                                                                            Transaksi yang sudah dibayar tidak dapat dibatalkan tanpa persetujuan kepala installasi.
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <?php foreach ($billing_bayar as $billbayar) { ?>
-                                                                    <input type="hidden" name="nobill" value="<?php echo $billbayar->nobill; ?>">
-                                                                    <input type="hidden" name="noreg" value="<?php echo $billbayar->noreg; ?>">
-                                                                    <input type="hidden" name="jmlbayar" value="<?php echo $billbayar->ttl; ?>">
-                                                                    <input type="hidden" name="tglinput" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
-                                                                    <input type="hidden" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>">
-                                                                    <h1 class="text-center">Jumlah Yang Harus Dibayar<br>
-                                                                        <span class="badge badge-primary">Rp. <?php echo angka($billbayar->ttl); ?></span>
-                                                                    </h1>
-                                                                    <br>
-                                                                    <a class="btn btn-block btn-danger" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                                        KERINGANAN
-                                                                    </a>
-                                                                    <div class="collapse" id="collapseExample">
-                                                                        <div class="card card-body">
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="example-palaceholder">Jumlah Keringanan</label>
-                                                                                <input type="text" id="example-palaceholder" class="form-control" placeholder="123456">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label class="form-label" for="example-textarea">Alasan</label>
-                                                                                <textarea class="form-control" id="example-textarea" rows="3"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                <?php } ?>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Bayar/Lunas</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+            <div id="panel-1" class="panel mb-1">
+                <div class="panel-container show">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-sm-7 ml-sm-auto">
+                                <div class="alert border-warning bg-transparent fade show">
+                                    <div class="d-flex align-items-center">
+                                        <div class="alert-icon">
+                                            <div class="alert-icon">
+                                                <i class="fal fa-exclamation-triangle"></i>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 ml-sm-auto">
-                                            <h5 class="frame-heading">Default</h5>
-                                            <button id="print" class="btn btn-info" type="button"> <span><i class="fal fa-print"></i> <b>Print</b></span> </button>
+                                        <div class="flex-1">
+                                            <span class="h5">PERHATIAN!!</span>
+                                            <br>
+                                            Transaksi yang sudah dibayar tidak dapat dibatalkan tanpa persetujuan kepala installasi.
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-5 ml-sm-auto">
-                                    <table class="table table-clean">
-                                        <tbody>
-                                            <?php foreach ($billing_total as $billtotal) { ?>
-                                                <tr>
-                                                    <td class="text-left">
-                                                        <b><?php echo $billtotal->bayar ?> </b>
-                                                    </td>
-                                                    <td class="text-right">:</td>
-                                                    <td class="text-right"><?php echo angka($billtotal->ttl) ?></td>
-                                                </tr>
-                                            <?php } ?>
+                                <div class="panel-tag mt-0">
+                                    Terbilang :<br>
+                                    <?php foreach ($billing_bayar as $billbayar) {
+                                        echo '<code>' . terbilang($billbayar->ttl - $keringanan) . '</code>';
+                                    } ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 ml-sm-auto">
+                                <table class="table table-clean">
+                                    <tbody>
+                                        <?php foreach ($billing_total as $billtotal) { ?>
                                             <tr>
                                                 <td class="text-left">
-                                                    <b>Keringanan</b>
+                                                    <b><?php echo $billtotal->bayar ?> </b>
                                                 </td>
-                                                <td class="text-right"></td>
-                                            </tr>
-                                            <tr class="table-scale-border-top border-left-0 border-right-0 border-bottom-0">
-                                                <td class="text-left keep-print-font"><b>Jumlah Bayar</b></td>
                                                 <td class="text-right">:</td>
-                                                <td class="text-right keep-print-font">
-                                                    <h4 class="m-0 fw-700 h4 keep-print-font">Rp. <?php foreach ($billing_bayar as $billbayar) {
-                                                                                                        echo angka($billbayar->ttl);
-                                                                                                    } ?></h4>
-                                                </td>
+                                                <td class="text-right"><?php echo angka($billtotal->ttl) ?></td>
                                             </tr>
-                                        </tbody>
-                                    </table>
+                                        <?php }
+                                        if ($keringanan > 0) {
+                                            echo '
+                                        <tr>
+                                            <td class="text-left">
+                                                <b>Keringanan</b>
+                                            </td>
+                                            <td class="text-right">:</td>
+                                            <td class="text-right">' . angka($keringanan) . '</td>
+                                        </tr>';
+                                        } ?>
+                                        <tr class="table-scale-border-top border-left-0 border-right-0 border-bottom-0">
+                                            <td class="text-left keep-print-font"><b>Jumlah Bayar</b></td>
+                                            <td class="text-right">:</td>
+                                            <td class="text-right keep-print-font">
+                                                <h4 class="m-0 fw-700 h4 keep-print-font">
+                                                    Rp. <?php foreach ($billing_bayar as $billbayar) {
+                                                            echo angka($billbayar->ttl - $keringanan);
+                                                        } ?></h4>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-12 ml-sm-auto">
+                                <?php
+                                $this->db->from('v_bill');
+                                $this->db->where('noreg', $noreg);
+                                $this->db->where('status', 'BL');
+                                $cekstatus = $this->db->get();
+                                $num = $cekstatus->num_rows();
+                                if ($num > 0) {
+                                    $disabled = '';
+                                } else {
+                                    $disabled = 'disabled';
+                                }
+                                ?>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#default-example-modal" <?php echo $disabled ?>>
+                                    <span><i class="fal fa-money-bill"></i> <b>Pembayaran</b>
+                                </button>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#default-keringanan-modal" <?php echo $disabled ?>>
+                                    <span><i class="fal fa-money-bill"></i> <b>Keringanan</b>
+                                </button>
+                                <button id="print" class="btn btn-info" type="button"> <span><i class="fal fa-print"></i> <b>Print</b></span> </button>
+
+                            </div>
+                            <!-- modal pembayaran -->
+                            <div class="modal fade" id="default-example-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Pembayaran</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                            </button>
+                                        </div>
+                                        <form action="<?php echo site_url('billing/bayar'); ?>" method="post">
+                                            <div class="modal-body">
+
+                                                <?php foreach ($billing_bayar as $billbayar) { ?>
+                                                    <!-- <input type="hidden" name="nobill" value="<?php echo $billbayar->nobill; ?>"> -->
+                                                    <input type="hidden" name="noreg" value="<?php echo $billbayar->noreg; ?>">
+                                                    <input type="hidden" name="jmlbayar" value="<?php echo $billbayar->ttl; ?>">
+                                                    <input type="hidden" name="tglinput" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
+                                                    <input type="hidden" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>">
+                                                    <h1 class="text-center">Jumlah Yang Harus Dibayar<br>
+                                                        <span class="badge badge-primary">Rp. <?php echo angka($billbayar->ttl); ?></span>
+                                                    </h1>
+                                                    <br>
+                                                    <div class="alert border-warning bg-transparent fade show">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="alert-icon">
+                                                                <div class="alert-icon">
+                                                                    <i class="fal fa-exclamation-triangle"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-1">
+                                                                <span class="h5">PERHATIAN!!</span>
+                                                                <br>
+                                                                Transaksi yang sudah dibayar tidak dapat dibatalkan tanpa persetujuan kepala installasi.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Bayar/Lunas</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- modal keringanan -->
+                            <div class="modal fade" id="default-keringanan-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">FORM KERINGANAN</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                            </button>
+                                        </div>
+                                        <form action="<?php echo site_url('billing/keringanan'); ?>" method="post">
+                                            <div class="modal-body">
+
+                                                <?php foreach ($billing_bayar as $billbayar) { ?>
+                                                    <input type="hidden" name="noreg" value="<?php echo $billbayar->noreg; ?>">
+                                                    <input type="hidden" name="tglinput" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
+                                                    <input type="hidden" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>">
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="example-palaceholder">Jenis Keringanan</label>
+                                                        <?php echo cmb_dinamis('kdkeringanan', 'm_keringanan', 'keringanan', 'kdkeringanan') ?>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="example-palaceholder">Jumlah Keringanan</label>
+                                                        <input type="text" name="jml" id="example-palaceholder" class="form-control" placeholder="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="example-textarea">Alasan</label>
+                                                        <textarea class="form-control" name="alasan" id="example-textarea" rows="3"></textarea>
+                                                    </div>
+
+                                                    <br>
+                                                    <div class="alert border-warning bg-transparent fade show">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="alert-icon">
+                                                                <div class="alert-icon">
+                                                                    <i class="fal fa-exclamation-triangle"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-1">
+                                                                <span class="h5">PERHATIAN!!</span>
+                                                                <br>
+                                                                Transaksi yang sudah dibayar tidak dapat dibatalkan tanpa persetujuan kepala installasi.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -371,6 +434,7 @@
                 </div>
             </div>
         </div>
+
 </main>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/vendors.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/app.bundle.js"></script>

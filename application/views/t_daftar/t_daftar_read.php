@@ -1,6 +1,141 @@
 <main id="js-page-content" role="main" class="page-content">
     <div class="row">
-        <div class="col-lg-6 col-xl-3 order-lg-1 order-xl-1">
+
+        <div class="col-lg-12 col-xl-9 order-lg-3 order-xl-1">
+            <div id="panel-9" class="panel">
+                <div class="panel-hdr">
+                    <ul class="nav nav-pills" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#js_change_pill_direction-1">TANDA VITAL</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_direction-2">TINDAKAN</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_direction-3">PENUNJANG</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_direction-4">RESUME MEDIS</a></li>
+                    </ul>
+                </div>
+                <div class="panel-container show">
+                    <div class="panel-content">
+                        <div class="tab-content py-3">
+                            <div class="tab-pane fade show active" id="js_change_pill_direction-1" role="tabpanel">
+                                <?php $this->load->view('t_daftar/tanda_vital'); ?>
+                            </div>
+                            <div class="tab-pane fade" id="js_change_pill_direction-2" role="tabpanel">
+                                <?php $this->load->view('t_daftar/tindakan'); ?>
+                            </div>
+                            <div class="tab-pane fade" id="js_change_pill_direction-3" role="tabpanel">
+                                Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.
+                            </div>
+                            <div class="tab-pane fade" id="js_change_pill_direction-4" role="tabpanel">
+                                <form action="" method="post">
+                                    <div class="col-12">
+                                        <input type="hidden" name="tglinput" value="<?php echo date('Y-m-d H:i:s'); ?>" />
+                                        <input type="hidden" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" />
+                                        <div class="row">
+                                            <div class="col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="example-textarea">RIWAYAT ALERGI</label>
+                                                    <input type="text" class="form-control" name="alergi"></input>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="example-textarea">DIET</label>
+                                                    <input type="text" class="form-control" name="diet"></input>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="example-textarea">KELUHAN UTAMA</label>
+                                                    <textarea class="form-control" name="subjek" id="example-textarea" rows="2"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="example-textarea">RINGKASAN RIWAYAT PENYAKIT</label>
+                                                    <textarea class="form-control" name="objek" id="example-textarea" rows="2"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="example-textarea">PEMERIKSAAN FISIK</label>
+                                                    <textarea class="form-control" name="asessment" id="example-textarea" rows="2"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="example-textarea">PEMERIKSAAN PENUNJANG</label>
+                                                    <textarea class="form-control" name="asessment" id="example-textarea" rows="2"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="example-textarea">TERAPI DAN ATAU TINDAKAN</label>
+                                                    <textarea class="form-control" name="plann" id="example-textarea" rows="2"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <!-- <div class="form-group">
+                    <label class="form-label" for="example-textarea">DIAGNOSA MASUK (ICD10)</label>
+                    <textarea class="form-control" name="plann" id="example-textarea" rows="2"></textarea>
+                </div> -->
+                                                <form action="" method="post">
+                                                    <input type="text" class='autocomplete' id="code" name="code" />
+                                                    <input type="text" class='autocomplete' id="desc" name="desc" />
+                                                    <input type="text" class='autocomplete' id="kdsubtarif" name="kdsubtarif" />
+                                                    <input type="text" name="tglinput" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
+                                                    <input type="text" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" readonly />
+                                                    <div class="form-group">
+                                                        <!-- <label class="form-label" for="button-addon5">Button on right</label> -->
+                                                        <div class="input-group">
+                                                            <input type="search" id=" autocomplete1" name="nama_customer" class="autocomplete form-control" placeholder="cari berdasarkan icd10" aria-label="Recipient's username" aria-describedby="button-addon5">
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn-primary waves-effect waves-themed" type="submit" id="button-addon5"><i class="fal fa-save"></i> Add Paket</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <table class="table table-bordered table-hover table-striped w-100" id="dt-basic-example">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="30px">No</th>
+                                                            <th>Nama Tarif</th>
+                                                            <th>Tglinput</th>
+                                                            <th>Id Users</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="example-textarea">DIAGNOSA AKHIR (ICD10)</label>
+                                                    <textarea class="form-control" name="plann" id="example-textarea" rows="2"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="example-textarea">TINDAKAN MEDIS (ICD9)</label>
+                                                    <textarea class="form-control" name="plann" id="example-textarea" rows="2"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                            </div>
+                                        </div>
+
+                                        <div class="p-3 text-center">
+                                            <button type="submit" class="btn btn-sm btn-primary font-weight-bold">Simpan</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-xl-3 order-lg-1 order-xl-2">
             <!-- profile summary -->
             <div class="card mb-g rounded-top">
                 <div class="row no-gutters row-grid">
@@ -55,221 +190,30 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12 col-xl-6 order-lg-3 order-xl-2">
-            <div id="panel-10" class="panel">
-                <div class="panel-hdr">
-                    <h2>
-                        REKAM MEDIS ELEKTRONIK <span class="fw-300"><i>(RME)</i></span>
-                    </h2>
-                    <div class="panel-toolbar">
-                        <button class="btn btn-panel waves-effect waves-themed" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
-                        <button class="btn btn-panel waves-effect waves-themed" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
-                        <button class="btn btn-panel waves-effect waves-themed" data-action="panel-close" data-toggle="tooltip" data-offset="0,10" data-original-title="Close"></button>
-                    </div>
-                </div>
-                <div class="panel-container show">
-                    <div class="panel-content">
-                        <ul class="nav nav-tabs nav-justified" role="tablist">
-                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#js_change_pill_justified-1">ASESSMENT DOKTER</a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_justified-2">TINDAKAN</a></li>
-                        </ul>
-                        <div class="tab-content py-3">
-                            <div class="tab-pane fade active show" id="js_change_pill_justified-1" role="tabpanel">
-                                <?php $this->load->view('t_daftar/soapdokter'); ?>
-                            </div>
-                            <div class="tab-pane fade" id="js_change_pill_justified-2" role="tabpanel">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <button type="button" class="btn btn-block btn-info waves-effect waves-themed" data-toggle="modal" data-target=".modal-tindakan">Tindakan</button>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button type="button" class="btn btn-block btn-success waves-effect waves-themed" data-toggle="modal" data-target=".modal-obat">Obat</button>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div id="reload">
-                                    <table class="table" id="">
-                                        <thead>
-                                            <tr>
-                                                <th class="border-top-0 table-scale-border-bottom">Nama Tindakan</th>
-                                                <th class="text-right border-top-0 table-scale-border-bottom">Harga</th>
-                                                <th class="text-center border-top-0 table-scale-border-bottom">Qty</th>
-                                                <th class="text-right border-top-0 table-scale-border-bottom">Total</th>
-                                                <th class="text-right border-top-0 table-scale-border-bottom"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="5"><b>TINDAKAN</b></td>
-                                            </tr>
-                                        </tbody>
-                                        <tbody id="show_data">
-
-                                        </tbody>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="5"><b>RESEP</b></td>
-                                            </tr>
-                                        </tbody>
-                                        <tbody id="show_obat">
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!--MODAL HAPUS Tindakan-->
-                                <div class="modal fade" id="ModalHapus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">Hapus Barang</h4>
-                                            </div>
-                                            <form class="form-horizontal">
-                                                <div class="modal-body">
-
-                                                    <input type="hidden" name="idbill" id="textidbill" value="">
-                                                    <div class="alert alert-warning">
-                                                        <p>Apakah Anda yakin mau memhapus barang ini?</p>
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                                                    <button class="btn_hapus btn btn-danger" id="btn_hapus">Hapus</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--END MODAL HAPUS-->
-                                <!--MODAL HAPUS Obat-->
-                                <div class="modal fade" id="ModalHapusObat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">Hapus Obat</h4>
-                                            </div>
-                                            <form class="form-horizontal">
-                                                <div class="modal-body">
-
-                                                    <input type="hidden" name="nobillobat" id="textnobillobat" value="">
-                                                    <div class="alert alert-warning">
-                                                        <p>Apakah Anda yakin mau memhapus barang ini?</p>
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                                                    <button class="btn_hapus_obat btn btn-danger" id="btn_hapus_obat">Hapus</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--END MODAL HAPUS-->
-                                <div class="modal fade modal-tindakan" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-right">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title h4">Master Tarif</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <table class="table table-bordered table-hover table-striped w-100" id="tarif">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Group Tarif</th>
-                                                            <th>Nama Tarif</th>
-                                                            <th>Harga</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php foreach ($listtarif as $tarif) { ?>
-                                                            <tr>
-                                                                <td><b style="text-transform: uppercase;"><?php echo $tarif->poli ?></b></td>
-                                                                <td><?php echo $tarif->nmtarif ?></td>
-                                                                <td><?php echo number_format($tarif->harga) ?></td>
-                                                                <td>
-                                                                    <input type="hidden" name="noreg" id="noreg<?php echo $tarif->kdtarif ?>" value="<?php echo $noreg ?>">
-                                                                    <button class="btn btn-info btn-xs" id="btn_simpan<?php echo $tarif->kdtarif ?>"><i class="fal fa-plus"></i></button>
-                                                                </td>
-                                                            </tr>
-                                                        <?php } ?>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary waves-effect waves-themed" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary waves-effect waves-themed">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- modal Obat -->
-                                <div class="modal fade modal-obat" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-right">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title h4">Master Tarif Obat</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <table class="display table table-bordered table-hover table-striped w-100">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nama Obat</th>
-                                                            <th>Harga</th>
-                                                            <th>Stok</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php foreach ($listobat as $obat) {
-                                                            if ($obat->stok == 0) {
-                                                                $hidden = ' disabled';
-                                                            } else {
-                                                                $hidden = '';
-                                                            }
-                                                        ?>
-                                                            <tr>
-                                                                <td><b style="text-transform: uppercase;"><?php echo $obat->obat ?></b></td>
-                                                                <td>Rp. <?php echo number_format($obat->hargaobat) ?></td>
-                                                                <td><?php echo number_format($obat->stok) ?></td>
-                                                                <td>
-                                                                    <input type="hidden" name="noreg" id="noreg<?php echo $obat->kdobat ?>" value="<?php echo $noreg ?>">
-                                                                    <input type="hidden" name="user" id="user<?php echo $obat->kdobat ?>" value="<?php echo $this->session->userdata('id_users'); ?>">
-                                                                    <button class="btn btn-primary btn-sm btn-icon waves-effect waves-themed" <?php echo $hidden ?> id="btn_simpanobat<?php echo $obat->kdobat ?>"><i class="fal fa-plus"></i></button>
-                                                                </td>
-                                                            </tr>
-                                                        <?php } ?>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary waves-effect waves-themed" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary waves-effect waves-themed">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php $this->load->view('t_daftar/asessment_perawat'); ?>
+        <?php //$this->load->view('t_daftar/asessment_perawat');
+        ?>
     </div>
 </main>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/vendors.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/app.bundle.js"></script>
+<script type='text/javascript' src='<?php echo base_url(); ?>assets/smartadmin/costume/jquery.autocomplete.js'></script>
+<link href='<?php echo base_url(); ?>assets/smartadmin/costume/jquery.autocomplete.css' rel='stylesheet' />
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.export.js"></script>
+<script type='text/javascript'>
+    var site = "<?php echo site_url(); ?>";
+    $(function() {
+        $('.autocomplete').autocomplete({
+            // serviceUrl berisi URL ke controller/fungsi yang menangani request kita
+            serviceUrl: site + 't_daftar/get_icd10',
+            // fungsi ini akan dijalankan ketika user memilih salah satu hasil request
+            onSelect: function(suggestion) {
+                $('#kdsubtarif').val('' + suggestion.nim); // membuat id 'kdsubpaket' untuk ditampilkan
+                //$('#v_jurusan').val('' + suggestion.jurusan); // membuat id 'v_jurusan' untuk ditampilkan
+            }
+        });
+    });
+</script>
 <script type="text/javascript">
     $(document).ready(function() {
         var groupColumn = 0;
@@ -362,6 +306,7 @@
         ?>
             $('#btn_simpan<?php echo $tarif->kdtarif ?>').on('click', function() {
                 var noreg = $('#noreg<?php echo $tarif->kdtarif ?>').val();
+                var nobill = '<?php echo $nobill ?>';
                 var paket = '<?php echo $tarif->paket ?>';
                 var kdpoli = '<?php echo $kdpoli ?>';
                 var kddokter = '<?php echo $kddokter ?>';
@@ -375,6 +320,7 @@
                     dataType: "JSON",
                     data: {
                         noreg: noreg,
+                        nobill: nobill,
                         kdpoli: kdpoli,
                         kddokter: kddokter,
                         paket: paket,
@@ -443,6 +389,7 @@
         <?php foreach ($listobat as $obat) { ?>
             $('#btn_simpanobat<?php echo $obat->kdobat ?>').on('click', function() {
                 var noreg = $('#noreg<?php echo $obat->kdobat ?>').val();
+                var nobill = '<?php echo $nobill ?>';
                 var user = $('#user<?php echo $this->session->userdata('id_users'); ?>').val();
                 var kdpoli = '<?php echo $obat->kdpoli ?>';
                 var kddokter = '<?php echo $kddokter ?>';
@@ -456,6 +403,7 @@
                     dataType: "JSON",
                     data: {
                         noreg: noreg,
+                        nobill: nobill,
                         kdpoli: kdpoli,
                         kddokter: kddokter,
                         user: user,

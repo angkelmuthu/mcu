@@ -1,7 +1,7 @@
 .stamplunas {
     background: url(../img/backgrounds/lunas.png) no-repeat center;
     /* background-size: cover; */
-    background-size: 50% 50%;
-    position: relative;
-    opacity: 0.5;
+    /* background-size: 50% 50%; */
+    /* position: relative; */
+    opacity: 0.6;
 }

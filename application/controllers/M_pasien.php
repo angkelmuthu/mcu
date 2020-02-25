@@ -16,13 +16,18 @@ class M_pasien extends CI_Controller
 
     public function index()
     {
-        $this->template->load('template', 'm_pasien/m_pasien_list');
+        $this->template->load('template', 'm_pasien/m_pasien_cari');
     }
 
     public function json()
     {
         header('Content-Type: application/json');
         echo $this->M_pasien_model->json();
+    }
+
+    public function list()
+    {
+        $this->template->load('template', 'm_pasien/m_pasien_list');
     }
 
     public function read($id)

@@ -52,9 +52,10 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <input type="text" name="noreg" value="<?php echo $this->uri->segment(3); ?>" />
-                                        <input type="text" class="form-control" name="tglinput" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
-                                        <input type="text" class="form-control" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" readonly />
+                                        <input type="hidden" name="noreg" value="<?php echo $this->uri->segment(3); ?>" />
+                                        <input type="hidden" name="nomr" value="<?php echo $this->uri->segment(4); ?>" />
+                                        <input type="hidden" class="form-control" name="tglinput" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
+                                        <input type="hidden" class="form-control" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" readonly />
                                         <button type="submit" class="btn btn-warning waves-effect waves-themed"><i class="fal fa-save"></i> <?php echo $button ?></button>
                                         <a href="<?php echo site_url('t_asessment') ?>" class="btn btn-info waves-effect waves-themed"><i class="fal fa-sign-out"></i> Kembali</a></td>
                                 </tr>
