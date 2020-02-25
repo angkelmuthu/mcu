@@ -153,8 +153,7 @@ class T_daftar extends CI_Controller
                 $data = $this->T_daftar_model->simpan_obat($nobill, $noreg, $kdpoli, $kddokter, $kdobat, $hargaobat, $qty, $kdbayar, $status, $tgl, $id_users);
             }
             echo json_encode($data);
-        } else {
-        }
+        } else { }
     }
     function hapus_obat()
     {
@@ -163,22 +162,16 @@ class T_daftar extends CI_Controller
         echo json_encode($data);
     }
     ///////////////////////////////////////////////
-    public function get_icd10($id)
+    function get_icd10()
     {
-        $keyword = $this->uri->segment(3);
-        $data = $this->db->from('m_icd10')->like('description', $keyword)->get();
-
-        // format keluaran di dalam array
-        foreach ($data->result() as $row) {
-            $arr['query'] = $keyword;
-            $arr['suggestions'][] = array(
-                'value'    => $row->description,
-                'nim'    => $row->code,
-                'jurusan'    => $row->code2
-            );
+        if (isset($_GET['term'])) {
+            $result = $this->T_daftar_model->search_icd10($_GET['term']);
+            if (count($result) > 0) {
+                foreach ($result as $row)
+                    $arr_result[] = $row->code . ' - ' . $row->description;
+                echo json_encode($arr_result);
+            }
         }
-        // minimal PHP 5.2
-        echo json_encode($arr);
     }
     ///////////////////////////////////////////////
     public function create()

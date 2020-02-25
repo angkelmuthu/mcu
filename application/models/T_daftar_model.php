@@ -173,6 +173,14 @@ class T_daftar_model extends CI_Model
         $this->db->where($this->id, $id);
         $this->db->delete($this->table);
     }
+
+    function search_icd10($title)
+    {
+        $this->db->like('description', $title, 'both');
+        $this->db->order_by('code', 'ASC');
+        $this->db->limit(10);
+        return $this->db->get('m_icd10')->result();
+    }
 }
 
 /* End of file T_daftar_model.php */

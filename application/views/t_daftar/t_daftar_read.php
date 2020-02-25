@@ -24,111 +24,7 @@
                                 Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.
                             </div>
                             <div class="tab-pane fade" id="js_change_pill_direction-4" role="tabpanel">
-                                <form action="" method="post">
-                                    <div class="col-12">
-                                        <input type="hidden" name="tglinput" value="<?php echo date('Y-m-d H:i:s'); ?>" />
-                                        <input type="hidden" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" />
-                                        <div class="row">
-                                            <div class="col-6 mb-2">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="example-textarea">RIWAYAT ALERGI</label>
-                                                    <input type="text" class="form-control" name="alergi"></input>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mb-2">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="example-textarea">DIET</label>
-                                                    <input type="text" class="form-control" name="diet"></input>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mb-2">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="example-textarea">KELUHAN UTAMA</label>
-                                                    <textarea class="form-control" name="subjek" id="example-textarea" rows="2"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mb-2">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="example-textarea">RINGKASAN RIWAYAT PENYAKIT</label>
-                                                    <textarea class="form-control" name="objek" id="example-textarea" rows="2"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mb-2">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="example-textarea">PEMERIKSAAN FISIK</label>
-                                                    <textarea class="form-control" name="asessment" id="example-textarea" rows="2"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mb-2">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="example-textarea">PEMERIKSAAN PENUNJANG</label>
-                                                    <textarea class="form-control" name="asessment" id="example-textarea" rows="2"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mb-2">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="example-textarea">TERAPI DAN ATAU TINDAKAN</label>
-                                                    <textarea class="form-control" name="plann" id="example-textarea" rows="2"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mb-2">
-                                            </div>
-                                            <div class="col-6 mb-2">
-                                                <!-- <div class="form-group">
-                    <label class="form-label" for="example-textarea">DIAGNOSA MASUK (ICD10)</label>
-                    <textarea class="form-control" name="plann" id="example-textarea" rows="2"></textarea>
-                </div> -->
-                                                <form action="" method="post">
-                                                    <input type="text" class='autocomplete' id="code" name="code" />
-                                                    <input type="text" class='autocomplete' id="desc" name="desc" />
-                                                    <input type="text" class='autocomplete' id="kdsubtarif" name="kdsubtarif" />
-                                                    <input type="text" name="tglinput" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
-                                                    <input type="text" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" readonly />
-                                                    <div class="form-group">
-                                                        <!-- <label class="form-label" for="button-addon5">Button on right</label> -->
-                                                        <div class="input-group">
-                                                            <input type="search" id=" autocomplete1" name="nama_customer" class="autocomplete form-control" placeholder="cari berdasarkan icd10" aria-label="Recipient's username" aria-describedby="button-addon5">
-                                                            <div class="input-group-append">
-                                                                <button class="btn btn-primary waves-effect waves-themed" type="submit" id="button-addon5"><i class="fal fa-save"></i> Add Paket</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                                <table class="table table-bordered table-hover table-striped w-100" id="dt-basic-example">
-                                                    <thead>
-                                                        <tr>
-                                                            <th width="30px">No</th>
-                                                            <th>Nama Tarif</th>
-                                                            <th>Tglinput</th>
-                                                            <th>Id Users</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-6 mb-2">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="example-textarea">DIAGNOSA AKHIR (ICD10)</label>
-                                                    <textarea class="form-control" name="plann" id="example-textarea" rows="2"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mb-2">
-                                                <div class="form-group">
-                                                    <label class="form-label" for="example-textarea">TINDAKAN MEDIS (ICD9)</label>
-                                                    <textarea class="form-control" name="plann" id="example-textarea" rows="2"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 mb-2">
-                                            </div>
-                                        </div>
-
-                                        <div class="p-3 text-center">
-                                            <button type="submit" class="btn btn-sm btn-primary font-weight-bold">Simpan</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                <?php $this->load->view('t_daftar/resume_medis'); ?>
                             </div>
                         </div>
                     </div>
@@ -200,17 +96,45 @@
 <link href='<?php echo base_url(); ?>assets/smartadmin/costume/jquery.autocomplete.css' rel='stylesheet' />
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.export.js"></script>
-<script type='text/javascript'>
-    var site = "<?php echo site_url(); ?>";
-    $(function() {
-        $('.autocomplete').autocomplete({
-            // serviceUrl berisi URL ke controller/fungsi yang menangani request kita
-            serviceUrl: site + 't_daftar/get_icd10',
-            // fungsi ini akan dijalankan ketika user memilih salah satu hasil request
-            onSelect: function(suggestion) {
-                $('#kdsubtarif').val('' + suggestion.nim); // membuat id 'kdsubpaket' untuk ditampilkan
-                //$('#v_jurusan').val('' + suggestion.jurusan); // membuat id 'v_jurusan' untuk ditampilkan
-            }
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#icdmasuk").autocomplete({
+            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
+        });
+        $("#icdakhir").autocomplete({
+            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
+        });
+        $("#icd101").autocomplete({
+            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
+        });
+        $("#icd102").autocomplete({
+            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
+        });
+        $("#icd103").autocomplete({
+            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
+        });
+        $("#icd104").autocomplete({
+            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
+        });
+        $("#icd105").autocomplete({
+            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
+        });
+        $("#icd91").autocomplete({
+            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
+        });
+        $("#icd92").autocomplete({
+            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
+        });
+        $("#icd93").autocomplete({
+            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
+        });
+        $("#icd94").autocomplete({
+            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
+        });
+        $("#icd95").autocomplete({
+            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
         });
     });
 </script>
@@ -303,7 +227,7 @@
         // $query = $this->db->get();
         // foreach ($query->result() as $row) {
         foreach ($listtarif as $tarif) {
-        ?>
+            ?>
             $('#btn_simpan<?php echo $tarif->kdtarif ?>').on('click', function() {
                 var noreg = $('#noreg<?php echo $tarif->kdtarif ?>').val();
                 var nobill = '<?php echo $nobill ?>';
