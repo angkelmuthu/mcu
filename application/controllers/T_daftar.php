@@ -53,6 +53,7 @@ class T_daftar extends CI_Controller
                 'petugas' => $row->id_users,
                 'listtarif' => $this->T_daftar_model->get_tarif($kdpoli),
                 'listobat' => $this->T_daftar_model->get_obat(),
+                'get_penunjang' => $this->T_daftar_model->get_penunjang($row->noreg),
 
             );
             $this->template->load('template', 't_daftar/t_daftar_read', $data);

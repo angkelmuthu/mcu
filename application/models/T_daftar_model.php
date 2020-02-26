@@ -73,6 +73,13 @@ class T_daftar_model extends CI_Model
         $this->db->from('v_obatdetail');
         return $this->db->get()->result();
     }
+    ///////////////////////////////////////////////
+    function get_penunjang($noreg)
+    {
+        $this->db->from('v_penunjang');
+        $this->db->where('noreg', $noreg);
+        return $this->db->get()->result();
+    }
     //////////////////////////////////////////////
     function barang_list($noreg, $kddokter)
     {
