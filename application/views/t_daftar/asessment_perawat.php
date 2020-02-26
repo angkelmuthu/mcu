@@ -1,5 +1,4 @@
 <div class="col-lg-6 col-xl-3 order-lg-2 order-xl-3">
-
     <!-- add : -->
     <!-- rating -->
     <div class="card mb-g">
