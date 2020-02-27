@@ -54,6 +54,7 @@ class T_daftar extends CI_Controller
                 'listtarif' => $this->T_daftar_model->get_tarif($kdpoli),
                 'listobat' => $this->T_daftar_model->get_obat(),
                 'get_penunjang' => $this->T_daftar_model->get_penunjang($row->noreg),
+                'get_icd' => $this->T_daftar_model->view(),
 
             );
             $this->template->load('template', 't_daftar/t_daftar_read', $data);
@@ -325,6 +326,38 @@ class T_daftar extends CI_Controller
 
         $this->form_validation->set_rules('noreg', 'noreg', 'trim');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    }
+    ////////////////////////////////////////////////////////
+    public function simpan()
+    {
+        if ($this->T_daftar_model->validation("save")) { // Jika validasi sukses atau hasil validasi adalah true
+            $this->T_daftar_model->save(); // Panggil fungsi save() yang ada di T_daftar_model.php
+            // Load ulang view.php agar data yang baru bisa muncul di tabel pada view.php
+            $html = $this->load->view('t_daftar/soapdokter', array('get_icd' => $this->T_daftar_model->view()), true);
+            $callback = array(
+                'status' => 'sukses',
+                'pesan' => 'Data berhasil disimpan',
+                'html' => $html
+            );
+        } else {
+            $callback = array(
+                'status' => 'gagal',
+                'pesan' => validation_errors()
+            );
+        }
+        echo json_encode($callback);
+    }
+    public function hapus($id)
+    {
+        $this->T_daftar_model->icd_delete($id); // Panggil fungsi delete() yang ada di T_daftar_model.php
+        // Load ulang view.php agar data yang baru bisa muncul di tabel pada view.php
+        $html = $this->load->view('t_daftar/soapdokter', array('get_icd' => $this->T_daftar_model->view()), true);
+        $callback = array(
+            // 'status' => 'sukses',
+            // 'pesan' => 'Data berhasil dihapus',
+            'html' => $html
+        );
+        echo json_encode($callback);
     }
 }
 

@@ -6,13 +6,7 @@
             <div class="col-6 mb-3">
                 <div class="form-group">
                     <label class="form-label" for="example-textarea">RIWAYAT ALERGI</label>
-                    <input type="text" class="form-control" name="alergi"></input>
-                </div>
-            </div>
-            <div class="col-6 mb-3">
-                <div class="form-group">
-                    <label class="form-label" for="example-textarea">DIET</label>
-                    <input type="text" class="form-control" name="diet"></input>
+                    <textarea class="form-control" name="subjek" id="example-textarea" rows="2"></textarea>
                 </div>
             </div>
             <div class="col-6 mb-3">
@@ -29,19 +23,7 @@
             </div>
             <div class="col-6 mb-3">
                 <div class="form-group">
-                    <label class="form-label" for="example-textarea">PEMERIKSAAN FISIK</label>
-                    <textarea class="form-control" name="asessment" id="example-textarea" rows="2"></textarea>
-                </div>
-            </div>
-            <div class="col-6 mb-3">
-                <div class="form-group">
-                    <label class="form-label" for="example-textarea">PEMERIKSAAN PENUNJANG</label>
-                    <textarea class="form-control" name="asessment" id="example-textarea" rows="2"></textarea>
-                </div>
-            </div>
-            <div class="col-6 mb-3">
-                <div class="form-group">
-                    <label class="form-label" for="example-textarea">TERAPI DAN ATAU TINDAKAN</label>
+                    <label class="form-label" for="example-textarea">INSTRUKSI</label>
                     <textarea class="form-control" name="plann" id="example-textarea" rows="2"></textarea>
                 </div>
             </div>

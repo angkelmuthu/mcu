@@ -188,6 +188,43 @@ class T_daftar_model extends CI_Model
         $this->db->limit(10);
         return $this->db->get('m_icd10')->result();
     }
+    ///////////////////////////////////////////////////////
+    public function view()
+    {
+        return $this->db->get('t_icd')->result();
+    }
+    // Fungsi untuk validasi form tambah dan ubah
+    public function validation($mode)
+    {
+        $this->load->library('form_validation'); // Load library form_validation untuk proses validasinya
+        // Tambahkan if apakah $mode save atau update
+        // Karena ketika update, NIS tidak harus divalidasi
+        // Jadi NIS di validasi hanya ketika menambah data siswa saja
+        if ($mode == "save")
+            $this->form_validation->set_rules('code', 'ICD', 'required|numeric|max_length[11]');
+        if ($this->form_validation->run()) // Jika validasi benar
+            return true; // Maka kembalikan hasilnya dengan TRUE
+        else // Jika ada data yang tidak sesuai validasi
+            return false; // Maka kembalikan hasilnya dengan FALSE
+    }
+    // Fungsi untuk melakukan simpan data ke tabel siswa
+    public function save()
+    {
+        $data = array(
+            "noreg" => $this->input->post('noreg'),
+            "nobill" => $this->input->post('nobill'),
+            "ket" => $this->input->post('ket'),
+            "code" => $this->input->post('code'),
+            "kddokter" => $this->input->post('kddokter')
+        );
+        $this->db->insert('t_icd', $data); // Untuk mengeksekusi perintah insert data
+    }
+    // Fungsi untuk melakukan menghapus data siswa berdasarkan ID siswa
+    public function icd_delete($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('t_icd'); // Untuk mengeksekusi perintah delete data
+    }
 }
 
 /* End of file T_daftar_model.php */

@@ -1,9 +1,9 @@
 <?php
-$this->db->from('t_asessment');
+$this->db->from('t_vital');
 $this->db->where('noreg', $noreg);
 $sqlvital = $this->db->get()->result();
 foreach ($sqlvital as $vital) {
-?>
+    ?>
     <table class="table table-bordered m-0">
         <tbody>
             <tr>
@@ -37,11 +37,11 @@ foreach ($sqlvital as $vital) {
 <br>
 <div class="accordion" id="js_demo_accordion-2">
     <?php
-    $this->db->from('t_asessment');
+    $this->db->from('t_vital');
     $this->db->where('nomr', $nomr);
     $getby_nomr = $this->db->get()->result();
     foreach ($getby_nomr as $getnomr) {
-    ?>
+        ?>
         <div class="card">
             <div class="card-header">
                 <a href="javascript:void(0);" class="card-title collapsed" data-toggle="collapse" data-target="#js_demo_accordion-<?php echo $getnomr->noreg ?>" aria-expanded="false">
@@ -51,11 +51,11 @@ foreach ($sqlvital as $vital) {
             <div id="js_demo_accordion-<?php echo $getnomr->noreg ?>" class="collapse" data-parent="#js_demo_accordion-2">
                 <div class="card-body">
                     <?php
-                    $this->db->from('t_asessment');
-                    $this->db->where('noreg', $getnomr->noreg);
-                    $sqlvital2 = $this->db->get()->result();
-                    foreach ($sqlvital2 as $vital2) {
-                    ?>
+                        $this->db->from('t_vital');
+                        $this->db->where('noreg', $getnomr->noreg);
+                        $sqlvital2 = $this->db->get()->result();
+                        foreach ($sqlvital2 as $vital2) {
+                            ?>
                         <table class="table table-bordered m-0">
                             <tbody>
                                 <tr>
