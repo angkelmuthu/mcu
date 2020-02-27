@@ -1,104 +1,162 @@
-<div class="well">
-    <button type="button" id="btn-tambah" data-toggle="modal" data-target="#form-modal" class="btn btn-success pull-right">
-        <span class="glyphicon glyphicon-plus"></span> Tambah Data
-    </button>
-    <h2 style="margin-top: 0;">Data Siswa</h2>
-</div>
-
-<div class="table-responsive">
-    <table class="table table-bordered">
-        <tr>
-            <th class="text-center">NO</th>
-            <th>NIS</th>
-            <th>NAMA</th>
-            <th>JENIS KELAMIN</th>
-            <th>TELP</th>
-            <th>ALAMAT</th>
-            <th class="text-center"><span class="glyphicon glyphicon-cog"></span></th>
-        </tr>
-        <?php
-        $no = 1;
-        foreach ($get_icd as $icd) {
-            ?>
-            <tr>
-                <td class="align-middle text-center"><?php echo $no; ?></td>
-                <td class="align-middle"><?php echo $icd->id; ?></td>
-                <td class="align-middle"><?php echo $icd->noreg; ?></td>
-                <td class="align-middle"><?php echo $icd->nobill; ?></td>
-                <td class="align-middle"><?php echo $icd->ket; ?></td>
-                <td class="align-middle"><?php echo $icd->code; ?></td>
-                <td class="align-middle text-center">
-                    <a href="javascript:void();" data-id="<?php echo $icd->id; ?>" data-toggle="modal" data-target="#delete-modal" class="btn btn-danger btn-alert-hapus"><span class="fal fa-trash"></span></a>
-                </td>
-            </tr>
-        <?php
-            $no++; // Tambah 1 setiap kali looping
-        }
-        ?>
-    </table>
-</div>
-
-<div id="form-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">
-                    <!-- Beri id "modal-title" untuk tag span pada judul modal -->
-                    <span id="modal-title"></span>
-                </h4>
+<form action="" method="post">
+    <div class="col-12">
+        <input type="hidden" name="tglinput" value="<?php echo date('Y-m-d H:i:s'); ?>" />
+        <input type="hidden" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" />
+        <div class="row">
+            <div class="col-6 mb-3">
+                <div class="form-group">
+                    <label class="form-label" for="example-textarea">RIWAYAT ALERGI</label>
+                    <textarea class="form-control" name="subjek" id="example-textarea" rows="2"></textarea>
+                </div>
             </div>
-            <div class="modal-body">
-                <!-- Beri id "pesan-error" untuk menampung pesan error -->
-                <div id="pesan-error" class="alert alert-danger"></div>
-                <form>
-                    <input type="text" class="form-control" id="noreg" name="noreg" placeholder="NIS">
-                    <input type="text" class="form-control" id="nobill" name="nobill" placeholder="Nama">
-                    <input type="text" class="form-control" id="ket" name="ket" placeholder="Nama">
-                    <input type="text" class="form-control" id="kddokter" name="kddokter" placeholder="Nama">
-                    <div class="form-group">
-                        <label>ICD</label>
-                        <input type="text" class="form-control" id="code" name="code" placeholder="No. Telepon">
+            <div class="col-6 mb-3">
+                <div class="form-group">
+                    <label class="form-label" for="example-textarea">KELUHAN UTAMA</label>
+                    <textarea class="form-control" name="subjek" id="example-textarea" rows="2"></textarea>
+                </div>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="form-group">
+                    <label class="form-label" for="example-textarea">RINGKASAN RIWAYAT PENYAKIT</label>
+                    <textarea class="form-control" name="objek" id="example-textarea" rows="2"></textarea>
+                </div>
+            </div>
+            <div class="col-6 mb-3">
+                <div class="form-group">
+                    <label class="form-label" for="example-textarea">INSTRUKSI</label>
+                    <textarea class="form-control" name="plann" id="example-textarea" rows="2"></textarea>
+                </div>
+            </div>
+            <div class="col-6 mb-3"></div>
+
+            <div class="col-12 mb-3">
+                <h2 class="fw-700 mt-2 mb-2"><i class="subheader-icon fal fa-list-alt"></i>DIAGNOSA (ICD10)</h2>
+                <div id="reload">
+                    <table class="table table-bordered" id="">
+                        <thead class="bg-info-500">
+                            <tr>
+                                <th width="15%">Diagnosa</th>
+                                <th width="25%">Prosedur</th>
+                                <th>ICD 10</th>
+                                <th>Deskripsi</th>
+                                <th width="10%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select name="jns_diagnosa" id="jns_diagnosa" class="form-control">
+                                        <option value="UTAMA">Utama</option>
+                                        <option value="SEKUNDER">Sekunder</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" name="ket" id="ket" class="form-control" placeholder="">
+                                </td>
+                                <td colspan="2">
+                                    <input type="text" name="code" class="form-control" id="icd10" placeholder="icd 10">
+                                </td>
+                                <td class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-sm btn-icon waves-effect waves-themed" id="btn_simpanicd"><i class="fal fa-plus"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody id="show_icd">
+
+                        </tbody>
+                    </table>
+                </div>
+                <!--MODAL HAPUS Obat-->
+                <div class="modal fade" id="ModalHapusICD" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Hapus ICD</h4>
+                            </div>
+                            <form class="form-horizontal">
+                                <div class="modal-body">
+
+                                    <input type="hidden" name="idicd" id="textidicd" value="">
+                                    <div class="alert alert-warning">
+                                        <p>Apakah Anda yakin mau memhapus barang ini?</p>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                                    <button class="btn_hapus_icd btn btn-danger" id="btn_hapus_icd">Hapus</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <!-- Beri id "loading-simpan" untuk loading ketika klik tombol simpan -->
-                <div id="loading-simpan" class="pull-left">
-                    <b>Sedang menyimpan...</b>
                 </div>
-                <!-- Beri id "btn-simpan" untuk tombol simpan nya -->
-                <button type="button" class="btn btn-primary" id="btn-simpan">Simpan</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+
+            </div>
+            <!--------------------------------------------->
+            <div class="col-12 mb-3">
+                <h2 class="fw-700 mt-2 mb-2"><i class="subheader-icon fal fa-list-alt"></i>TERAPI DAN ATAU TINDAKAN (ICD9)</h2>
+                <div id="reload">
+                    <table class="table table-bordered" id="">
+                        <thead class="bg-info-500">
+                            <tr>
+                                <th width="25%">Prosedur</th>
+                                <th>ICD 9</th>
+                                <th>Deskripsi</th>
+                                <th width="10%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" name="ket9" id="ket9" class="form-control" placeholder="">
+                                </td>
+                                <td colspan="2">
+                                    <input type="text" name="code" class="form-control" id="icd9" placeholder="icd 9">
+                                </td>
+                                <td class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-sm btn-icon waves-effect waves-themed" id="btn_simpanicd9"><i class="fal fa-plus"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody id="show_icd9">
+
+                        </tbody>
+                    </table>
+                </div>
+                <!--MODAL HAPUS Obat-->
+                <div class="modal fade" id="ModalHapusICD9" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Hapus ICD</h4>
+                            </div>
+                            <form class="form-horizontal">
+                                <div class="modal-body">
+
+                                    <input type="hidden" name="idicd" id="textidicd" value="">
+                                    <div class="alert alert-warning">
+                                        <p>Apakah Anda yakin mau memhapus barang ini?</p>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                                    <button class="btn_hapus_icd9 btn btn-danger" id="btn_hapus_icd9">Hapus</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-6 mb-3">
             </div>
         </div>
-    </div>
-</div>
-<!--
-    -- Membuat sebuah tag div untuk Modal Dialog untuk Form Tambah dan Ubah
-    -- Beri id "form-modal" untuk tag div tersebut
-    -->
-<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">
-                    Konfirmasi
-                </h4>
-            </div>
-            <div class="modal-body">
-                Apakah anda yakin ingin menghapus data ini?
-            </div>
-            <div class="modal-footer">
-                <!-- Beri id "loading-hapus" untuk loading ketika klik tombol hapus -->
-                <div id="loading-hapus" class="pull-left">
-                    <b>Sedang meghapus...</b>
-                </div>
-                <!-- Beri id "btn-hapus" untuk tombol hapus nya -->
-                <button type="button" class="btn btn-primary" id="btn-hapus">Ya</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
-            </div>
+
+        <div class="p-3 text-center">
+            <button type="submit" class="btn btn-sm btn-primary font-weight-bold">Simpan</button>
         </div>
     </div>
-</div>
+</form>

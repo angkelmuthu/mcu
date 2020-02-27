@@ -24,12 +24,7 @@
                                 <?php $this->load->view('t_daftar/penunjang'); ?>
                             </div>
                             <div class="tab-pane fade" id="js_change_pill_direction-4" role="tabpanel">
-                                <div id="view" style="margin: 10px 20px;">
-                                    <?php $this->load->view('t_daftar/soapdokter', array('get_icd' => $get_icd)); // Load file view.php dan kirim data siswanya
-                                    ?>
-                                </div>
-                                <?php //$this->load->view('t_daftar/resume_medis');
-                                ?>
+                                <?php $this->load->view('t_daftar/soapdokter'); ?>
                             </div>
                         </div>
                     </div>
@@ -105,42 +100,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#icdmasuk").autocomplete({
+        $("#icd10").autocomplete({
             source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
         });
-        $("#icdakhir").autocomplete({
+        $('#modal-icd').modal('show');
+        $("#icd9").autocomplete({
             source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
-        });
-        $("#icd101").autocomplete({
-            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
-        });
-        $("#icd102").autocomplete({
-            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
-        });
-        $("#icd103").autocomplete({
-            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
-        });
-        $("#icd104").autocomplete({
-            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
-        });
-        $("#icd105").autocomplete({
-            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
-        });
-        $("#icd91").autocomplete({
-            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
-        });
-        $("#icd92").autocomplete({
-            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
-        });
-        $("#icd93").autocomplete({
-            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
-        });
-        $("#icd94").autocomplete({
-            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
-        });
-        $("#icd95").autocomplete({
-            source: "<?php echo site_url('t_daftar/get_icd10/?'); ?>"
-
         });
     });
 </script>
@@ -233,7 +198,7 @@
         // $query = $this->db->get();
         // foreach ($query->result() as $row) {
         foreach ($listtarif as $tarif) {
-            ?>
+        ?>
             $('#btn_simpan<?php echo $tarif->kdtarif ?>').on('click', function() {
                 var noreg = $('#noreg<?php echo $tarif->kdtarif ?>').val();
                 var nobill = '<?php echo $nobill ?>';
@@ -373,94 +338,168 @@
             });
             return false;
         });
+        /////////////////////////////////////////////////////////
+        //tampil icd
+        tampil_icd(); //pemanggilan fungsi tampil barang.
+        $('table.display').dataTable();
+        //fungsi tampil barang
+        function tampil_icd() {
+            $.ajax({
+                type: 'GET',
+                url: '<?php echo base_url() ?>index.php/t_daftar/list_icd/<?php echo $noreg ?>/<?php echo $kddokter ?>',
+                async: true,
+                dataType: 'json',
+                success: function(data) {
+                    var html = '';
+                    var i;
+                    for (i = 0; i < data.length; i++) {
+                        html += '<tr>' +
+                            '<td>' + data[i].jenis + '</td>' +
+                            '<td>' + data[i].ket + '</td>' +
+                            '<td align="center">' + data[i].code + '</td>' +
+                            '<td>' + data[i].description + '</td>' +
+                            '<td style="text-align:center;">' +
+                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus_icd" data="' + data[i].id + '"><i class="fal fa-trash"></i></a>' +
+                            '</td>' +
+                            '</tr>';
+                    }
+                    $('#show_icd').html(html);
+                }
+            });
+        }
+
+        //add paket tarif
+        $('#btn_simpanicd').on('click', function() {
+            var noreg = '<?php echo $noreg ?>';
+            var nobill = '<?php echo $nobill ?>';
+            var kddokter = '<?php echo $kddokter ?>';
+            var flag = 'icd10';
+            var jns = $('#jns_diagnosa').val();
+            var ket = $('#ket').val();
+            var icd = $('#icd10').val();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('index.php/t_daftar/simpan_icd') ?>",
+                dataType: "JSON",
+                data: {
+                    noreg: noreg,
+                    nobill: nobill,
+                    kddokter: kddokter,
+                    flag: flag,
+                    jns: jns,
+                    ket: ket,
+                    icd: icd
+                },
+                success: function(data) {
+                    tampil_icd();
+                }
+            });
+            return false;
+        });
+        //GET HAPUS
+        $('#show_icd').on('click', '.item_hapus_icd', function() {
+            var id = $(this).attr('data');
+            $('#ModalHapusICD').modal('show');
+            $('[name="idicd"]').val(id);
+        });
+
+        //Hapus Barang
+        $('#btn_hapus_icd').on('click', function() {
+            var idicd = $('#textidicd').val();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('index.php/t_daftar/hapus_icd') ?>",
+                dataType: "JSON",
+                data: {
+                    idicd: idicd
+                },
+                success: function(data) {
+                    $('#ModalHapusICD').modal('hide');
+                    tampil_icd();
+                }
+            });
+            return false;
+        });
+        /////////////////////////////////////////////////////////
+        //tampil icd9
+        tampil_icd9(); //pemanggilan fungsi tampil barang.
+        $('table.display').dataTable();
+        //fungsi tampil barang
+        function tampil_icd9() {
+            $.ajax({
+                type: 'GET',
+                url: '<?php echo base_url() ?>index.php/t_daftar/list_icd9/<?php echo $noreg ?>/<?php echo $kddokter ?>',
+                async: true,
+                dataType: 'json',
+                success: function(data) {
+                    var html = '';
+                    var i;
+                    for (i = 0; i < data.length; i++) {
+                        html += '<tr>' +
+                            '<td>' + data[i].ket + '</td>' +
+                            '<td align="center">' + data[i].code + '</td>' +
+                            '<td>' + data[i].description + '</td>' +
+                            '<td style="text-align:center;">' +
+                            '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus_icd9" data="' + data[i].id + '"><i class="fal fa-trash"></i></a>' +
+                            '</td>' +
+                            '</tr>';
+                    }
+                    $('#show_icd9').html(html);
+                }
+            });
+        }
+
+        //add paket tarif
+        $('#btn_simpanicd9').on('click', function() {
+            var noreg = '<?php echo $noreg ?>';
+            var nobill = '<?php echo $nobill ?>';
+            var kddokter = '<?php echo $kddokter ?>';
+            var flag = 'icd9';
+            var jns = '';
+            var ket = $('#ket9').val();
+            var icd = $('#icd9').val();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('index.php/t_daftar/simpan_icd9') ?>",
+                dataType: "JSON",
+                data: {
+                    noreg: noreg,
+                    nobill: nobill,
+                    kddokter: kddokter,
+                    flag: flag,
+                    jns: jns,
+                    ket: ket,
+                    icd: icd
+                },
+                success: function(data) {
+                    tampil_icd9();
+                }
+            });
+            return false;
+        });
+        //GET HAPUS
+        $('#show_icd9').on('click', '.item_hapus_icd9', function() {
+            var id = $(this).attr('data');
+            $('#ModalHapusICD9').modal('show');
+            $('[name="idicd"]').val(id);
+        });
+
+        //Hapus Barang
+        $('#btn_hapus_icd9').on('click', function() {
+            var idicd = $('#textidicd').val();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('index.php/t_daftar/hapus_icd9') ?>",
+                dataType: "JSON",
+                data: {
+                    idicd: idicd
+                },
+                success: function(data) {
+                    $('#ModalHapusICD9').modal('hide');
+                    tampil_icd9();
+                }
+            });
+            return false;
+        });
     });
-</script>
-<script>
-    var base_url = '<?= base_url() ?>';
-    var id = 0 // Untuk menampung ID yang kaan di ubah / hapus
-    $(document).ready(function() {
-        // Sembunyikan loading simpan, loading ubah, loading hapus, pesan error, pesan sukes, dan tombol reset
-        $('#loading-simpan, #loading-hapus, #pesan-error, #pesan-sukses, #btn-reset').hide()
-        // Fungsi ini akan dipanggil ketika tombol hapus diklik
-        $('#view').on('click', '.btn-alert-hapus', function() { // Ketika tombol dengan class btn-alert-hapus pada div view di klik
-            id = $(this).data('id') // Set variabel id dengan id yang kita set pada atribut data-id pada tag button hapus
-        })
-        $('#btn-tambah').click(function() { // Ketika tombol tambah diklik
-            $('#btn-ubah').hide() // Sembunyikan tombol ubah
-            $('#btn-simpan').show() // Munculkan tombol simpan
-            // Set judul modal dialog menjadi Form Simpan Data
-            $('#modal-title').html('Form Simpan data')
-        })
-        $('#btn-simpan').click(function() { // Ketika tombol simpan di klik
-            $('#loading-simpan').show() // Munculkan loading simpan
-            $.ajax({
-                url: base_url + 't_daftar/simpan', // URL tujuan
-                type: 'POST', // Tentukan type nya POST atau GET
-                data: $("#form-modal form").serialize(), // Ambil semua data yang ada didalam tag form
-                dataType: 'json',
-                beforeSend: function(e) {
-                    if (e && e.overrideMimeType) {
-                        e.overrideMimeType('application/jsoncharset=UTF-8')
-                    }
-                },
-                success: function(response) { // Ketika proses pengiriman berhasil
-                    $('#loading-simpan').hide() // Sembunyikan loading simpan
-                    if (response.status == 'sukses') { // Jika Statusnya = sukses
-                        // Ganti isi dari div view dengan view yang diambil dari proses_simpan.php
-                        $('#view').html(response.html)
-                        /*
-                         * Ambil pesan suksesnya dan set ke div pesan-sukses
-                         * Lalu munculkan div pesan-sukes nya
-                         * Setelah 10 detik, sembunyikan kembali pesan suksesnya
-                         */
-                        $('#pesan-sukses').html(response.pesan).fadeIn().delay(5).fadeOut()
-                        $('#form-modal').modal('hide')
-                        $('body').removeClass('modal-open');
-                        $('.modal-backdrop').remove();
-                        // Close / Tutup Modal Dialog
-                    } else { // Jika statusnya = gagal
-                        /*
-                         * Ambil pesan errornya dan set ke div pesan-error
-                         * Lalu munculkan div pesan-error nya
-                         */
-                        $('#pesan-error').html(response.pesan).show()
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) { // Ketika terjadi error
-                    alert(xhr.responseText) // munculkan alert
-                }
-            })
-        })
-        $('#btn-hapus').click(function() { // Ketika tombol hapus di klik
-            $('#loading-hapus').show() // Munculkan loading hapus
-            $.ajax({
-                url: base_url + 't_daftar/hapus/' + id, // URL tujuan
-                type: 'GET', // Tentukan type nya POST atau GET
-                dataType: 'json',
-                beforeSend: function(e) {
-                    if (e && e.overrideMimeType) {
-                        e.overrideMimeType('application/jsoncharset=UTF-8')
-                    }
-                },
-                success: function(response) { // Ketika proses pengiriman berhasil
-                    $('#loading-hapus').hide() // Sembunyikan loading hapus
-                    // Ganti isi dari div view dengan view yang diambil dari proses_hapus.php
-                    $('#view').html(response.html)
-                    /*
-                     * Ambil pesan suksesnya dan set ke div pesan-sukses
-                     * Lalu munculkan div pesan-sukes nya
-                     * Setelah 10 detik, sembunyikan kembali pesan suksesnya
-                     */
-                    $('#pesan-sukses').html(response.pesan).fadeIn().delay(5).fadeOut()
-                    $('#delete-modal').modal('hide')
-                    $('.modal-backdrop').hide()
-                    // Close / Tutup Modal Dialog
-                }
-            })
-        })
-        $('#form-modal').on('hidden.bs.modal', function(e) { // Ketika Modal Dialog di Close / tertutup
-            $('#form-modal input, #form-modal select, #form-modal textarea').val('')
-            // Clear inputan menjadi kosong
-        })
-    })
 </script>

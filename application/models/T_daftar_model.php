@@ -102,11 +102,53 @@ class T_daftar_model extends CI_Model
         $hasil = $this->db->query("DELETE FROM t_billrajal WHERE idbill='$idbill'");
         return $hasil;
     }
+    //////////////////////icd////////////////////////////////////
+    function list_icd($noreg, $kddokter)
+    {
+        $this->db->from('t_icd a');
+        $this->db->JOIN('m_icd10 b', 'a.code=b.code', 'LEFT');
+        $this->db->where('a.noreg', $noreg);
+        $this->db->where('a.kddokter', $kddokter);
+        $this->db->where('a.flag', 'icd10');
+        $hasil = $this->db->get();
+        return $hasil->result();
+    }
+    function simpan_icd($nobill, $noreg, $kddokter, $flag, $jns, $ket, $code, $tglinput)
+    {
+        $hasil = $this->db->query("INSERT INTO t_icd (noreg, nobill, kddokter, flag, jenis, ket, code, tglinput)VALUES('$noreg','$nobill','$kddokter','$flag','$jns','$ket','$code','$tglinput')");
+        return $hasil;
+    }
+    function hapus_icd($idicd)
+    {
+        $hasil = $this->db->query("DELETE FROM t_icd WHERE id='$idicd'");
+        return $hasil;
+    }
+    //////////////////////////////////////////////////////////////
+    function list_icd9($noreg, $kddokter)
+    {
+        $this->db->from('t_icd a');
+        $this->db->JOIN('m_icd10 b', 'a.code=b.code', 'LEFT');
+        $this->db->where('a.noreg', $noreg);
+        $this->db->where('a.kddokter', $kddokter);
+        $this->db->where('a.flag', 'icd9');
+        $hasil = $this->db->get();
+        return $hasil->result();
+    }
+    function simpan_icd9($nobill, $noreg, $kddokter, $flag, $jns, $ket, $code, $tglinput)
+    {
+        $hasil = $this->db->query("INSERT INTO t_icd (noreg, nobill, kddokter, flag, jenis, ket, code, tglinput)VALUES('$noreg','$nobill','$kddokter','$flag','$jns','$ket','$code','$tglinput')");
+        return $hasil;
+    }
+    function hapus_icd9($idicd)
+    {
+        $hasil = $this->db->query("DELETE FROM t_icd WHERE id='$idicd'");
+        return $hasil;
+    }
     //////////////////////obat////////////////////////////////////
     function obat_bill_list($noreg, $kddokter)
     {
         $hasil = $this->db->query("SELECT a.*,b.nmobat FROM t_billobat a
-            LEFT JOIN m_obat b ON a.kdobat=b.kdobat where a.noreg='$noreg' and a.kddokter='$kddokter'");
+                LEFT JOIN m_obat b ON a.kdobat=b.kdobat where a.noreg='$noreg' and a.kddokter='$kddokter'");
         return $hasil->result();
     }
 
@@ -125,6 +167,7 @@ class T_daftar_model extends CI_Model
         $hasil = $this->db->query("DELETE FROM t_billobat WHERE idbill='$idbill'");
         return $hasil;
     }
+    //////////////////////////////////////////////
     // get total rows
     function total_rows($q = NULL)
     {
@@ -184,47 +227,13 @@ class T_daftar_model extends CI_Model
     function search_icd10($title)
     {
         $this->db->like('description', $title, 'both');
+        $this->db->or_like('code', $title, 'both');
         $this->db->order_by('code', 'ASC');
         $this->db->limit(10);
         return $this->db->get('m_icd10')->result();
     }
     ///////////////////////////////////////////////////////
-    public function view()
-    {
-        return $this->db->get('t_icd')->result();
-    }
-    // Fungsi untuk validasi form tambah dan ubah
-    public function validation($mode)
-    {
-        $this->load->library('form_validation'); // Load library form_validation untuk proses validasinya
-        // Tambahkan if apakah $mode save atau update
-        // Karena ketika update, NIS tidak harus divalidasi
-        // Jadi NIS di validasi hanya ketika menambah data siswa saja
-        if ($mode == "save")
-            $this->form_validation->set_rules('code', 'ICD', 'required|numeric|max_length[11]');
-        if ($this->form_validation->run()) // Jika validasi benar
-            return true; // Maka kembalikan hasilnya dengan TRUE
-        else // Jika ada data yang tidak sesuai validasi
-            return false; // Maka kembalikan hasilnya dengan FALSE
-    }
-    // Fungsi untuk melakukan simpan data ke tabel siswa
-    public function save()
-    {
-        $data = array(
-            "noreg" => $this->input->post('noreg'),
-            "nobill" => $this->input->post('nobill'),
-            "ket" => $this->input->post('ket'),
-            "code" => $this->input->post('code'),
-            "kddokter" => $this->input->post('kddokter')
-        );
-        $this->db->insert('t_icd', $data); // Untuk mengeksekusi perintah insert data
-    }
-    // Fungsi untuk melakukan menghapus data siswa berdasarkan ID siswa
-    public function icd_delete($id)
-    {
-        $this->db->where('id', $id);
-        $this->db->delete('t_icd'); // Untuk mengeksekusi perintah delete data
-    }
+
 }
 
 /* End of file T_daftar_model.php */

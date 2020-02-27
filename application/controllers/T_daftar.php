@@ -54,7 +54,6 @@ class T_daftar extends CI_Controller
                 'listtarif' => $this->T_daftar_model->get_tarif($kdpoli),
                 'listobat' => $this->T_daftar_model->get_obat(),
                 'get_penunjang' => $this->T_daftar_model->get_penunjang($row->noreg),
-                'get_icd' => $this->T_daftar_model->view(),
 
             );
             $this->template->load('template', 't_daftar/t_daftar_read', $data);
@@ -155,12 +154,70 @@ class T_daftar extends CI_Controller
                 $data = $this->T_daftar_model->simpan_obat($nobill, $noreg, $kdpoli, $kddokter, $kdobat, $hargaobat, $qty, $kdbayar, $status, $tgl, $id_users);
             }
             echo json_encode($data);
-        } else { }
+        } else {
+        }
     }
     function hapus_obat()
     {
         $idbill = $this->input->post('idbill');
         $data = $this->T_daftar_model->hapus_obat($idbill);
+        echo json_encode($data);
+    }
+    //////////////////////////////icd/////////////////////////////////////////
+    function list_icd($noreg, $kddokter)
+    {
+        $data = $this->T_daftar_model->list_icd($noreg, $kddokter);
+        echo json_encode($data);
+    }
+
+    function simpan_icd()
+    {
+        $noreg = $this->input->post('noreg');
+        $nobill = $this->input->post('nobill');
+        $kddokter = $this->input->post('kddokter');
+        $flag = $this->input->post('flag');
+        $jns = $this->input->post('jns');
+        $ket = $this->input->post('ket');
+        $icd = $this->input->post('icd');
+        $codex = explode(" - ", $icd);
+        $code = $codex[0];
+        $tglinput = date("Y-m-d h:s:i");
+        $id_users = $this->session->userdata('id_users');
+        $data = $this->T_daftar_model->simpan_icd($nobill, $noreg, $kddokter, $flag, $jns, $ket, $code, $tglinput, $id_users);
+        echo json_encode($data);
+    }
+    function hapus_icd()
+    {
+        $idicd = $this->input->post('idicd');
+        $data = $this->T_daftar_model->hapus_icd($idicd);
+        echo json_encode($data);
+    }
+    ///////////////////////////////////////////////////////////////////
+    function list_icd9($noreg, $kddokter)
+    {
+        $data = $this->T_daftar_model->list_icd9($noreg, $kddokter);
+        echo json_encode($data);
+    }
+    function simpan_icd9()
+    {
+        $noreg = $this->input->post('noreg');
+        $nobill = $this->input->post('nobill');
+        $kddokter = $this->input->post('kddokter');
+        $flag = $this->input->post('flag');
+        $jns = $this->input->post('jns');
+        $ket = $this->input->post('ket');
+        $icd = $this->input->post('icd');
+        $codex = explode(" - ", $icd);
+        $code = $codex[0];
+        $tglinput = date("Y-m-d h:s:i");
+        $id_users = $this->session->userdata('id_users');
+        $data = $this->T_daftar_model->simpan_icd9($nobill, $noreg, $kddokter, $flag, $jns, $ket, $code, $tglinput, $id_users);
+        echo json_encode($data);
+    }
+    function hapus_icd9()
+    {
+        $idicd = $this->input->post('idicd');
+        $data = $this->T_daftar_model->hapus_icd9($idicd);
         echo json_encode($data);
     }
     ///////////////////////////////////////////////
@@ -328,37 +385,7 @@ class T_daftar extends CI_Controller
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
     ////////////////////////////////////////////////////////
-    public function simpan()
-    {
-        if ($this->T_daftar_model->validation("save")) { // Jika validasi sukses atau hasil validasi adalah true
-            $this->T_daftar_model->save(); // Panggil fungsi save() yang ada di T_daftar_model.php
-            // Load ulang view.php agar data yang baru bisa muncul di tabel pada view.php
-            $html = $this->load->view('t_daftar/soapdokter', array('get_icd' => $this->T_daftar_model->view()), true);
-            $callback = array(
-                'status' => 'sukses',
-                'pesan' => 'Data berhasil disimpan',
-                'html' => $html
-            );
-        } else {
-            $callback = array(
-                'status' => 'gagal',
-                'pesan' => validation_errors()
-            );
-        }
-        echo json_encode($callback);
-    }
-    public function hapus($id)
-    {
-        $this->T_daftar_model->icd_delete($id); // Panggil fungsi delete() yang ada di T_daftar_model.php
-        // Load ulang view.php agar data yang baru bisa muncul di tabel pada view.php
-        $html = $this->load->view('t_daftar/soapdokter', array('get_icd' => $this->T_daftar_model->view()), true);
-        $callback = array(
-            // 'status' => 'sukses',
-            // 'pesan' => 'Data berhasil dihapus',
-            'html' => $html
-        );
-        echo json_encode($callback);
-    }
+
 }
 
 /* End of file T_daftar.php */
