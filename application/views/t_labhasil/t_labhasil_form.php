@@ -42,7 +42,7 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><input type="hidden" name="" value="<?php echo $nobill; ?>" />
+                                    <td><input type="hidden" name="idlab" value="<?php echo $idlab; ?>" />
                                         <button type="submit" class="btn btn-warning waves-effect waves-themed"><i class="fal fa-save"></i> <?php echo $button ?></button>
                                         <a href="<?php echo site_url('t_labhasil') ?>" class="btn btn-info waves-effect waves-themed"><i class="fal fa-sign-out"></i> Kembali</a></td>
                                 </tr>

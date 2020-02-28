@@ -94,10 +94,14 @@ class T_labhasil_model extends CI_Model
     }
 
     // update data
-    function update($nobill, $data)
+    function update($nobill, $kdlab, $nilai, $tglinput, $id_users)
     {
+        $this->db->set('nilai', $nilai);
+        $this->db->set('tglinput', $tglinput);
+        $this->db->set('id_users', $id_users);
         $this->db->where('nobill', $nobill);
-        $this->db->update($this->table, $data);
+        $this->db->where('kdlab', $kdlab);
+        $this->db->update($this->table);
     }
 
     // delete data

@@ -32,6 +32,7 @@ class T_labhasil extends CI_Controller
             $data = array(
                 'nama' => $row->nama,
                 'noreg' => $row->noreg,
+                'nobill' => $row->nobill,
                 'tgllhr' => $row->tgllhr,
                 'alamat' => $row->alamat,
                 'tglinput' => $row->tglinput,
@@ -71,6 +72,7 @@ class T_labhasil extends CI_Controller
         //$this->create();
         //} else {
         $data = array(
+            'idlab' => '',
             'nobill' => $this->input->post('nobill', TRUE),
             'noreg' => $this->input->post('noreg', TRUE),
             'kdlab' => $this->input->post('kdlab', TRUE),
@@ -88,48 +90,15 @@ class T_labhasil extends CI_Controller
         //}
     }
 
-    public function update($noreg)
-    {
-        $row = $this->T_labhasil_model->get_by_id($noreg);
-
-        if ($row) {
-            $data = array(
-                'button' => 'Update',
-                'action' => site_url('t_labhasil/update_action'),
-                'nobill' => set_value('nobill', $row->nobill),
-                'noreg' => set_value('noreg', $row->noreg),
-                'kdtarif' => set_value('kdtarif', $row->kdtarif),
-                'nilai' => set_value('nilai', $row->nilai),
-                'tglinput' => set_value('tglinput', $row->tglinput),
-                'id_users' => set_value('id_users', $row->id_users),
-            );
-            $this->template->load('template', 't_labhasil/t_labhasil_form', $data);
-        } else {
-            $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true"><i class="fal fa-times"></i></span>
-            </button><strong> Record Not Found</strong></div>');
-            redirect(site_url('t_labhasil/read/' . $noreg));
-        }
-    }
-
     public function update_action($noreg)
     {
-        //$this->_rules();
+        $nobill = $this->input->post('nobill');
+        $kdlab = $this->input->post('kdlab');
+        $nilai = $this->input->post('nilai');
+        $tglinput = $this->input->post('tglinput');
+        $id_users = $this->input->post('id_users');
 
-        //if ($this->form_validation->run() == FALSE) {
-        //$this->update($this->input->post('', TRUE));
-        //} else {
-        $data = array(
-            'nobill' => $this->input->post('nobill', TRUE),
-            'noreg' => $this->input->post('noreg', TRUE),
-            'kdlab' => $this->input->post('kdlab', TRUE),
-            'nilai' => $this->input->post('nilai', TRUE),
-            'tglinput' => $this->input->post('tglinput', TRUE),
-            'id_users' => $this->input->post('id_users', TRUE),
-        );
-
-        $this->T_labhasil_model->update($this->input->post('nobill', TRUE), $data);
+        $this->T_labhasil_model->update($nobill, $kdlab, $nilai, $tglinput, $id_users);
         $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true"><i class="fal fa-times"></i></span>

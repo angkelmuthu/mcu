@@ -76,7 +76,7 @@
                                     } else {
                                         echo '<form action="' . base_url() . 't_labhasil/create_action" method="post">';
                                     }
-                                    ?>
+                                ?>
 
                                     <tr>
                                         <td><?php echo $no ?></td>
@@ -84,24 +84,24 @@
                                         <!-- <td><?php echo $lab->deskripsi ?></td> -->
                                         <td><?php echo $lab->nilai_min . ' - ' . $lab->nilai_max ?></td>
                                         <td>
-                                            <input type="hidden" name="nobill" id="nobill" value="<?php echo $lab->labbill ?>">
+                                            <input type="hidden" name="nobill" id="nobill" value="<?php echo $nobill ?>">
                                             <input type="hidden" name="noreg" id="noreg" value="<?php echo $lab->noreg ?>">
                                             <input type="hidden" name="kdlab" id="kdlab" value="<?php echo $lab->kdlab ?>">
                                             <input type="text" name="nilai" id="nilai" class="form-control" value="<?php echo $lab->nilai ?>">
-                                            <input type="hidden" name="tglinput" id="tglinput" value="<?php echo date('Y-m-d'); ?>" />
+                                            <input type="hidden" name="tglinput" id="tglinput" value="<?php echo date('Y-m-d h:s:i'); ?>" />
                                             <input type="hidden" name="id_users" id="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" />
                                         </td>
                                         <td>
                                             <?php if (!empty($lab->nilai)) {
-                                                    if ($lab->nilai >= $lab->nilai_min && $lab->nilai <= $lab->nilai_max) {
-                                                        echo $lab->nilai_normal;
-                                                    } else {
-                                                        echo $lab->nilai_tidak_normal;
-                                                    }
+                                                if ($lab->nilai >= $lab->nilai_min && $lab->nilai <= $lab->nilai_max) {
+                                                    echo $lab->nilai_normal;
                                                 } else {
-                                                    echo '-';
+                                                    echo $lab->nilai_tidak_normal;
                                                 }
-                                                ?>
+                                            } else {
+                                                echo '-';
+                                            }
+                                            ?>
                                         </td>
                                         <td>
                                             <button type="submit" class="btn btn-sm btn-info waves-effect waves-themed"><i class="fal fa-save"></i></button>
