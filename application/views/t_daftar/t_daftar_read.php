@@ -6,9 +6,10 @@
                 <div class="panel-hdr">
                     <ul class="nav nav-pills" role="tablist">
                         <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#js_change_pill_direction-1">TANDA VITAL</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_direction-2">TINDAKAN</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_direction-3">PENUNJANG</a></li>
-                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_direction-4">RESUME MEDIS</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_direction-2">ASESSMENT</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_direction-3">TINDAKAN</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_direction-4">PENUNJANG</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#js_change_pill_direction-5">RESUME MEDIS</a></li>
                     </ul>
                 </div>
                 <div class="panel-container show">
@@ -18,13 +19,16 @@
                                 <?php $this->load->view('t_daftar/tanda_vital'); ?>
                             </div>
                             <div class="tab-pane fade" id="js_change_pill_direction-2" role="tabpanel">
-                                <?php $this->load->view('t_daftar/tindakan'); ?>
+                                <?php $this->load->view('t_daftar/soapdokter'); ?>
                             </div>
                             <div class="tab-pane fade" id="js_change_pill_direction-3" role="tabpanel">
-                                <?php $this->load->view('t_daftar/penunjang'); ?>
+                                <?php $this->load->view('t_daftar/tindakan'); ?>
                             </div>
                             <div class="tab-pane fade" id="js_change_pill_direction-4" role="tabpanel">
-                                <?php $this->load->view('t_daftar/soapdokter'); ?>
+                                <?php $this->load->view('t_daftar/penunjang'); ?>
+                            </div>
+                            <div class="tab-pane fade" id="js_change_pill_direction-5" role="tabpanel">
+                                <?php $this->load->view('t_daftar/resume_medis'); ?>
                             </div>
                         </div>
                     </div>
@@ -198,7 +202,7 @@
         // $query = $this->db->get();
         // foreach ($query->result() as $row) {
         foreach ($listtarif as $tarif) {
-        ?>
+            ?>
             $('#btn_simpan<?php echo $tarif->kdtarif ?>').on('click', function() {
                 var noreg = $('#noreg<?php echo $tarif->kdtarif ?>').val();
                 var nobill = '<?php echo $nobill ?>';
@@ -405,7 +409,7 @@
 
         //Hapus Barang
         $('#btn_hapus_icd').on('click', function() {
-            var idicd = $('#textidicd').val();
+            var idicd = $('#textidicd10').val();
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url('index.php/t_daftar/hapus_icd') ?>",
@@ -486,7 +490,7 @@
 
         //Hapus Barang
         $('#btn_hapus_icd9').on('click', function() {
-            var idicd = $('#textidicd').val();
+            var idicd = $('#textidicd9').val();
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url('index.php/t_daftar/hapus_icd9') ?>",

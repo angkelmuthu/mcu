@@ -154,8 +154,7 @@ class T_daftar extends CI_Controller
                 $data = $this->T_daftar_model->simpan_obat($nobill, $noreg, $kdpoli, $kddokter, $kdobat, $hargaobat, $qty, $kdbayar, $status, $tgl, $id_users);
             }
             echo json_encode($data);
-        } else {
-        }
+        } else { }
     }
     function hapus_obat()
     {
@@ -385,7 +384,52 @@ class T_daftar extends CI_Controller
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
     ////////////////////////////////////////////////////////
+    public function ins_soap()
+    {
+        $url = $this->input->post('url');
+        $data = array(
+            //'noreg' => $noregx,
+            'noreg' => $this->input->post('noreg', TRUE),
+            'nobill' => $this->input->post('nobill', TRUE),
+            'alergi' => $this->input->post('alergi', TRUE),
+            'keluhan' => $this->input->post('keluhan', TRUE),
+            'kddokter' => $this->input->post('kddokter', TRUE),
+            'r_penyakit' => $this->input->post('r_penyakit', TRUE),
+            'instruksi' => $this->input->post('instruksi', TRUE),
+            'tglinput' => $this->input->post('tglinput', TRUE),
+            'id_users' => $this->input->post('id_users', TRUE),
+        );
 
+        $this->T_daftar_model->ins_soap($data);
+        // $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
+        //     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        //         <span aria-hidden="true"><i class="fal fa-times"></i></span>
+        //     </button><strong> Create Record Success 2</strong></div>');
+        redirect(site_url('t_daftar/read/' . $url));
+    }
+    public function updt_soap()
+    {
+        $url = $this->input->post('url');
+        $idsoap = $this->input->post('idsoap');
+        $data = array(
+            'noreg' => $this->input->post('noreg', TRUE),
+            'nobill' => $this->input->post('nobill', TRUE),
+            'alergi' => $this->input->post('alergi', TRUE),
+            'keluhan' => $this->input->post('keluhan', TRUE),
+            'kddokter' => $this->input->post('kddokter', TRUE),
+            'r_penyakit' => $this->input->post('r_penyakit', TRUE),
+            'instruksi' => $this->input->post('instruksi', TRUE),
+            'tglinput' => $this->input->post('tglinput', TRUE),
+            'id_users' => $this->input->post('id_users', TRUE),
+        );
+
+        $this->T_daftar_model->updt_soap($idsoap, $data);
+        // $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
+        //     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        //         <span aria-hidden="true"><i class="fal fa-times"></i></span>
+        //     </button><strong> Create Record Success 2</strong></div>');
+        redirect(site_url('t_daftar/read/' . $url));
+    }
 }
 
 /* End of file T_daftar.php */

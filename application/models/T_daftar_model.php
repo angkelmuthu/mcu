@@ -233,7 +233,15 @@ class T_daftar_model extends CI_Model
         return $this->db->get('m_icd10')->result();
     }
     ///////////////////////////////////////////////////////
-
+    function ins_soap($data)
+    {
+        $this->db->insert('t_asessment', $data);
+    }
+    function updt_soap($idsoap, $data)
+    {
+        $this->db->where('id', $idsoap);
+        $this->db->update('t_asessment', $data);
+    }
 }
 
 /* End of file T_daftar_model.php */

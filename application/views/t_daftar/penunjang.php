@@ -1,6 +1,7 @@
 <?php
 $this->db->from('v_penunjang');
 $this->db->where('noreg', $noreg);
+$this->db->where('nobill', $nobill);
 $this->db->group_by('kdpoli');
 $query = $this->db->get();
 if ($query->num_rows() > 0) {
@@ -8,6 +9,8 @@ if ($query->num_rows() > 0) {
         echo '<h2 class="fw-700 mt-2 mb-2"><i class="subheader-icon fal fa-list-alt"></i> ' . $row->poli . '</h2>';
         ///echo '<h3>' . $row->poli . '</h3>';
         $this->db->from('v_penunjang');
+        $this->db->where('noreg', $noreg);
+        $this->db->where('nobill', $nobill);
         $this->db->where('kdpoli', $row->kdpoli);
         $query2 = $this->db->get()->result();
         foreach ($query2 as $row2) {
@@ -39,6 +42,7 @@ if ($query->num_rows() > 0) {
                                         $this->db->JOIN('m_lab d', 'c.kdlab=d.kdlab', 'LEFT');
                                         $this->db->JOIN('t_labhasil e', 'e.kdlab=d.kdlab', 'LEFT');
                                         $this->db->where('a.noreg', $noreg);
+                                        $this->db->where('a.nobill', $nobill);
                                         $this->db->where('a.kdtarif', $row2->kdtarif);
                                         $query3 = $this->db->get()->result();
                                         foreach ($query3 as $row3) {
