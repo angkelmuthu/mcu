@@ -18,8 +18,11 @@ class M_tarif_model extends CI_Model
     // get all
     function get_all()
     {
-        $this->db->order_by($this->id, $this->order);
-        return $this->db->get($this->table)->result();
+        //$this->db->order_by($this->id, $this->order);
+        //return $this->db->get($this->table)->result();
+        $this->db->from('m_tarif a');
+        $this->db->join('m_poli b', 'a.kdpoli = b.kdpoli', 'left');
+        return $this->db->get()->result();
     }
 
     // get data by id
@@ -32,30 +35,34 @@ class M_tarif_model extends CI_Model
     // get total rows
     function total_rows($q = NULL)
     {
-        $this->db->like('kdtarif', $q);
-        $this->db->or_like('nmtarif', $q);
-        $this->db->or_like('kdpoli', $q);
-        $this->db->or_like('paket', $q);
-        $this->db->or_like('aktif', $q);
-        $this->db->or_like('tglinput', $q);
-        $this->db->or_like('id_users', $q);
-        $this->db->from($this->table);
+        $this->db->like('a.kdtarif', $q);
+        $this->db->or_like('a.nmtarif', $q);
+        $this->db->or_like('b.poli', $q);
+        $this->db->or_like('a.paket', $q);
+        $this->db->or_like('a.aktif', $q);
+        $this->db->or_like('a.tglinput', $q);
+        $this->db->or_like('a.id_users', $q);
+        //$this->db->from($this->table);
+        $this->db->from('m_tarif a');
+        $this->db->join('m_poli b', 'a.kdpoli = b.kdpoli', 'left');
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
     function get_limit_data($limit, $start = 0, $q = NULL)
     {
-        $this->db->order_by($this->id, $this->order);
-        $this->db->like('kdtarif', $q);
-        $this->db->or_like('nmtarif', $q);
-        $this->db->or_like('kdpoli', $q);
-        $this->db->or_like('paket', $q);
-        $this->db->or_like('aktif', $q);
-        $this->db->or_like('tglinput', $q);
-        $this->db->or_like('id_users', $q);
+        $this->db->order_by('a.kdtarif', $this->order);
+        $this->db->like('a.kdtarif', $q);
+        $this->db->or_like('a.nmtarif', $q);
+        $this->db->or_like('b.poli', $q);
+        $this->db->or_like('a.paket', $q);
+        $this->db->or_like('a.aktif', $q);
+        $this->db->or_like('a.tglinput', $q);
+        $this->db->or_like('a.id_users', $q);
         $this->db->limit($limit, $start);
-        return $this->db->get($this->table)->result();
+        $this->db->from('m_tarif a');
+        $this->db->join('m_poli b', 'a.kdpoli = b.kdpoli', 'left');
+        return $this->db->get()->result();
     }
     // ambil data tarif perkelas
     function get_tarifkelas($id)

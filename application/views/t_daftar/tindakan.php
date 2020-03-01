@@ -121,10 +121,10 @@
                     </tbody>
                 </table>
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-secondary waves-effect waves-themed" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary waves-effect waves-themed">Save changes</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -170,10 +170,10 @@
                     </tbody>
                 </table>
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-secondary waves-effect waves-themed" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary waves-effect waves-themed">Save changes</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

@@ -36,19 +36,9 @@
                             }
                             ?>
                             <table class='table table-striped'>
-
-                                <tr>
-                                    <td width='200'>Noreg</td>
-                                    <td><input type="text" class="form-control" name="noreg" value="<?php echo $noreg_max; ?>" readonly /></td>
-                                </tr>
-                                <tr>
-                                    <td width='200'>Nomr <?php echo form_error('nomr') ?></td>
-                                    <td><input type="text" class="form-control" name="nomr" id="nomr" placeholder="Nomr" value="<?php echo $this->uri->segment(4); ?>" readonly /></td>
-                                </tr>
-                                <tr>
-                                    <td width='200'>Baru <?php echo form_error('baru') ?></td>
-                                    <td><input type="text" class="form-control" name="baru" id="baru" placeholder="Baru" value="<?php echo $this->uri->segment(3); ?>" readonly /></td>
-                                </tr>
+                                <input type="hidden" class="form-control" name="noreg" value="<?php echo $noreg_max; ?>" readonly />
+                                <input type="hidden" class="form-control" name="nomr" id="nomr" placeholder="Nomr" value="<?php echo $this->uri->segment(4); ?>" readonly />
+                                <input type="hidden" class="form-control" name="baru" id="baru" placeholder="Baru" value="<?php echo $this->uri->segment(3); ?>" readonly />
                                 <tr>
                                     <td width='200'>Poliklinik <?php echo form_error('kdpoli') ?></td>
                                     <td><?php echo cmb_dinamis('kdpoli', 'm_poli', 'poli', 'kdpoli') ?></td>
@@ -89,9 +79,9 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><input type="text" class="form-control" name="idreg" value="<?php echo $idreg; ?>" readonly />
-                                        <input type="text" class="form-control" name="tglreg" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
-                                        <input type="text" class="form-control" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" readonly />
+                                    <td><input type="hidden" class="form-control" name="idreg" value="<?php echo $idreg; ?>" readonly />
+                                        <input type="hidden" class="form-control" name="tglreg" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
+                                        <input type="hidden" class="form-control" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" readonly />
                                         <button type="submit" class="btn btn-warning waves-effect waves-themed"><i class="fal fa-save"></i> <?php echo $button ?></button>
                                         <a href="<?php echo site_url('t_daftar') ?>" class="btn btn-info waves-effect waves-themed"><i class="fal fa-sign-out"></i> Kembali</a></td>
                                 </tr>

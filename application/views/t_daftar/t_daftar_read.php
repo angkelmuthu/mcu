@@ -124,7 +124,7 @@
             "order": [
                 [groupColumn, 'asc']
             ],
-            "displayLength": 25,
+            "displayLength": 10,
             "drawCallback": function(settings) {
                 var api = this.api();
                 var rows = api.rows({
@@ -202,7 +202,7 @@
         // $query = $this->db->get();
         // foreach ($query->result() as $row) {
         foreach ($listtarif as $tarif) {
-            ?>
+        ?>
             $('#btn_simpan<?php echo $tarif->kdtarif ?>').on('click', function() {
                 var noreg = $('#noreg<?php echo $tarif->kdtarif ?>').val();
                 var nobill = '<?php echo $nobill ?>';

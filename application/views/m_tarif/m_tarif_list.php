@@ -52,7 +52,7 @@
                                         <th>Paket</th>
                                         <th>Aktif</th>
                                         <th>Tglinput</th>
-                                        <th>Id Users</th>
+                                        <!-- <th>Id Users</th> -->
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -62,11 +62,11 @@
                                         <tr>
                                             <td width="10px"><?php echo ++$start ?></td>
                                             <td><?php echo $m_tarif->nmtarif ?></td>
-                                            <td><?php echo $m_tarif->kdpoli ?></td>
-                                            <td><?php echo $m_tarif->paket ?></td>
-                                            <td><?php echo $m_tarif->aktif ?></td>
-                                            <td><?php echo $m_tarif->tglinput ?></td>
-                                            <td><?php echo $m_tarif->id_users ?></td>
+                                            <td><?php echo $m_tarif->poli ?></td>
+                                            <td><?php echo ya($m_tarif->paket) ?></td>
+                                            <td><?php echo aktif($m_tarif->aktif) ?></td>
+                                            <td><?php echo tanggal($m_tarif->tglinput) ?></td>
+                                            <!-- <td><?php echo $m_tarif->id_users ?></td> -->
                                             <td style="text-align:center" width="200px">
                                                 <?php
                                                 echo anchor(site_url('m_tarif/read/' . $m_tarif->kdtarif), '<i class="fal fa-eye" aria-hidden="true"></i>', 'class="btn btn-info btn-xs waves-effect waves-themed"');
