@@ -231,6 +231,11 @@ class T_daftar extends CI_Controller
             }
         }
     }
+    ////////////////////////////////////////////////
+    public function metode_bayar()
+    {
+        $this->template->load('template', 't_daftar/t_daftar_cr_bayar');
+    }
     ///////////////////////////////////////////////
     public function create()
     {

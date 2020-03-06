@@ -16,7 +16,7 @@ class M_pasien extends CI_Controller
 
     public function index()
     {
-        $this->template->load('template', 'm_pasien/m_pasien_cari');
+        $this->template->load('template', 'm_pasien/m_pasien_list');
     }
 
     public function json()
@@ -25,7 +25,7 @@ class M_pasien extends CI_Controller
         echo $this->M_pasien_model->json();
     }
 
-    public function list()
+    public function listx()
     {
         $this->template->load('template', 'm_pasien/m_pasien_list');
     }

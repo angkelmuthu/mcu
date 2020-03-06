@@ -58,7 +58,7 @@
                                                     } else {
                                                         $disable = 'disabled';
                                                     }
-                                                ?>
+                                                    ?>
                                                     <option value="<?php echo $dok->kddokter ?>" <?php echo $disable ?>><?php echo $dok->dokter ?></option>
                                                 <?php } ?>
                                             </select>
@@ -66,25 +66,33 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <?php
+                                    $bayar = $this->uri->segment(5);
+                                    if ($bayar == 'Y') {
+                                        echo '<input type="text" class="form-control" name="kdbayar" id="kdbayar" placeholder="kdbayar" value="1" />';
+                                    } else { ?>
+                                <tr>
                                     <td width='200'>Cara Bayar <?php echo form_error('kdbayar') ?></td>
                                     <td><?php echo cmb_dinamis('kdbayar', 'm_bayar', 'bayar', 'kdbayar') ?></td>
                                 </tr>
-                                <tr>
-                                    <td width='200'>Rujukan <?php echo form_error('rujukan') ?></td>
-                                    <td><input type="text" class="form-control" name="rujukan" id="rujukan" placeholder="Rujukan" value="<?php echo $rujukan; ?>" /></td>
-                                </tr>
-                                <tr>
-                                    <td width='200'>Kdrujuk <?php echo form_error('kdrujuk') ?></td>
-                                    <td><input type="text" class="form-control" name="kdrujuk" id="kdrujuk" placeholder="Kdrujuk" value="<?php echo $kdrujuk; ?>" /></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td><input type="hidden" class="form-control" name="idreg" value="<?php echo $idreg; ?>" readonly />
-                                        <input type="hidden" class="form-control" name="tglreg" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
-                                        <input type="hidden" class="form-control" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" readonly />
-                                        <button type="submit" class="btn btn-warning waves-effect waves-themed"><i class="fal fa-save"></i> <?php echo $button ?></button>
-                                        <a href="<?php echo site_url('t_daftar') ?>" class="btn btn-info waves-effect waves-themed"><i class="fal fa-sign-out"></i> Kembali</a></td>
-                                </tr>
+                            <?php } ?>
+
+                            <tr>
+                                <td width='200'>Rujukan <?php echo form_error('rujukan') ?></td>
+                                <td><input type="text" class="form-control" name="rujukan" id="rujukan" placeholder="Rujukan" value="<?php echo $rujukan; ?>" /></td>
+                            </tr>
+                            <tr>
+                                <td width='200'>Kdrujuk <?php echo form_error('kdrujuk') ?></td>
+                                <td><input type="text" class="form-control" name="kdrujuk" id="kdrujuk" placeholder="Kdrujuk" value="<?php echo $kdrujuk; ?>" /></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="hidden" class="form-control" name="idreg" value="<?php echo $idreg; ?>" readonly />
+                                    <input type="hidden" class="form-control" name="tglreg" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
+                                    <input type="hidden" class="form-control" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" readonly />
+                                    <button type="submit" class="btn btn-warning waves-effect waves-themed"><i class="fal fa-save"></i> <?php echo $button ?></button>
+                                    <a href="<?php echo site_url('t_daftar') ?>" class="btn btn-info waves-effect waves-themed"><i class="fal fa-sign-out"></i> Kembali</a></td>
+                            </tr>
                             </table>
                         </form>
                     </div>

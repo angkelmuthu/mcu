@@ -29,7 +29,7 @@
                                     <th>Hp</th>
                                     <!-- <th>Tglinput</th>
                                     <th>Id Users</th> -->
-                                    <th width="130px">Action</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
 
@@ -74,8 +74,12 @@
             },
             processing: true,
             serverSide: true,
+            // ajax: {
+            //     "url": "json",
+            //     "type": "POST"
+            // },
             ajax: {
-                "url": "json",
+                "url": "m_pasien/json",
                 "type": "POST"
             },
             columns: [{

@@ -23,7 +23,7 @@ class M_pasien_model extends CI_Model
         //add this line for join
         $this->datatables->add_column('action', anchor(site_url('m_pasien/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-xs waves-effect waves-themed')) . "
             " . anchor(site_url('m_pasien/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-xs waves-effect waves-themed')) . "
-                " . anchor(site_url('m_pasien/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-xs waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'nomr');
+                " . anchor(site_url('t_daftar/metode_bayar/N/$1'), '<i class="fal fa-first-aid" aria-hidden="true"> Daftar</i>', array('class' => 'btn btn-success btn-xs waves-effect waves-themed')), 'nomr');
         return $this->datatables->generate();
     }
 
