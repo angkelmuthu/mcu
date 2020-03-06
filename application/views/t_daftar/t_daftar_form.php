@@ -12,7 +12,7 @@
                 </div>
                 <div class="panel-container show">
                     <div class="panel-content">
-                        <form action="<?php echo $action; ?>" method="post">
+                        <form id="form1" name="form1" action="<?php echo $action; ?>" method="post">
                             <?php
                             $action = $this->uri->segment(2);
                             $nomr = $this->uri->segment(4);
@@ -58,41 +58,74 @@
                                                     } else {
                                                         $disable = 'disabled';
                                                     }
-                                                    ?>
+                                                ?>
                                                     <option value="<?php echo $dok->kddokter ?>" <?php echo $disable ?>><?php echo $dok->dokter ?></option>
                                                 <?php } ?>
                                             </select>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <?php
-                                    $bayar = $this->uri->segment(5);
-                                    if ($bayar == 'Y') {
-                                        echo '<input type="text" class="form-control" name="kdbayar" id="kdbayar" placeholder="kdbayar" value="1" />';
-                                    } else { ?>
-                                <tr>
-                                    <td width='200'>Cara Bayar <?php echo form_error('kdbayar') ?></td>
-                                    <td><?php echo cmb_dinamis('kdbayar', 'm_bayar', 'bayar', 'kdbayar') ?></td>
-                                </tr>
-                            <?php } ?>
+                                <?php
+                                $bayar = $this->uri->segment(5);
+                                if ($bayar == 'Y') {
+                                    echo '<input type="hidden" class="form-control" name="kdbayar" id="kdbayar" placeholder="kdbayar" value="1" />';
+                                } else { ?>
+                                    <tr>
+                                        <td width='200'>Metode Pembayaran <?php echo form_error('kdbayar') ?></td>
+                                        <td>
+                                            <?php foreach ($get_metode as $row) : ?>
+                                                <label class="btn btn-primary">
+                                                    <input type="radio" name="metode" id="metode" value="<?php echo $row->kdmetodebayar; ?>"><?php echo $row->metode; ?>
+                                                </label>
+                                            <?php endforeach; ?>
+                                            <!-- <div class="form-group">
+                                                <select name="metode" id="metode" class="form-control">
+                                                    <option value="0">-PILIH-</option>
+                                                    <?php foreach ($get_metode as $row) : ?>
+                                                        <option value="<?php echo $row->kdmetodebayar; ?>"><?php echo $row->metode; ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div> -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width='200'></td>
+                                        <td>
+                                            <div id='bayar'>
+                                                <!-- <select name="bayar" class="bayar form-control">
+                                                    <option value="0">-PILIH-</option>
+                                                </select> -->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
 
-                            <tr>
-                                <td width='200'>Rujukan <?php echo form_error('rujukan') ?></td>
-                                <td><input type="text" class="form-control" name="rujukan" id="rujukan" placeholder="Rujukan" value="<?php echo $rujukan; ?>" /></td>
-                            </tr>
-                            <tr>
-                                <td width='200'>Kdrujuk <?php echo form_error('kdrujuk') ?></td>
-                                <td><input type="text" class="form-control" name="kdrujuk" id="kdrujuk" placeholder="Kdrujuk" value="<?php echo $kdrujuk; ?>" /></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><input type="hidden" class="form-control" name="idreg" value="<?php echo $idreg; ?>" readonly />
-                                    <input type="hidden" class="form-control" name="tglreg" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
-                                    <input type="hidden" class="form-control" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" readonly />
-                                    <button type="submit" class="btn btn-warning waves-effect waves-themed"><i class="fal fa-save"></i> <?php echo $button ?></button>
-                                    <a href="<?php echo site_url('t_daftar') ?>" class="btn btn-info waves-effect waves-themed"><i class="fal fa-sign-out"></i> Kembali</a></td>
-                            </tr>
+                                <tr>
+                                    <td width='200'>Rujukan <?php echo form_error('rujukan') ?></td>
+                                    <td>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" class="custom-control-input" id="defaultInline1Radio" name="rujukan" value="N" checked>
+                                            <label class="custom-control-label" for="defaultInline1Radio">Tidak, Bukan Pasien Rujukan</label>
+                                            </label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" class="custom-control-input" id="defaultInline2Radio" name="rujukan" value="Y">
+                                            <label class="custom-control-label" for="defaultInline2Radio">Ya, Ini Pasien Rujukan</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width='200'>Kdrujuk <?php echo form_error('kdrujuk') ?></td>
+                                    <td><input type="text" class="form-control" name="kdrujuk" id="kdrujuk" placeholder="Kdrujuk" value="<?php echo $kdrujuk; ?>" /></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type="hidden" class="form-control" name="idreg" value="<?php echo $idreg; ?>" readonly />
+                                        <input type="hidden" class="form-control" name="tglreg" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
+                                        <input type="hidden" class="form-control" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" readonly />
+                                        <button type="submit" class="btn btn-warning waves-effect waves-themed"><i class="fal fa-save"></i> <?php echo $button ?></button>
+                                        <a href="<?php echo site_url('t_daftar') ?>" class="btn btn-info waves-effect waves-themed"><i class="fal fa-sign-out"></i> Kembali</a></td>
+                                </tr>
                             </table>
                         </form>
                     </div>
@@ -105,6 +138,36 @@
 <script src="<?php echo base_url() ?>assets/smartadmin/js/vendors.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/app.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/formplugins/select2/select2.bundle.js"></script>
+<!-- <script src="<?php echo base_url(); ?>assets/jquery.min.js"></script> -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        //$('#metode').change(function() {
+        $('input[type=radio][name="metode').change(function() {
+            var id = $(this).val();
+            //var id = $("input[name=metode]");
+            $.ajax({
+                url: "<?php echo base_url(); ?>index.php/t_daftar/get_bayar",
+                method: "POST",
+                data: {
+                    id: id
+                },
+                async: false,
+                dataType: 'json',
+                success: function(data) {
+                    var html = '';
+                    var i;
+                    for (i = 0; i < data.length; i++) {
+                        // /html += '<option>' + data[i].bayar + '</option>';
+                        html += '<label class="btn btn-success">' +
+                            '<input type="radio" name="kdbayar" id="kdbayar" value="' + data[i].kdbayar + '">' + data[i].bayar +
+                            '</label>';
+                    }
+                    $('#bayar').html(html);
+                }
+            });
+        });
+    });
+</script>
 <script>
     $(document).ready(function() {
         $(function() {

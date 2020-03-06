@@ -154,7 +154,8 @@ class T_daftar extends CI_Controller
                 $data = $this->T_daftar_model->simpan_obat($nobill, $noreg, $kdpoli, $kddokter, $kdobat, $hargaobat, $qty, $kdbayar, $status, $tgl, $id_users);
             }
             echo json_encode($data);
-        } else { }
+        } else {
+        }
     }
     function hapus_obat()
     {
@@ -255,10 +256,16 @@ class T_daftar extends CI_Controller
             'tglreg' => set_value('tglreg'),
             'id_users' => set_value('id_users'),
             'jadwaldok' => $this->T_daftar_model->get_dokter(),
+            'get_metode' => $this->T_daftar_model->get_metode(),
         );
         $this->template->load('template', 't_daftar/t_daftar_form', $data);
     }
-
+    function get_bayar()
+    {
+        $id = $this->input->post('id');
+        $data = $this->T_daftar_model->get_bayar($id);
+        echo json_encode($data);
+    }
     public function create_action()
     {
         //$regdate = date('ym');
@@ -434,6 +441,12 @@ class T_daftar extends CI_Controller
         //         <span aria-hidden="true"><i class="fal fa-times"></i></span>
         //     </button><strong> Create Record Success 2</strong></div>');
         redirect(site_url('t_daftar/read/' . $url));
+    }
+    function get_subkategori()
+    {
+        $id = $this->input->post('id');
+        $data = $this->m_kategori->get_subkategori($id);
+        echo json_encode($data);
     }
 }
 

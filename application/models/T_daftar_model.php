@@ -242,6 +242,25 @@ class T_daftar_model extends CI_Model
         $this->db->where('id', $idsoap);
         $this->db->update('t_asessment', $data);
     }
+    /* fungsi untuk memanggil data pada table provinsi*/
+    function get_metode()
+    {
+        $this->db->from('m_bayar_metode');
+        $this->db->where('aktif', 'Y');
+        $this->db->where_not_in('kdmetodebayar', '1');
+        $hasil = $this->db->get();
+        return $hasil->result();
+    }
+
+    /* fungsi untuk memanggil data pada table kota*/
+    function get_bayar($id)
+    {
+        $this->db->from('m_bayar');
+        $this->db->where('kdmetodebayar', $id);
+        $this->db->where('aktif', 'Y');
+        $hasil = $this->db->get();
+        return $hasil->result();
+    }
 }
 
 /* End of file T_daftar_model.php */
