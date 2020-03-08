@@ -257,6 +257,7 @@ class T_daftar extends CI_Controller
             'id_users' => set_value('id_users'),
             'jadwaldok' => $this->T_daftar_model->get_dokter(),
             'get_metode' => $this->T_daftar_model->get_metode(),
+            'get_poli' => $this->T_daftar_model->get_poli(),
         );
         $this->template->load('template', 't_daftar/t_daftar_form', $data);
     }
@@ -264,6 +265,12 @@ class T_daftar extends CI_Controller
     {
         $id = $this->input->post('id');
         $data = $this->T_daftar_model->get_bayar($id);
+        echo json_encode($data);
+    }
+    function jadwaldokter()
+    {
+        $id = $this->input->post('id');
+        $data = $this->T_daftar_model->get_jadwaldokter($id);
         echo json_encode($data);
     }
     public function create_action()

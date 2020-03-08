@@ -39,7 +39,7 @@
                                 <input type="hidden" class="form-control" name="noreg" value="<?php echo $noreg_max; ?>" readonly />
                                 <input type="hidden" class="form-control" name="nomr" id="nomr" placeholder="Nomr" value="<?php echo $this->uri->segment(4); ?>" readonly />
                                 <input type="hidden" class="form-control" name="baru" id="baru" placeholder="Baru" value="<?php echo $this->uri->segment(3); ?>" readonly />
-                                <tr>
+                                <!-- <tr>
                                     <td width='200'>Poliklinik <?php echo form_error('kdpoli') ?></td>
                                     <td><?php echo cmb_dinamis('kdpoli', 'm_poli', 'poli', 'kdpoli') ?></td>
                                 </tr>
@@ -64,7 +64,31 @@
                                             </select>
                                         </div>
                                     </td>
+                                </tr> -->
+
+
+                                <tr>
+                                    <td width='200'>Poliklinik <?php echo form_error('kdpoli') ?></td>
+                                    <td>
+                                        <?php foreach ($get_poli as $row) : ?>
+                                            <label class="btn btn-primary">
+                                                <input type="radio" name="poli" id="poli" value="<?php echo $row->kdpoli; ?>"><?php echo $row->poli; ?>
+                                            </label>
+                                        <?php endforeach; ?>
+                                    </td>
                                 </tr>
+                                <tr>
+                                    <td width='200'>Dokter <?php echo form_error('kddokter') ?></td>
+                                    <td>
+                                        <div id='jadwal'>
+                                            <!-- <select name="bayar" class="bayar form-control">
+                                                    <option value="0">-PILIH-</option>
+                                                </select> -->
+                                        </div>
+                                    </td>
+                                </tr>
+
+
                                 <?php
                                 $bayar = $this->uri->segment(5);
                                 if ($bayar == 'Y') {
@@ -163,6 +187,35 @@
                             '</label>';
                     }
                     $('#bayar').html(html);
+                }
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        //$('#metode').change(function() {
+        $('input[type=radio][name="poli').change(function() {
+            var id = $(this).val();
+            //var id = $("input[name=metode]");
+            $.ajax({
+                url: "<?php echo base_url(); ?>index.php/t_daftar/jadwaldokter",
+                method: "POST",
+                data: {
+                    id: id
+                },
+                async: false,
+                dataType: 'json',
+                success: function(data) {
+                    var html = '';
+                    var i;
+                    for (i = 0; i < data.length; i++) {
+                        // /html += '<option>' + data[i].bayar + '</option>';
+                        html += '<label class="btn btn-success">' +
+                            '<input type="radio" name="kddokter" id="kddokter" value="' + data[i].kddokter + '">' + data[i].dokter +
+                            '</label>';
+                    }
+                    $('#jadwal').html(html);
                 }
             });
         });

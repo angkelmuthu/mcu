@@ -261,6 +261,28 @@ class T_daftar_model extends CI_Model
         $hasil = $this->db->get();
         return $hasil->result();
     }
+    /* fungsi untuk memanggil data pada table provinsi*/
+    function get_poli()
+    {
+        $this->db->from('m_poli');
+        $hasil = $this->db->get();
+        return $hasil->result();
+    }
+
+    /* fungsi untuk memanggil data pada table kota*/
+    function get_jadwaldokter($id)
+    {
+        $qry = "SELECT a.kdjadwal,a.kddokter,b.dokter,a.jam_mulai,a.jam_akhir,a.kdpoli FROM m_dokterjadwal a
+        LEFT JOIN m_dokter b ON a.kddokter=b.kddokter
+        WHERE a.kdpoli='$id' and a.hari=date_format(now(),'%w')";
+        $query = $this->db->query($qry);
+        return $query->result();
+        // $this->db->from('m_dokterjadwal');
+        // $this->db->where('kdpoli', $id);
+        // $this->db->where('aktif', 'Y');
+        // $hasil = $this->db->get();
+        // return $hasil->result();
+    }
 }
 
 /* End of file T_daftar_model.php */
