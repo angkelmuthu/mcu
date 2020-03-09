@@ -40,8 +40,6 @@
                                 <?php
                                 }
                                 ?>
-
-
                                 <tr>
                                     <td width='200'>Level User <?php echo form_error('id_user_level') ?></td>
                                     <td>

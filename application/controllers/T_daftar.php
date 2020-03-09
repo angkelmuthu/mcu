@@ -154,8 +154,7 @@ class T_daftar extends CI_Controller
                 $data = $this->T_daftar_model->simpan_obat($nobill, $noreg, $kdpoli, $kddokter, $kdobat, $hargaobat, $qty, $kdbayar, $status, $tgl, $id_users);
             }
             echo json_encode($data);
-        } else {
-        }
+        } else { }
     }
     function hapus_obat()
     {
@@ -395,7 +394,7 @@ class T_daftar extends CI_Controller
         $this->form_validation->set_rules('kdpoli', 'kdpoli', 'trim|required');
         $this->form_validation->set_rules('kdbayar', 'kdbayar', 'trim|required');
         $this->form_validation->set_rules('rujukan', 'rujukan', 'trim|required');
-        $this->form_validation->set_rules('kdrujuk', 'kdrujuk', 'trim|required');
+        $this->form_validation->set_rules('kdrujuk', 'kdrujuk');
         $this->form_validation->set_rules('tglreg', 'tglreg', 'trim|required');
         $this->form_validation->set_rules('id_users', 'id users', 'trim|required');
 

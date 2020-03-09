@@ -3,7 +3,7 @@
         <div class="col-xl-12">
             <div id="panel-1" class="panel">
                 <div class="panel-hdr">
-                    <h2>INPUT DATA T_DAFTAR</h2>
+                    <h2>FORM PENDAFTARAN PASIEN</h2>
                     <div class="panel-toolbar">
                         <button class="btn btn-panel" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"></button>
                         <button class="btn btn-panel" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Fullscreen"></button>
@@ -39,111 +39,92 @@
                                 <input type="hidden" class="form-control" name="noreg" value="<?php echo $noreg_max; ?>" readonly />
                                 <input type="hidden" class="form-control" name="nomr" id="nomr" placeholder="Nomr" value="<?php echo $this->uri->segment(4); ?>" readonly />
                                 <input type="hidden" class="form-control" name="baru" id="baru" placeholder="Baru" value="<?php echo $this->uri->segment(3); ?>" readonly />
-                                <!-- <tr>
-                                    <td width='200'>Poliklinik <?php echo form_error('kdpoli') ?></td>
-                                    <td><?php echo cmb_dinamis('kdpoli', 'm_poli', 'poli', 'kdpoli') ?></td>
+                                <tr>
+                                    <td>
+                                        <h3>Poliklinik</h3> <?php echo form_error('kdpoli') ?>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td width='200'>Dokter <?php echo form_error('kddokter') ?></td>
-                                    <td>
-                                        <div class="form-group">
-                                            <select name="kddokter" id="kddokter" class="select2 form-control w-100 select2-hidden-accessible" id="single-default" data-select2-id="single-default" tabindex="-1" aria-hidden="true">
-                                                <?php
-                                                $now = new DateTime();
-                                                $now->setTimezone(new DateTimezone('Asia/Jakarta'));
-                                                $jam = $now->format('H:i');
-                                                foreach ($jadwaldok as $dok) {
-                                                    if ($dok->jam_mulai <= $jam & $dok->jam_akhir >= $jam) {
-                                                        $disable = '';
-                                                    } else {
-                                                        $disable = 'disabled';
-                                                    }
-                                                ?>
-                                                    <option value="<?php echo $dok->kddokter ?>" <?php echo $disable ?>><?php echo $dok->dokter ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr> -->
-
-
-                                <tr>
-                                    <td width='200'>Poliklinik <?php echo form_error('kdpoli') ?></td>
                                     <td>
                                         <?php foreach ($get_poli as $row) : ?>
                                             <label class="btn btn-primary">
-                                                <input type="radio" name="poli" id="poli" value="<?php echo $row->kdpoli; ?>"><?php echo $row->poli; ?>
+                                                <input type="radio" name="kdpoli" id="kdpoli" value="<?php echo $row->kdpoli; ?>"><?php echo $row->poli; ?>
                                             </label>
                                         <?php endforeach; ?>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width='200'>Dokter <?php echo form_error('kddokter') ?></td>
                                     <td>
-                                        <div id='jadwal'>
-                                            <!-- <select name="bayar" class="bayar form-control">
-                                                    <option value="0">-PILIH-</option>
-                                                </select> -->
+                                        <h3>Dokter</h3> <?php echo form_error('kddokter') ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <select name="kddokter" id="kddokter" class="select2 form-control w-100 select2-hidden-accessible" id="single-default" data-select2-id="single-default" tabindex="-1" aria-hidden="true">
+                                            </select>
                                         </div>
                                     </td>
                                 </tr>
-
-
                                 <?php
                                 $bayar = $this->uri->segment(5);
                                 if ($bayar == 'Y') {
                                     echo '<input type="hidden" class="form-control" name="kdbayar" id="kdbayar" placeholder="kdbayar" value="1" />';
                                 } else { ?>
                                     <tr>
-                                        <td width='200'>Metode Pembayaran <?php echo form_error('kdbayar') ?></td>
+                                        <td>
+                                            <h3>Metode Pembayaran</h3> <?php echo form_error('kdbayar') ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>
                                             <?php foreach ($get_metode as $row) : ?>
                                                 <label class="btn btn-primary">
                                                     <input type="radio" name="metode" id="metode" value="<?php echo $row->kdmetodebayar; ?>"><?php echo $row->metode; ?>
                                                 </label>
                                             <?php endforeach; ?>
-                                            <!-- <div class="form-group">
-                                                <select name="metode" id="metode" class="form-control">
-                                                    <option value="0">-PILIH-</option>
-                                                    <?php foreach ($get_metode as $row) : ?>
-                                                        <option value="<?php echo $row->kdmetodebayar; ?>"><?php echo $row->metode; ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div> -->
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width='200'></td>
+                                        <td>
+                                            <h3>Pembayaran</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>
                                             <div id='bayar'>
-                                                <!-- <select name="bayar" class="bayar form-control">
-                                                    <option value="0">-PILIH-</option>
-                                                </select> -->
                                             </div>
                                         </td>
                                     </tr>
                                 <?php } ?>
-
                                 <tr>
-                                    <td width='200'>Rujukan <?php echo form_error('rujukan') ?></td>
                                     <td>
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" class="custom-control-input" id="defaultInline1Radio" name="rujukan" value="N" checked>
-                                            <label class="custom-control-label" for="defaultInline1Radio">Tidak, Bukan Pasien Rujukan</label>
+                                        <h3>Apakah Pasien ini Rujukan?</h3> <?php echo form_error('rujukan') ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check-inline">
+                                            <label class="customradio"><span class="radiotextsty">Ya, Pasien Rujukan</span>
+                                                <input type="radio" name="rujukan" id="rujukan" value="Y" onclick="show2();">
+                                                <span class="checkmark"></span>
+                                            </label>        
+                                            <label class="customradio"><span class="radiotextsty">Tidak, Bukan Pasien Rujukan</span>
+                                                <input type="radio" checked="checked" name="rujukan" id="rujukan" value="N">
+                                                <span class="checkmark"></span>
                                             </label>
-                                        </div>
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" class="custom-control-input" id="defaultInline2Radio" name="rujukan" value="Y">
-                                            <label class="custom-control-label" for="defaultInline2Radio">Ya, Ini Pasien Rujukan</label>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width='200'>Kdrujuk <?php echo form_error('kdrujuk') ?></td>
-                                    <td><input type="text" class="form-control" name="kdrujuk" id="kdrujuk" placeholder="Kdrujuk" value="<?php echo $kdrujuk; ?>" /></td>
+                                    <td>
+                                        <div id="div1" style="display: none;">
+                                            <h3>Perujuk <?php echo form_error('kdrujuk') ?></h3>
+                                            <input type="text" class="form-control" name="kdrujuk" id="kdrujuk" value="<?php echo $kdrujuk; ?>" />
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td></td>
                                     <td><input type="hidden" class="form-control" name="idreg" value="<?php echo $idreg; ?>" readonly />
                                         <input type="hidden" class="form-control" name="tglreg" value="<?php echo date('Y-m-d H:i:s'); ?>" readonly />
                                         <input type="hidden" class="form-control" name="id_users" value="<?php echo $this->session->userdata('id_users'); ?>" readonly />
@@ -163,6 +144,15 @@
 <script src="<?php echo base_url() ?>assets/smartadmin/js/app.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/formplugins/select2/select2.bundle.js"></script>
 <!-- <script src="<?php echo base_url(); ?>assets/jquery.min.js"></script> -->
+<script type="text/javascript">
+    function show1() {
+        document.getElementById('div1').style.display = 'none';
+    }
+
+    function show2() {
+        document.getElementById('div1').style.display = 'block';
+    }
+</script>
 <script type="text/javascript">
     $(document).ready(function() {
         //$('#metode').change(function() {
@@ -195,7 +185,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         //$('#metode').change(function() {
-        $('input[type=radio][name="poli').change(function() {
+        $('input[type=radio][name="kdpoli').change(function() {
             var id = $(this).val();
             //var id = $("input[name=metode]");
             $.ajax({
@@ -209,13 +199,18 @@
                 success: function(data) {
                     var html = '';
                     var i;
+                    var dt = new Date();
+                    var time = dt.getHours() + ":" + dt.getMinutes();
                     for (i = 0; i < data.length; i++) {
-                        // /html += '<option>' + data[i].bayar + '</option>';
-                        html += '<label class="btn btn-success">' +
-                            '<input type="radio" name="kddokter" id="kddokter" value="' + data[i].kddokter + '">' + data[i].dokter +
-                            '</label>';
+                        var jam_akhir = data[i].jam_akhir;
+                        if (time > jam_akhir) {
+                            var disable = "disabled";
+                        } else {
+                            var disable = "";
+                        }
+                        html += '<option value="' + data[i].kddokter + '" ' + disable + '>Jam : ' + data[i].jam_mulai + ' - ' + data[i].jam_akhir + ' | ' + data[i].dokter + '</option>';
                     }
-                    $('#jadwal').html(html);
+                    $('#kddokter').html(html);
                 }
             });
         });

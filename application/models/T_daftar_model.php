@@ -272,7 +272,7 @@ class T_daftar_model extends CI_Model
     /* fungsi untuk memanggil data pada table kota*/
     function get_jadwaldokter($id)
     {
-        $qry = "SELECT a.kdjadwal,a.kddokter,b.dokter,a.jam_mulai,a.jam_akhir,a.kdpoli FROM m_dokterjadwal a
+        $qry = "SELECT a.kdjadwal,a.kddokter,b.dokter,TIME_FORMAT(a.jam_mulai, '%H:%i') AS jam_mulai,TIME_FORMAT(a.jam_akhir, '%H:%i') as jam_akhir,a.kdpoli FROM m_dokterjadwal a
         LEFT JOIN m_dokter b ON a.kddokter=b.kddokter
         WHERE a.kdpoli='$id' and a.hari=date_format(now(),'%w')";
         $query = $this->db->query($qry);

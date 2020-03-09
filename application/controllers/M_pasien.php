@@ -107,7 +107,7 @@ class M_pasien extends CI_Controller
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true"><i class="fal fa-times"></i></span>
             </button><strong> Create Record Success 2</strong></div>');
-            redirect(site_url('T_daftar/create/' . $baru . '/' . $nomr));
+            redirect(site_url('T_daftar/metode_bayar/' . $baru . '/' . $nomr));
         }
     }
 
