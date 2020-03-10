@@ -74,14 +74,14 @@
                                     } else {
                                         echo '<form action="' . base_url() . 't_radhasil/create_action" method="post">';
                                     }
-                                    ?>
+                                ?>
 
                                     <tr>
                                         <td><?php echo $no ?></td>
                                         <td><?php echo $rad->nmtarif ?></td>
                                         <!-- <td><?php echo $rad->deskripsi ?></td> -->
                                         <td>
-                                            <input type="hidden" name="nobill" id="nobill" value="<?php echo $rad->labbill ?>">
+                                            <input type="hidden" name="nobill" id="nobill" value="<?php echo $rad->radbill ?>">
                                             <input type="hidden" name="noreg" id="noreg" value="<?php echo $rad->noreg ?>">
                                             <input type="hidden" name="kdtarif" id="kdtarif" value="<?php echo $rad->kdtarif ?>">
                                             <textarea name="hasil" class="form-control"><?php echo $rad->hasil ?></textarea>

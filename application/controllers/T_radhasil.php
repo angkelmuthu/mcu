@@ -72,6 +72,7 @@ class T_radhasil extends CI_Controller
             $this->create();
         } else {
             $data = array(
+                'nobill' => $this->input->post('nobill', TRUE),
                 'noreg' => $this->input->post('noreg', TRUE),
                 'kdtarif' => $this->input->post('kdtarif', TRUE),
                 'hasil' => $this->input->post('hasil', TRUE),

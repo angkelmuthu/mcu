@@ -48,7 +48,7 @@ class T_radhasil_model extends CI_Model
 
     function get_tindakan_rad($noreg)
     {
-        $qry = "SELECT a.noreg,b.kdtarif,b.nmtarif,e.nobill as labbill,e.hasil FROM t_billrajal a
+        $qry = "SELECT a.noreg,b.kdtarif,b.nmtarif,a.nobill as radbill,e.hasil FROM t_billrajal a
         LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
         LEFT JOIN t_radhasil e ON e.kdtarif=b.kdtarif
         WHERE b.kdpoli='4' and a.noreg='$noreg'";

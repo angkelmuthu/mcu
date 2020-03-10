@@ -1,3 +1,4 @@
+<link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/css/miscellaneous/lightgallery/lightgallery.bundle.css">
 <main id="js-page-content" role="main" class="page-content">
     <div class="row">
 
@@ -99,9 +100,36 @@
 <script type='text/javascript' src='<?php echo base_url(); ?>assets/smartadmin/costume/jquery.autocomplete.js'></script>
 <link href='<?php echo base_url(); ?>assets/smartadmin/costume/jquery.autocomplete.css' rel='stylesheet' />
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
-<script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.export.js"></script>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<!-- <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.export.js"></script> -->
+<!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
+<script src="<?php echo base_url() ?>assets/smartadmin/js/miscellaneous/lightgallery/lightgallery.bundle.js"></script>
+<script>
+    $(document).ready(function() {
+        var $initScope = $('#js-lightgallery');
+        if ($initScope.length) {
+            $initScope.justifiedGallery({
+                border: -1,
+                rowHeight: 150,
+                margins: 8,
+                waitThumbnailsLoad: true,
+                randomize: false,
+            }).on('jg.complete', function() {
+                $initScope.lightGallery({
+                    thumbnail: true,
+                    animateThumb: true,
+                    showThumbByDefault: true,
+                });
+            });
+        };
+        $initScope.on('onAfterOpen.lg', function(event) {
+            $('body').addClass("overflow-hidden");
+        });
+        $initScope.on('onCloseAfter.lg', function(event) {
+            $('body').removeClass("overflow-hidden");
+        });
+    });
+</script>
 <script type="text/javascript">
     $(document).ready(function() {
         $("#icd10").autocomplete({
