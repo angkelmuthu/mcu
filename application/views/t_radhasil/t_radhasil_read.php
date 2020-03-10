@@ -61,8 +61,8 @@
                                     <th width="5%">No.</th>
                                     <th width="30%">Pemeriksaan</th>
                                     <!-- <th>Deskripsi</th> -->
-                                    <th width="60%">Nilai</th>
-                                    <th width="5%"></th>
+                                    <th width="50%">Hasil</th>
+                                    <th width="15%"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,9 +70,9 @@
                                 $no = 1;
                                 foreach ($list_rad as $rad) {
                                     if (!empty($rad->hasil)) {
-                                        echo '<form action="' . base_url() . 't_labhasil/update_action/' . $rad->noreg . '" method="post">';
+                                        echo '<form action="' . base_url() . 't_radhasil/update_action/' . $rad->noreg . '" method="post">';
                                     } else {
-                                        echo '<form action="' . base_url() . 't_labhasil/create_action" method="post">';
+                                        echo '<form action="' . base_url() . 't_radhasil/create_action" method="post">';
                                     }
                                     ?>
 
@@ -90,6 +90,7 @@
                                         </td>
                                         <td>
                                             <button type="submit" class="btn btn-sm btn-info waves-effect waves-themed"><i class="fal fa-save"></i></button>
+                                            <a href="<?php echo base_url(); ?>t_radhasil/upload/<?php echo $nobill ?>/<?php echo $noreg ?>/<?php echo $rad->kdtarif ?>" class="btn btn-sm btn-success waves-effect waves-themed">File</a>
                                         </td>
                                     </tr>
                                     </form>

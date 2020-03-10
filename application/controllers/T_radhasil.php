@@ -32,6 +32,7 @@ class T_radhasil extends CI_Controller
             $data = array(
                 'nama' => $row->nama,
                 'noreg' => $row->noreg,
+                'nobill' => $row->nobill,
                 'tgllhr' => $row->tgllhr,
                 'alamat' => $row->alamat,
                 'tglinput' => $row->tglinput,
@@ -166,6 +167,74 @@ class T_radhasil extends CI_Controller
 
         $this->form_validation->set_rules('nobill', 'nobill', 'trim');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    }
+
+    public function upload()
+    {
+        $nobill = $this->uri->segment(3);
+        $noreg = $this->uri->segment(4);
+        $kdtarif = $this->uri->segment(5);
+        $data = array(
+            'files' => $this->T_radhasil_model->getRows($nobill, $noreg, $kdtarif),
+        );
+        //$this->template->load('template', 't_radhasil/t_radhasil_form', $data);
+        $this->template->load('template', 't_radhasil/t_radhasil_upload', $data);
+    }
+
+    function upload_files()
+    {
+        $nobill = $this->input->post('nobill');
+        $noreg = $this->input->post('noreg');
+        $kdtarif = $this->input->post('kdtarif');
+        $data = array();
+        // If file upload form submitted
+        if ($this->input->post('fileSubmit') && !empty($_FILES['files']['name'])) {
+            $filesCount = count($_FILES['files']['name']);
+            for ($i = 0; $i < $filesCount; $i++) {
+                $_FILES['file']['name']     = $_FILES['files']['name'][$i];
+                $_FILES['file']['type']     = $_FILES['files']['type'][$i];
+                $_FILES['file']['tmp_name'] = $_FILES['files']['tmp_name'][$i];
+                $_FILES['file']['error']     = $_FILES['files']['error'][$i];
+                $_FILES['file']['size']     = $_FILES['files']['size'][$i];
+
+                // File upload configuration
+                $uploadPath = 'assets/file_radiologi/';
+                $config['upload_path'] = $uploadPath;
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+
+                // Load and initialize upload library
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                // Upload file to server
+                if ($this->upload->do_upload('file')) {
+                    // Uploaded file data
+                    $fileData = $this->upload->data();
+                    $uploadData[$i]['nobill'] = $nobill;
+                    $uploadData[$i]['noreg'] = $noreg;
+                    $uploadData[$i]['kdtarif'] = $kdtarif;
+                    $uploadData[$i]['file_name'] = $fileData['file_name'];
+                    $uploadData[$i]['uploaded_on'] = date("Y-m-d H:i:s");
+                }
+            }
+
+            if (!empty($uploadData)) {
+                // Insert files data into the database
+                $insert = $this->T_radhasil_model->upload($uploadData);
+
+                // Upload status message
+                $statusMsg = $insert ? '<div class="alert border-info bg-transparent text-info" role="alert">Files uploaded successfully.</div>' : '<div class="alert border-info bg-transparent text-info" role="alert">Some problem occurred, please try again.</div>';
+                $this->session->set_flashdata('statusMsg', $statusMsg);
+            }
+        }
+
+        // Get files data from the database
+        //$data['files'] = $this->T_radhasil_model->getRows();
+
+        // Pass the files data to view
+        //$this->load->view('t_radhasil/t_radhasil_upload', $data);
+        //$this->template->load('template', 't_radhasil/t_radhasil_upload');
+        redirect(site_url('t_radhasil/upload/' . $nobill . '/' . $noreg . '/' . $kdtarif));
     }
 }
 

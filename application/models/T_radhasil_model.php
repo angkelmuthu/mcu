@@ -39,8 +39,8 @@ class T_radhasil_model extends CI_Model
     function get_by_id($noreg)
     {
         $this->db->select('*');
-        $this->db->from('t_daftar');
-        $this->datatables->join('m_pasien', 't_daftar.nomr = m_pasien.nomr');
+        $this->db->from('v_pendaftaran');
+        //$this->datatables->join('m_pasien', 't_daftar.nomr = m_pasien.nomr');
         $this->db->where('noreg', $noreg);
         //return $this->db->get($this->table)->row();
         return $this->db->get()->row();
@@ -102,6 +102,34 @@ class T_radhasil_model extends CI_Model
     {
         $this->db->where($this->id, $id);
         $this->db->delete($this->table);
+    }
+    public function getRows($nobill, $noreg, $kdtarif)
+    {
+        $this->db->select('id,file_name,uploaded_on');
+        $this->db->from('t_rad_file');
+        $this->db->where('nobill', $nobill);
+        $this->db->where('noreg', $noreg);
+        $this->db->where('kdtarif', $kdtarif);
+        // if ($id) {
+        //     $this->db->where('id', $id);
+        //     $query = $this->db->get();
+        //     $result = $query->row_array();
+        // } else {
+        $this->db->order_by('uploaded_on', 'desc');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        //}
+        return !empty($result) ? $result : false;
+    }
+
+    /*
+     * Insert file data into the database
+     * @param array the data for inserting into the table
+     */
+    public function upload($data = array())
+    {
+        $insert = $this->db->insert_batch('t_rad_file', $data);
+        return $insert ? true : false;
     }
 }
 
