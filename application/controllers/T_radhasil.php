@@ -25,7 +25,7 @@ class T_radhasil extends CI_Controller
         echo $this->T_radhasil_model->json();
     }
 
-    public function read($noreg)
+    public function read($noreg, $nobill)
     {
         $row = $this->T_radhasil_model->get_by_id($noreg);
         if ($row) {
@@ -37,7 +37,7 @@ class T_radhasil extends CI_Controller
                 'alamat' => $row->alamat,
                 'tglinput' => $row->tglinput,
                 'id_users' => $row->id_users,
-                'list_rad' => $this->T_radhasil_model->get_tindakan_rad($noreg),
+                'list_rad' => $this->T_radhasil_model->get_tindakan_rad($noreg, $nobill),
             );
             $this->template->load('template', 't_radhasil/t_radhasil_read', $data);
         } else {

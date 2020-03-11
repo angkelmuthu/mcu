@@ -26,7 +26,7 @@
                             </thead>
                             <tbody>
                                 <?php
-                                $sql_lab = "SELECT a.noreg,f.nama,f.tgllhr,f.alamat FROM t_billrajal a
+                                $sql_lab = "SELECT a.nobill,a.noreg,f.nama,f.tgllhr,f.alamat FROM t_billrajal a
                                 LEFT JOIN m_tarif d ON a.kdtarif=d.kdtarif
                                 LEFT JOIN t_daftar e ON a.noreg=e.noreg
                                 LEFT JOIN m_pasien f ON e.nomr=f.nomr
@@ -40,7 +40,7 @@
                                         <td><?php echo $lab->tgllhr ?></td>
                                         <td><?php echo $lab->alamat ?></td>
                                         <td>
-                                            <a href="t_radhasil/read/<?php echo $lab->noreg ?>" class="btn btn-info btn-xs"><i class="fal fa-eye"></i></a>
+                                            <a href="t_radhasil/read/<?php echo $lab->noreg ?>/<?php echo $lab->nobill ?>" class="btn btn-info btn-xs"><i class="fal fa-eye"></i></a>
                                         </td>
                                     </tr>
                                 <?php } ?>

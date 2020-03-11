@@ -46,15 +46,17 @@ class T_radhasil_model extends CI_Model
         return $this->db->get()->row();
     }
 
-    function get_tindakan_rad($noreg)
+    function get_tindakan_rad($noreg, $nobill)
     {
-        $qry = "SELECT a.noreg,b.kdtarif,b.nmtarif,a.nobill as radbill,e.hasil FROM t_billrajal a
-        LEFT JOIN m_tarif b ON a.kdtarif=b.kdtarif
-        LEFT JOIN t_radhasil e ON e.kdtarif=b.kdtarif
-        WHERE b.kdpoli='4' and a.noreg='$noreg'";
-        $hasil = $this->db->query($qry);
+        $this->db->select('a.noreg,b.kdtarif,b.nmtarif,a.nobill as radbill,c.hasil');
+        $this->db->from('t_billrajal a');
+        $this->db->JOIN('m_tarif b', 'a.kdtarif=b.kdtarif', 'LEFT');
+        $this->db->JOIN('t_radhasil c', 'a.nobill=c.nobill', 'LEFT');
+        $this->db->where('b.kdpoli', '4');
+        $this->db->where('a.nobill', $nobill);
+        $this->db->where('a.noreg', $noreg);
+        $hasil = $this->db->get();
         return $hasil->result();
-        //return $this->db->get()->row();
     }
 
     // get total rows
