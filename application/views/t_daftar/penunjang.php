@@ -6,8 +6,13 @@ $this->db->group_by('kdpoli');
 $query = $this->db->get();
 if ($query->num_rows() > 0) {
     foreach ($query->result() as $row) {
-        echo '<h2 class="fw-700 mt-2 mb-2"><i class="subheader-icon fal fa-list-alt"></i> ' . $row->poli . '</h2>';
-        ///echo '<h3>' . $row->poli . '</h3>';
+        echo '
+            <table class="table table-hover mt-0 mb-2">
+                <thead class="bg-info-500">
+                    <td><h4 class="fw-700 m-0"><i class="subheader-icon fal fa-list-alt"></i> ' . $row->poli . '</h4></td>
+                </thead>
+            </table>';
+        //echo '<h2 class="fw-700 mt-2 mb-2"><i class="subheader-icon fal fa-list-alt"></i> ' . $row->poli . '</h2>';
         $this->db->from('v_penunjang');
         $this->db->where('noreg', $noreg);
         $this->db->where('nobill', $nobill);
@@ -15,14 +20,10 @@ if ($query->num_rows() > 0) {
         $query2 = $this->db->get()->result();
         foreach ($query2 as $row2) {
 ?>
-            <table class="table table-hover">
-                <thead class="bg-info-500">
-                    <th>Nama Pemeriksaan : <?php echo $row2->nmtarif ?></th>
-                </thead>
-            </table>
 
             <?php
             if ($row->kdpoli == 5) { ?>
+                <h6 class="fw-700 mt-2 mb-2"><?php echo $row2->nmtarif ?></h6>
                 <table class="table m-0">
                     <thead>
                         <tr>
@@ -49,7 +50,7 @@ if ($query->num_rows() > 0) {
                         foreach ($query3 as $row3) {
                         ?>
                             <tr>
-                                <th scope="row"><?php echo $row3->nmlab ?></th>
+                                <th scope="row">- <?php echo $row3->nmlab ?></th>
                                 <td><?php echo $row3->deskripsi ?></td>
                                 <td><?php echo $row3->nilai_min . ' - ' . $row3->nilai_max ?></td>
                                 <td><?php echo $row3->nilai ?></td>
@@ -76,45 +77,51 @@ if ($query->num_rows() > 0) {
                 $this->db->where('noreg', $noreg);
                 $this->db->where('kdtarif', $row2->kdtarif);
                 $result = $this->db->get()->result();
-                //echo $this->db->last_query();
-                //$result = $query->result_array();
-                //if (!empty($result)) {
             ?>
 
-                <div class="panel-tag">
-                    <h3>Hasil : </h3>
-                    <?php
-                    foreach ($result as $hasil) {
-                        echo $hasil->hasil;
-                    } ?>
-                </div>
-                <?php //}
-                $this->db->select('id,file_name,uploaded_on');
-                $this->db->from('t_rad_file');
-                $this->db->where('nobill', $nobill);
-                $this->db->where('noreg', $noreg);
-                $this->db->where('kdtarif', $row2->kdtarif);
-                $this->db->order_by('uploaded_on', 'desc');
-                $query = $this->db->get();
-                //echo $this->db->last_query();
-                $result = $query->result_array();
-                if (!empty($result)) { ?>
-                    <div id="js-lightgallery">
+                <table class="table m-0">
+                    <thead>
+                        <tr>
+                            <th>Nama Periksaan</th>
+                            <th>Hasil</th>
+                            <th>File</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         <?php
-                        foreach ($result as $file) { ?>
-
-                            <a class="" href="<?php echo base_url('assets/file_radiologi/' . $file['file_name']); ?>">
-                                <img class="img-responsive" src="<?php echo base_url('assets/file_radiologi/' . $file['file_name']); ?>" alt="<?php echo date("j M Y h:s:i", strtotime($file['uploaded_on'])); ?>">
-                            </a>
+                        foreach ($result as $hasil) { ?>
+                            <tr>
+                                <td><?php echo $row2->nmtarif ?></td>
+                                <td><?php echo $hasil->hasil ?></td>
+                                <td>
+                                    <?php
+                                    $radno = 1;
+                                    $this->db->select('id,file_name,uploaded_on');
+                                    $this->db->from('t_rad_file');
+                                    $this->db->where('nobill', $nobill);
+                                    $this->db->where('noreg', $noreg);
+                                    $this->db->where('kdtarif', $row2->kdtarif);
+                                    $this->db->order_by('uploaded_on', 'desc');
+                                    $query = $this->db->get();
+                                    //echo $this->db->last_query();
+                                    $result = $query->result_array();
+                                    if (!empty($result)) { ?>
+                                        <div class="image-set">
+                                            <?php foreach ($result as $file) { ?>
+                                                <a data-magnify="gallery" data-caption="<?php echo $radno ?>" class="btn btn-sm btn-primary" href="<?php echo base_url('assets/file_radiologi/' . $file['file_name']); ?>">
+                                                    file-<?php echo $radno ?>
+                                                </a>
+                                            <?php $radno++;
+                                            } ?>
+                                        </div>
+                                    <?php } else {
+                                    } ?>
+                                </td>
+                            </tr>
                         <?php } ?>
-                    </div>
-                <?php } else { ?>
-                    <br>
-                    <div class="alert border-info bg-transparent text-info" role="alert">
-                        <strong>Info!</strong> Hasil belum tersedia.
-                    </div>
+                    </tbody>
+                </table>
 <?php
-                }
             }
         }
     }

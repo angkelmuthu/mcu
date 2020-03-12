@@ -1,4 +1,43 @@
-<link rel="stylesheet" media="screen, print" href="<?php echo base_url() ?>assets/smartadmin/css/miscellaneous/lightgallery/lightgallery.bundle.css">
+<link href="<?php echo base_url() ?>assets/smartadmin/js/magnify/jquery.magnify.css" rel="stylesheet">
+<style>
+    .magnify-modal {
+        box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .magnify-header .magnify-toolbar {
+        background-color: rgba(0, 0, 0, .5);
+    }
+
+    .magnify-stage {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-width: 0;
+    }
+
+    .magnify-footer {
+        bottom: 10px;
+    }
+
+    .magnify-footer .magnify-toolbar {
+        background-color: rgba(0, 0, 0, .5);
+        border-radius: 5px;
+    }
+
+    .magnify-loader {
+        background-color: transparent;
+    }
+
+    .magnify-header,
+    .magnify-footer {
+        pointer-events: none;
+    }
+
+    .magnify-button {
+        pointer-events: auto;
+    }
+</style>
 <main id="js-page-content" role="main" class="page-content">
     <div class="row">
 
@@ -100,34 +139,16 @@
 <script type='text/javascript' src='<?php echo base_url(); ?>assets/smartadmin/costume/jquery.autocomplete.js'></script>
 <link href='<?php echo base_url(); ?>assets/smartadmin/costume/jquery.autocomplete.css' rel='stylesheet' />
 <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
-<!-- <script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.export.js"></script> -->
-<!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
-<script src="<?php echo base_url() ?>assets/smartadmin/js/miscellaneous/lightgallery/lightgallery.bundle.js"></script>
+<script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.export.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="<?php echo base_url() ?>assets/smartadmin/js/magnify/jquery.magnify.js"></script>
 <script>
-    $(document).ready(function() {
-        var $initScope = $('#js-lightgallery');
-        if ($initScope.length) {
-            $initScope.justifiedGallery({
-                border: -1,
-                rowHeight: 150,
-                margins: 8,
-                waitThumbnailsLoad: true,
-                randomize: false,
-            }).on('jg.complete', function() {
-                $initScope.lightGallery({
-                    thumbnail: true,
-                    animateThumb: true,
-                    showThumbByDefault: true,
-                });
-            });
-        };
-        $initScope.on('onAfterOpen.lg', function(event) {
-            $('body').addClass("overflow-hidden");
-        });
-        $initScope.on('onCloseAfter.lg', function(event) {
-            $('body').removeClass("overflow-hidden");
-        });
+    $('[data-magnify]').magnify({
+        headToolbar: [
+            'close'
+        ],
+        initMaximized: true
     });
 </script>
 <script type="text/javascript">
