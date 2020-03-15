@@ -13,6 +13,7 @@
             <div class="panel-container show">
                 <div class="panel-content">
         <table class="table table-striped">
+	    <tr><td>Kdunit</td><td><?php echo $kdunit; ?></td></tr>
 	    <tr><td>Unit</td><td><?php echo $unit; ?></td></tr>
 	    <tr><td></td><td><a href="<?php echo site_url('m_unit') ?>" class="btn btn-primary waves-effect waves-themed">Kembali</a></td></tr>
 	</table>

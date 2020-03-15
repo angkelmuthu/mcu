@@ -13,11 +13,14 @@
             <div class="panel-container show">
                 <div class="panel-content">
                     <div class="text-center">
-        <?php echo anchor(site_url('m_unit/create'), '<i class="fal fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-primary btn-sm waves-effect waves-themed"'); ?></div>
+        <?php echo anchor(site_url('m_unit/create'), '<i class="fal fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-primary btn-sm waves-effect waves-themed"'); ?>
+		<?php echo anchor(site_url('m_unit/excel'), '<i class="fal fa-file-excel" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-outline-success btn-sm waves-effect waves-themed"'); ?>
+		<?php echo anchor(site_url('m_unit/word'), '<i class="fal fa-file-word" aria-hidden="true"></i> Export Ms Word', 'class="btn btn-outline-primary btn-sm waves-effect waves-themed"'); ?></div>
         <table class="table table-bordered table-hover table-striped w-100" id="dt-basic-example">
             <thead>
                 <tr>
                     <th width="30px">No</th>
+		    <th>Kdunit</th>
 		    <th>Unit</th>
 		    <th width="200px">Action</th>
                 </tr>
@@ -68,9 +71,9 @@
                     ajax: {"url": "m_unit/json", "type": "POST"},
                     columns: [
                         {
-                            "data": "kdunit",
+                            "data": "idunit",
                             "orderable": false
-                        },{"data": "unit"},
+                        },{"data": "kdunit"},{"data": "unit"},
                         {
                             "data" : "action",
                             "orderable": false,

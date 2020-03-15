@@ -16,8 +16,9 @@
 
 <table class='table table-striped'>
 
+	    <tr><td width='200'>Kdunit <?php echo form_error('kdunit') ?></td><td><input type="text" class="form-control" name="kdunit" id="kdunit" placeholder="Kdunit" value="<?php echo $kdunit; ?>" /></td></tr>
 	    <tr><td width='200'>Unit <?php echo form_error('unit') ?></td><td><input type="text" class="form-control" name="unit" id="unit" placeholder="Unit" value="<?php echo $unit; ?>" /></td></tr>
-	    <tr><td></td><td><input type="hidden" name="kdunit" value="<?php echo $kdunit; ?>" /> 
+	    <tr><td></td><td><input type="hidden" name="idunit" value="<?php echo $idunit; ?>" /> 
 	    <button type="submit" class="btn btn-warning waves-effect waves-themed"><i class="fal fa-save"></i> <?php echo $button ?></button> 
 	    <a href="<?php echo site_url('m_unit') ?>" class="btn btn-info waves-effect waves-themed"><i class="fal fa-sign-out"></i> Kembali</a></td></tr>
 	</table></form>        </div>

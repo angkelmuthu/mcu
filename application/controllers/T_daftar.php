@@ -11,18 +11,70 @@ class T_daftar extends CI_Controller
         is_login();
         $this->load->model('T_daftar_model');
         $this->load->library('form_validation');
-        $this->load->library('datatables');
     }
 
     public function index()
     {
-        $this->template->load('template', 't_daftar/t_daftar_list');
-    }
+        $q = urldecode($this->input->get('q', TRUE));
+        $start = intval($this->uri->segment(3));
 
-    public function json()
+        if ($q <> '') {
+            $config['base_url'] = base_url() . '.php/c_url/index.html?q=' . urlencode($q);
+            $config['first_url'] = base_url() . 'index.php/t_daftar/index.html?q=' . urlencode($q);
+        } else {
+            $config['base_url'] = base_url() . 'index.php/t_daftar/index/';
+            $config['first_url'] = base_url() . 'index.php/t_daftar/index/';
+        }
+
+        $config['per_page'] = 10;
+        $config['page_query_string'] = FALSE;
+        $config['total_rows'] = $this->T_daftar_model->total_rows($q);
+        $t_daftar = $this->T_daftar_model->get_limit_data($config['per_page'], $start, $q);
+        $config['full_tag_open'] = '<ul class="pagination justify-content-center">';
+        $config['full_tag_close'] = '</ul>';
+        $this->load->library('pagination');
+        $this->pagination->initialize($config);
+
+        $data = array(
+            't_daftar_data' => $t_daftar,
+            'q' => $q,
+            'pagination' => $this->pagination->create_links(),
+            'total_rows' => $config['total_rows'],
+            'start' => $start,
+        );
+        $this->template->load('template', 't_daftar/t_daftar_list', $data);
+    }
+    public function unit()
     {
-        header('Content-Type: application/json');
-        echo $this->T_daftar_model->json();
+        $unit = $this->uri->segment(3);
+        $q = urldecode($this->input->get('q', TRUE));
+        $start = intval($this->uri->segment(3));
+
+        if ($q <> '') {
+            $config['base_url'] = base_url() . '.php/c_url/index.html?q=' . urlencode($q);
+            $config['first_url'] = base_url() . 'index.php/t_daftar/unit/' . $unit . '/index.html?q=' . urlencode($q);
+        } else {
+            $config['base_url'] = base_url() . 'index.php/t_daftar/unit/' . $unit . '/index/';
+            $config['first_url'] = base_url() . 'index.php/t_daftar/unit/' . $unit . '/index/';
+        }
+
+        $config['per_page'] = 10;
+        $config['page_query_string'] = FALSE;
+        $config['total_rows'] = $this->T_daftar_model->total_rows_unit($unit, $q);
+        $t_daftar = $this->T_daftar_model->get_limit_data_unit($config['per_page'], $start, $unit, $q);
+        $config['full_tag_open'] = '<ul class="pagination justify-content-center">';
+        $config['full_tag_close'] = '</ul>';
+        $this->load->library('pagination');
+        $this->pagination->initialize($config);
+
+        $data = array(
+            't_daftar_data' => $t_daftar,
+            'q' => $q,
+            'pagination' => $this->pagination->create_links(),
+            'total_rows' => $config['total_rows'],
+            'start' => $start,
+        );
+        $this->template->load('template', 't_daftar/t_daftar_list_unit', $data);
     }
 
     public function read($id)
@@ -54,11 +106,8 @@ class T_daftar extends CI_Controller
                 'listtarif' => $this->T_daftar_model->get_tarif($kdpoli),
                 'listobat' => $this->T_daftar_model->get_obat(),
                 'get_penunjang' => $this->T_daftar_model->get_penunjang($row->noreg),
-
             );
             $this->template->load('template', 't_daftar/t_daftar_read', $data);
-
-            //$this->template->load('template', 't_daftar/t_daftar_read',);
         } else {
             $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -67,6 +116,66 @@ class T_daftar extends CI_Controller
             redirect(site_url('t_daftar'));
         }
     }
+
+    public function excel()
+    {
+        $this->load->helper('exportexcel');
+        $namaFile = "t_daftar.xls";
+        $judul = "t_daftar";
+        $tablehead = 0;
+        $tablebody = 1;
+        $nourut = 1;
+        //penulisan header
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");
+        header("Content-Disposition: attachment;filename=" . $namaFile . "");
+        header("Content-Transfer-Encoding: binary ");
+
+        xlsBOF();
+
+        $kolomhead = 0;
+        xlsWriteLabel($tablehead, $kolomhead++, "No");
+        xlsWriteLabel($tablehead, $kolomhead++, "Noreg");
+        xlsWriteLabel($tablehead, $kolomhead++, "Nobill");
+        xlsWriteLabel($tablehead, $kolomhead++, "Nomr");
+        xlsWriteLabel($tablehead, $kolomhead++, "Baru");
+        xlsWriteLabel($tablehead, $kolomhead++, "Kddokter");
+        xlsWriteLabel($tablehead, $kolomhead++, "Kdpoli");
+        xlsWriteLabel($tablehead, $kolomhead++, "Kdbayar");
+        xlsWriteLabel($tablehead, $kolomhead++, "Rujukan");
+        xlsWriteLabel($tablehead, $kolomhead++, "Kdrujuk");
+        xlsWriteLabel($tablehead, $kolomhead++, "Tglreg");
+        xlsWriteLabel($tablehead, $kolomhead++, "Id Users");
+
+        foreach ($this->T_daftar_model->get_all() as $data) {
+            $kolombody = 0;
+
+            //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
+            xlsWriteNumber($tablebody, $kolombody++, $nourut);
+            xlsWriteLabel($tablebody, $kolombody++, $data->noreg);
+            xlsWriteLabel($tablebody, $kolombody++, $data->nobill);
+            xlsWriteLabel($tablebody, $kolombody++, $data->nomr);
+            xlsWriteLabel($tablebody, $kolombody++, $data->baru);
+            xlsWriteNumber($tablebody, $kolombody++, $data->kddokter);
+            xlsWriteNumber($tablebody, $kolombody++, $data->kdpoli);
+            xlsWriteNumber($tablebody, $kolombody++, $data->kdbayar);
+            xlsWriteLabel($tablebody, $kolombody++, $data->rujukan);
+            xlsWriteNumber($tablebody, $kolombody++, $data->kdrujuk);
+            xlsWriteLabel($tablebody, $kolombody++, $data->tglreg);
+            xlsWriteNumber($tablebody, $kolombody++, $data->id_users);
+
+            $tablebody++;
+            $nourut++;
+        }
+
+        xlsEOF();
+        exit();
+    }
+    ////////////////////////modifikasi/////////////////////////////////////////////////////
     ////////////////////////////////////////////
     function data_barang($noreg, $kddokter)
     {
@@ -301,9 +410,9 @@ class T_daftar extends CI_Controller
 
             $this->T_daftar_model->insert($data);
             $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true"><i class="fal fa-times"></i></span>
-            </button><strong> Create Record Success 2</strong></div>');
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button><strong> Create Record Success 2</strong></div>');
             redirect(site_url('t_daftar'));
         }
     }
@@ -331,9 +440,9 @@ class T_daftar extends CI_Controller
             $this->template->load('template', 't_daftar/t_daftar_form', $data);
         } else {
             $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true"><i class="fal fa-times"></i></span>
-            </button><strong> Record Not Found</strong></div>');
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button><strong> Record Not Found</strong></div>');
             redirect(site_url('t_daftar'));
         }
     }
@@ -360,9 +469,9 @@ class T_daftar extends CI_Controller
 
             $this->T_daftar_model->update($this->input->post('noreg', TRUE), $data);
             $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true"><i class="fal fa-times"></i></span>
-            </button><strong> Update Record Success</strong></div>');
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button><strong> Update Record Success</strong></div>');
             redirect(site_url('t_daftar'));
         }
     }
@@ -374,15 +483,15 @@ class T_daftar extends CI_Controller
         if ($row) {
             $this->T_daftar_model->delete($id);
             $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true"><i class="fal fa-times"></i></span>
-            </button><strong> Delete Record Success</strong></div>');
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button><strong> Delete Record Success</strong></div>');
             redirect(site_url('t_daftar'));
         } else {
             $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true"><i class="fal fa-times"></i></span>
-            </button><strong> Record Not Found</strong></div>');
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button><strong> Record Not Found</strong></div>');
             redirect(site_url('t_daftar'));
         }
     }
@@ -460,5 +569,5 @@ class T_daftar extends CI_Controller
 /* End of file T_daftar.php */
 /* Location: ./application/controllers/T_daftar.php */
 /* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2019-10-23 06:32:59 */
+/* Generated by Harviacode Codeigniter CRUD Generator 2020-03-15 08:51:59 */
 /* http://harviacode.com */

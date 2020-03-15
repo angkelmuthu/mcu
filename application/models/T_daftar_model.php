@@ -15,41 +15,128 @@ class T_daftar_model extends CI_Model
         parent::__construct();
     }
 
-    // datatables
-    function json()
-    {
-        $this->datatables->select('idreg,noreg,baru,dokter,bayar,rujukan,kdrujuk,tglreg,full_name as petugas,nomr,nik,nama,tgllhr,alamat,kodepos,kdklmn,kdkawin,hp,tglinput,kelamin,kawin,poli,unit');
-        $this->datatables->from('v_pendaftaran');
-        //add this line for join
-        //$this->datatables->join('table2', 't_daftar.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('t_daftar/read/$1'), '<i class="fal fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-info btn-sm waves-effect waves-themed')) . "
-            " . anchor(site_url('t_daftar/update/$1'), '<i class="fal fa-pencil" aria-hidden="true"></i>', array('class' => 'btn btn-warning btn-sm waves-effect waves-themed')) . "
-                " . anchor(site_url('t_daftar/delete/$1'), '<i class="fal fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm waves-effect waves-themed" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'idreg');
-        return $this->datatables->generate();
-    }
-
     // get all
     function get_all()
     {
         $this->db->order_by($this->id, $this->order);
-        return $this->db->get($this->table)->result();
+        return $this->db->get('v_pendaftaran')->result();
     }
 
     // get data by id
     function get_by_id($id)
     {
-        //$this->db->select('idreg,a.noreg,a.nomr,b.nik,b.nama,b.tgllhr,a.baru,a.kddokter,a.kdpoli,a.kdbayar,a.rujukan,a.kdrujuk,a.tglreg,a.id_users');
-        $this->db->from('v_pendaftaran');
-        //$this->db->join('m_pasien b', 'a.nomr = b.nomr', 'left');
-        $this->db->where('idreg', $id);
-        return $this->db->get()->row();
+        $this->db->where($this->id, $id);
+        return $this->db->get('v_pendaftaran')->row();
     }
+
+    // get total rows
+    function total_rows($q = NULL)
+    {
+        $this->db->like('idreg', $q);
+        $this->db->or_like('noreg', $q);
+        $this->db->or_like('nobill', $q);
+        $this->db->or_like('nomr', $q);
+        $this->db->or_like('baru', $q);
+        $this->db->or_like('dokter', $q);
+        $this->db->or_like('poli', $q);
+        $this->db->or_like('bayar', $q);
+        $this->db->or_like('rujukan', $q);
+        $this->db->or_like('kdrujuk', $q);
+        $this->db->or_like('tglreg', $q);
+        $this->db->or_like('id_users', $q);
+        $this->db->from('v_pendaftaran');
+        return $this->db->count_all_results();
+    }
+    function total_rows_unit($unit, $q = NULL)
+    {
+        $this->db->where('kdunit', $unit);
+        $this->db->group_start();
+        $this->db->or_like('idreg', $q);
+        $this->db->or_like('noreg', $q);
+        $this->db->or_like('nobill', $q);
+        $this->db->or_like('nomr', $q);
+        $this->db->or_like('baru', $q);
+        $this->db->or_like('dokter', $q);
+        $this->db->or_like('poli', $q);
+        $this->db->or_like('bayar', $q);
+        $this->db->or_like('rujukan', $q);
+        $this->db->or_like('kdrujuk', $q);
+        $this->db->or_like('tglreg', $q);
+        $this->db->or_like('id_users', $q);
+        $this->db->group_end();
+        $this->db->from('v_pendaftaran');
+        return $this->db->count_all_results();
+    }
+
+
+    // get data with limit and search
+    function get_limit_data($limit, $start = 0, $q = NULL)
+    {
+
+        $this->db->order_by($this->id, $this->order);
+        $this->db->like('idreg', $q);
+        $this->db->or_like('noreg', $q);
+        $this->db->or_like('nobill', $q);
+        $this->db->or_like('nomr', $q);
+        $this->db->or_like('baru', $q);
+        $this->db->or_like('dokter', $q);
+        $this->db->or_like('poli', $q);
+        $this->db->or_like('bayar', $q);
+        $this->db->or_like('rujukan', $q);
+        $this->db->or_like('kdrujuk', $q);
+        $this->db->or_like('tglreg', $q);
+        $this->db->or_like('id_users', $q);
+        $this->db->limit($limit, $start);
+        return $this->db->get('v_pendaftaran')->result();
+    }
+    function get_limit_data_unit($limit, $start = 0, $unit, $q = NULL)
+    {
+        $this->db->where('kdunit', $unit);
+        $this->db->order_by($this->id, $this->order);
+        $this->db->group_start();
+        $this->db->or_like('idreg', $q);
+        $this->db->or_like('noreg', $q);
+        $this->db->or_like('nobill', $q);
+        $this->db->or_like('nomr', $q);
+        $this->db->or_like('baru', $q);
+        $this->db->or_like('dokter', $q);
+        $this->db->or_like('poli', $q);
+        $this->db->or_like('bayar', $q);
+        $this->db->or_like('rujukan', $q);
+        $this->db->or_like('kdrujuk', $q);
+        $this->db->or_like('tglreg', $q);
+        $this->db->or_like('id_users', $q);
+        $this->db->group_end();
+        $this->db->limit($limit, $start);
+        return $this->db->get('v_pendaftaran')->result();
+    }
+
+    // insert data
+    function insert($data)
+    {
+        $this->db->insert($this->table, $data);
+    }
+
+    // update data
+    function update($id, $data)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->update($this->table, $data);
+    }
+
+    // delete data
+    function delete($id)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->delete($this->table);
+    }
+    ///////////////////////////////modifikasi///////////////////////////////////////////////
     ////tarif
     function get_tarif($kdpoli)
     {
         $qry = "SELECT a.*,b.*,c.harga from m_tarif a LEFT JOIN m_poli b ON a.kdpoli = b.kdpoli
-        LEFT JOIN m_tarifkelas c ON a.kdtarif = c.kdtarif and c.kdkelas=1
-        where a.kdpoli IN ('4','5','$kdpoli')";
+            LEFT JOIN m_tarifkelas c ON a.kdtarif = c.kdtarif and c.kdkelas=1
+            where a.kdpoli IN ('4','5','$kdpoli')";
         $query = $this->db->query($qry);
         return $query->result();
         // $this->db->select('a.*,b.*,c.harga');
@@ -62,8 +149,8 @@ class T_daftar_model extends CI_Model
     function get_dokter()
     {
         $qry = "SELECT a.kdjadwal,a.kddokter,b.dokter,a.jam_mulai,a.jam_akhir,a.kdpoli FROM m_dokterjadwal a
-        LEFT JOIN m_dokter b ON a.kddokter=b.kddokter
-        WHERE a.hari=date_format(now(),'%w')";
+            LEFT JOIN m_dokter b ON a.kddokter=b.kddokter
+            WHERE a.hari=date_format(now(),'%w')";
         $query = $this->db->query($qry);
         return $query->result();
     }
@@ -148,7 +235,7 @@ class T_daftar_model extends CI_Model
     function obat_bill_list($noreg, $kddokter)
     {
         $hasil = $this->db->query("SELECT a.*,b.nmobat FROM t_billobat a
-                LEFT JOIN m_obat b ON a.kdobat=b.kdobat where a.noreg='$noreg' and a.kddokter='$kddokter'");
+                    LEFT JOIN m_obat b ON a.kdobat=b.kdobat where a.noreg='$noreg' and a.kddokter='$kddokter'");
         return $hasil->result();
     }
 
@@ -168,62 +255,6 @@ class T_daftar_model extends CI_Model
         return $hasil;
     }
     //////////////////////////////////////////////
-    // get total rows
-    function total_rows($q = NULL)
-    {
-        $this->db->like('noreg', $q);
-        $this->db->or_like('nomr', $q);
-        $this->db->or_like('baru', $q);
-        $this->db->or_like('kddokter', $q);
-        $this->db->or_like('kdpoli', $q);
-        $this->db->or_like('kdbayar', $q);
-        $this->db->or_like('rujukan', $q);
-        $this->db->or_like('kdrujuk', $q);
-        $this->db->or_like('tglreg', $q);
-        $this->db->or_like('id_users', $q);
-        $this->db->from($this->table);
-        return $this->db->count_all_results();
-    }
-
-    // get data with limit and search
-    function get_limit_data($limit, $start = 0, $q = NULL)
-    {
-        $this->db->order_by($this->id, $this->order);
-        $this->db->like('idreg', $q);
-        $this->db->like('noreg', $q);
-        $this->db->or_like('nomr', $q);
-        $this->db->or_like('baru', $q);
-        $this->db->or_like('kddokter', $q);
-        $this->db->or_like('kdpoli', $q);
-        $this->db->or_like('kdbayar', $q);
-        $this->db->or_like('rujukan', $q);
-        $this->db->or_like('kdrujuk', $q);
-        $this->db->or_like('tglreg', $q);
-        $this->db->or_like('id_users', $q);
-        $this->db->limit($limit, $start);
-        return $this->db->get($this->table)->result();
-    }
-
-    // insert data
-    function insert($data)
-    {
-        $this->db->insert($this->table, $data);
-    }
-
-    // update data
-    function update($id, $data)
-    {
-        $this->db->where($this->id, $id);
-        $this->db->update($this->table, $data);
-    }
-
-    // delete data
-    function delete($id)
-    {
-        $this->db->where($this->id, $id);
-        $this->db->delete($this->table);
-    }
-
     function search_icd10($title)
     {
         $this->db->like('description', $title, 'both');
@@ -288,5 +319,5 @@ class T_daftar_model extends CI_Model
 /* End of file T_daftar_model.php */
 /* Location: ./application/models/T_daftar_model.php */
 /* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2019-10-23 06:32:59 */
+/* Generated by Harviacode Codeigniter CRUD Generator 2020-03-15 08:51:59 */
 /* http://harviacode.com */

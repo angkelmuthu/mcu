@@ -1,4 +1,5 @@
 <main id="js-page-content" role="main" class="page-content">
+    <?php echo $this->session->userdata('message') <> '' ? $this->session->userdata('message') : ''; ?>
     <div class="row">
         <div class="col-xl-12">
             <div id="panel-1" class="panel">
@@ -12,111 +13,113 @@
                 </div>
                 <div class="panel-container show">
                     <div class="panel-content">
-                        <!-- <div class="text-center">
-                            <?php echo anchor(site_url('t_daftar/create'), '<i class="fal fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-primary btn-sm waves-effect waves-themed"'); ?></div> -->
-                        <table class="table table-bordered table-hover table-striped w-100" id="dt-basic-example">
-                            <thead>
-                                <tr>
-                                    <th width="30px">No</th>
-                                    <th>NoReg</th>
-                                    <th>Nomr</th>
-                                    <th>Nama</th>
-                                    <th>TGL Lahir</th>
-                                    <th>Baru</th>
-                                    <th>dokter</th>
-                                    <th>poli</th>
-                                    <th>bayar</th>
-                                    <th>Tglreg</th>
-                                    <th>Users</th>
-                                    <th width="200px">Action</th>
-                                </tr>
-                            </thead>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- <?php echo anchor(site_url('t_daftar/create'), '<i class="fal fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-primary btn-sm waves-effect waves-themed"'); ?> -->
+                                <?php echo anchor(site_url('t_daftar/excel'), '<i class="fal fa-file-excel" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-outline-success btn-sm waves-effect waves-themed"'); ?></div>
+                            <div class="col-md-6">
+                                <form action="<?php echo site_url('t_daftar/index'); ?>" method="get">
+                                    <div class="input-group">
+                                        <div class="input-group">
+                                            <?php
+                                            if ($q <> '') {
+                                            ?>
+                                                <div class="input-group-prepend">
+                                                    <a href="<?php echo site_url('t_daftar'); ?>" class="btn btn-danger waves-effect waves-themed">Reset</a>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
+                                            <input id="button-addon3" type="text" name="q" value="<?php echo $q; ?>" class="form-control" placeholder="Search for anything..." aria-label="Example text with two button addons" aria-describedby="button-addon3">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary waves-effect waves-themed" type="submit">Search</button>
+                                            </div>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-container show">
+                    <div class="panel-content">
+                        <div class="frame-wrap">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead class="thead-themed">
+                                    <tr>
+                                        <th width="30px">No</th>
+                                        <th>No. Reg</th>
+                                        <th>No. Bill</th>
+                                        <th>Nomr</th>
+                                        <th>Nama</th>
+                                        <th>TGL Lahir</th>
+                                        <th>Baru</th>
+                                        <th>dokter</th>
+                                        <th>poli</th>
+                                        <th>bayar</th>
+                                        <th>Tglreg</th>
+                                        <th>Users</th>
+                                        <th width="200px">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody><?php
+                                        //echo $this->db->last_query();
+                                        foreach ($t_daftar_data as $t_daftar) {
+                                        ?>
+                                        <tr>
+                                            <td width="10px"><?php echo ++$start ?></td>
+                                            <td><?php echo $t_daftar->noreg ?></td>
+                                            <td><?php echo $t_daftar->nobill ?></td>
+                                            <td><?php echo $t_daftar->nomr ?></td>
+                                            <td><?php echo $t_daftar->nama ?></td>
+                                            <td><?php echo tanggal($t_daftar->tgllhr) ?></td>
+                                            <td><?php echo $t_daftar->baru ?></td>
+                                            <td><?php echo $t_daftar->dokter ?></td>
+                                            <td><?php echo $t_daftar->poli ?></td>
+                                            <td><?php echo $t_daftar->bayar ?></td>
+                                            <td><?php echo $t_daftar->tglreg ?></td>
+                                            <td><?php echo $t_daftar->id_users ?></td>
+                                            <td style="text-align:center" width="200px">
+                                                <?php
+                                                echo anchor(site_url('t_daftar/read/' . $t_daftar->idreg), '<i class="fal fa-eye" aria-hidden="true"></i>', 'class="btn btn-info btn-xs waves-effect waves-themed"');
+                                                echo '  ';
+                                                echo anchor(site_url('t_daftar/update/' . $t_daftar->idreg), '<i class="fal fa-pencil" aria-hidden="true"></i>', 'class="btn btn-warning btn-xs waves-effect waves-themed"');
+                                                echo '  ';
+                                                echo
+                                                    '<button type="button" class="btn btn-danger btn-xs waves-effect waves-themed" data-toggle="modal" data-target="#default-example-modal-sm' . $t_daftar->idreg . '"><i class="fal fa-trash" aria-hidden="true"></i></button>
+    <div class="modal fade" id="default-example-modal-sm' . $t_daftar->idreg . '" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title">INFO!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Apakah Anda Yakin Ingin Menghapus?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <a href="t_daftar/delete/' . $t_daftar->idreg . '" class="btn btn-primary">Ya, Hapus</a>
+            </div>
+        </div>
+    </div>
+</div>';
+                                                ?>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    ?>
+                                </tbody>
+                            </table>
 
-                        </table>
+                            <?php echo $pagination ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </main>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/vendors.bundle.js"></script>
 <script src="<?php echo base_url() ?>assets/smartadmin/js/app.bundle.js"></script>
-<script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.bundle.js"></script>
-<script src="<?php echo base_url() ?>assets/smartadmin/js/datagrid/datatables/datatables.export.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
-            return {
-                "iStart": oSettings._iDisplayStart,
-                "iEnd": oSettings.fnDisplayEnd(),
-                "iLength": oSettings._iDisplayLength,
-                "iTotal": oSettings.fnRecordsTotal(),
-                "iFilteredTotal": oSettings.fnRecordsDisplay(),
-                "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
-                "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
-            };
-        };
-
-        var t = $("#dt-basic-example").dataTable({
-            initComplete: function() {
-                var api = this.api();
-                $('#mytable_filter input')
-                    .off('.DT')
-                    .on('keyup.DT', function(e) {
-                        if (e.keyCode == 13) {
-                            api.search(this.value).draw();
-                        }
-                    });
-            },
-            oLanguage: {
-                sProcessing: "loading..."
-            },
-            processing: true,
-            serverSide: true,
-            ajax: {
-                "url": "t_daftar/json",
-                "type": "POST"
-            },
-            columns: [{
-                    "data": "noreg",
-                    "orderable": false
-                }, {
-                    "data": "noreg"
-                }, {
-                    "data": "nomr"
-                }, {
-                    "data": "nama"
-                }, {
-                    "data": "tgllhr"
-                }, {
-                    "data": "baru"
-                }, {
-                    "data": "dokter"
-                }, {
-                    "data": "poli"
-                }, {
-                    "data": "bayar"
-                }, {
-                    "data": "tglreg"
-                }, {
-                    "data": "petugas"
-                },
-                {
-                    "data": "action",
-                    "orderable": false,
-                    "className": "text-center"
-                }
-            ],
-            order: [
-                [0, 'desc']
-            ],
-            rowCallback: function(row, data, iDisplayIndex) {
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
-                var index = page * length + (iDisplayIndex + 1);
-                $('td:eq(0)', row).html(index);
-            }
-        });
-    });
-</script>
