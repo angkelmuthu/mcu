@@ -13,10 +13,31 @@
                                 </small>
                             </h2>
                         </div>
-                        <div class="col-xl-4 ml-auto mr-auto">
-                            <div class="card bg-primary text-white text-center p-3">
+                        <div class="col-xl-12 mb-5">
+                        <ul class="nav nav-tabs nav-fill" role="tablist">
+                                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab_justified-1" role="tab">Home</a></li>
+                                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-2" role="tab">Profile</a></li>
+                                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_justified-3" role="tab">Time</a></li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link disabled" href="#" tabindex="-1">Disabled</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content p-3">
+                                                <div class="tab-pane fade show active" id="tab_justified-1" role="tabpanel">
+                                                    Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone.
+                                                </div>
+                                                <div class="tab-pane fade" id="tab_justified-2" role="tabpanel">
+                                                    Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic.
+                                                </div>
+                                                <div class="tab-pane fade" id="tab_justified-3" role="tabpanel">
+                                                    Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.
+                                                </div>
+                                            </div>
+                        </div>
+                        <!-- <div class="col-xl-4 ml-auto mr-auto"> -->
+                            <!-- <div class="card bg-primary text-white text-center p-3">
                                 <h2>Tap Kartu Pasien atau E-KTP</h2>
-                            </div>
+                            </div> -->
                             <!-- <div class="card p-2 bg-faded">
                                 <div class="d-flex flex-column align-items-center justify-content-center p-2">
                                     <img src="<?php echo base_url() ?>assets/smartadmin/img/demo/php.png" class="rounded shadow-2 img-thumbnail" alt="">
@@ -27,12 +48,12 @@
                                 </div>
                                 <button class="btn btn-block btn-primary">Pilih</button>
                             </div> -->
-                        </div>
+                        <!-- </div> -->
 
-                        <div class="col-xl-4 ml-auto mr-auto">
+                        <!-- <div class="col-xl-4 ml-auto mr-auto">
                             <a href="m_pasien/list" class="card bg-success text-white text-center p-3">
                                 <h2>Tampilkan Seluruh Data Pasien</h2>
-                            </a>
+                            </a> -->
                             <!-- <div class="card p-2 bg-faded">
                                 <div class="d-flex flex-column align-items-center justify-content-center p-2">
                                     <img src="<?php echo base_url() ?>assets/smartadmin/img/demo/php.png" class="rounded shadow-2 img-thumbnail" alt="">
@@ -43,12 +64,12 @@
                                 </div>
                                 <a href="m_pasien/list" class="btn btn-block btn-primary">Pilih</a>
                             </div> -->
-                        </div>
+                        <!-- </div> -->
 
-                        <div class="col-xl-4 ml-auto mr-auto">
+                        <!-- <div class="col-xl-4 ml-auto mr-auto">
                             <a href="m_pasien/create/Y" class="card bg-info text-white text-center p-3">
                                 <h2>Pendaftaran Pasien Baru</h2>
-                            </a>
+                            </a> -->
                             <!-- <div class="card p-2 bg-faded">
                                 <div class="d-flex flex-column align-items-center justify-content-center p-2">
                                     <img src="<?php echo base_url() ?>assets/smartadmin/img/demo/php.png" class="rounded shadow-2 img-thumbnail" alt="">
@@ -59,8 +80,8 @@
                                 </div>
                                 <a href="m_pasien/create/Y" class="btn btn-block btn-primary">Pilih</a>
                             </div> -->
-                        </div>
-                    </div>
+                        <!-- </div> -->
+                    <!-- </div> -->
                 </div>
             </div>
         </div>

@@ -42,7 +42,12 @@ class M_pasien extends CI_Controller
             'total_rows' => $config['total_rows'],
             'start' => $start,
         );
-        $this->template->load('template','m_pasien/m_pasien_list', $data);
+        $this->template->load('template', 'm_pasien/m_pasien_list', $data);
+    }
+
+    public function daftar()
+    {
+        $this->template->load('template', 'm_pasien/m_pasien_cari');
     }
 
     public function read($id)
@@ -50,20 +55,20 @@ class M_pasien extends CI_Controller
         $row = $this->M_pasien_model->get_by_id($id);
         if ($row) {
             $data = array(
-		'nomr' => $row->nomr,
-		'nik' => $row->nik,
-		'nama' => $row->nama,
-		'tgllhr' => $row->tgllhr,
-		'alamat' => $row->alamat,
-		'kodepos' => $row->kodepos,
-		'kdklmn' => $row->kdklmn,
-		'kdkawin' => $row->kdkawin,
-		'hp' => $row->hp,
-		'foto' => $row->foto,
-		'tglinput' => $row->tglinput,
-		'id_users' => $row->id_users,
-	    );
-            $this->template->load('template','m_pasien/m_pasien_read', $data);
+                'nomr' => $row->nomr,
+                'nik' => $row->nik,
+                'nama' => $row->nama,
+                'tgllhr' => $row->tgllhr,
+                'alamat' => $row->alamat,
+                'kodepos' => $row->kodepos,
+                'kdklmn' => $row->kdklmn,
+                'kdkawin' => $row->kdkawin,
+                'hp' => $row->hp,
+                'foto' => $row->foto,
+                'tglinput' => $row->tglinput,
+                'id_users' => $row->id_users,
+            );
+            $this->template->load('template', 'm_pasien/m_pasien_read', $data);
         } else {
             $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -78,20 +83,20 @@ class M_pasien extends CI_Controller
         $data = array(
             'button' => 'Create',
             'action' => site_url('m_pasien/create_action'),
-	    'nomr' => set_value('nomr'),
-	    'nik' => set_value('nik'),
-	    'nama' => set_value('nama'),
-	    'tgllhr' => set_value('tgllhr'),
-	    'alamat' => set_value('alamat'),
-	    'kodepos' => set_value('kodepos'),
-	    'kdklmn' => set_value('kdklmn'),
-	    'kdkawin' => set_value('kdkawin'),
-	    'hp' => set_value('hp'),
-	    'foto' => set_value('foto'),
-	    'tglinput' => set_value('tglinput'),
-	    'id_users' => set_value('id_users'),
-	);
-        $this->template->load('template','m_pasien/m_pasien_form', $data);
+            'nomr' => set_value('nomr'),
+            'nik' => set_value('nik'),
+            'nama' => set_value('nama'),
+            'tgllhr' => set_value('tgllhr'),
+            'alamat' => set_value('alamat'),
+            'kodepos' => set_value('kodepos'),
+            'kdklmn' => set_value('kdklmn'),
+            'kdkawin' => set_value('kdkawin'),
+            'hp' => set_value('hp'),
+            'foto' => set_value('foto'),
+            'tglinput' => set_value('tglinput'),
+            'id_users' => set_value('id_users'),
+        );
+        $this->template->load('template', 'm_pasien/m_pasien_form', $data);
     }
 
     public function create_action()
@@ -102,25 +107,26 @@ class M_pasien extends CI_Controller
             $this->create();
         } else {
             $data = array(
-		'nik' => $this->input->post('nik',TRUE),
-		'nama' => $this->input->post('nama',TRUE),
-		'tgllhr' => $this->input->post('tgllhr',TRUE),
-		'alamat' => $this->input->post('alamat',TRUE),
-		'kodepos' => $this->input->post('kodepos',TRUE),
-		'kdklmn' => $this->input->post('kdklmn',TRUE),
-		'kdkawin' => $this->input->post('kdkawin',TRUE),
-		'hp' => $this->input->post('hp',TRUE),
-		'foto' => $this->input->post('foto',TRUE),
-		'tglinput' => $this->input->post('tglinput',TRUE),
-		'id_users' => $this->input->post('id_users',TRUE),
-	    );
-
+                'nik' => $this->input->post('nik', TRUE),
+                'nama' => $this->input->post('nama', TRUE),
+                'tgllhr' => $this->input->post('tgllhr', TRUE),
+                'alamat' => $this->input->post('alamat', TRUE),
+                'kodepos' => $this->input->post('kodepos', TRUE),
+                'kdklmn' => $this->input->post('kdklmn', TRUE),
+                'kdkawin' => $this->input->post('kdkawin', TRUE),
+                'hp' => $this->input->post('hp', TRUE),
+                'foto' => $this->input->post('foto', TRUE),
+                'tglinput' => $this->input->post('tglinput', TRUE),
+                'id_users' => $this->input->post('id_users', TRUE),
+            );
+            $nomr = $this->input->post('nomr');
+            $baru = $this->input->post('baru');
             $this->M_pasien_model->insert($data);
             $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true"><i class="fal fa-times"></i></span>
             </button><strong> Create Record Success 2</strong></div>');
-            redirect(site_url('m_pasien'));
+            redirect(site_url('T_daftar/metode_bayar/' . $baru . '/' . $nomr));
         }
     }
 
@@ -132,20 +138,20 @@ class M_pasien extends CI_Controller
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('m_pasien/update_action'),
-		'nomr' => set_value('nomr', $row->nomr),
-		'nik' => set_value('nik', $row->nik),
-		'nama' => set_value('nama', $row->nama),
-		'tgllhr' => set_value('tgllhr', $row->tgllhr),
-		'alamat' => set_value('alamat', $row->alamat),
-		'kodepos' => set_value('kodepos', $row->kodepos),
-		'kdklmn' => set_value('kdklmn', $row->kdklmn),
-		'kdkawin' => set_value('kdkawin', $row->kdkawin),
-		'hp' => set_value('hp', $row->hp),
-		'foto' => set_value('foto', $row->foto),
-		'tglinput' => set_value('tglinput', $row->tglinput),
-		'id_users' => set_value('id_users', $row->id_users),
-	    );
-            $this->template->load('template','m_pasien/m_pasien_form', $data);
+                'nomr' => set_value('nomr', $row->nomr),
+                'nik' => set_value('nik', $row->nik),
+                'nama' => set_value('nama', $row->nama),
+                'tgllhr' => set_value('tgllhr', $row->tgllhr),
+                'alamat' => set_value('alamat', $row->alamat),
+                'kodepos' => set_value('kodepos', $row->kodepos),
+                'kdklmn' => set_value('kdklmn', $row->kdklmn),
+                'kdkawin' => set_value('kdkawin', $row->kdkawin),
+                'hp' => set_value('hp', $row->hp),
+                'foto' => set_value('foto', $row->foto),
+                'tglinput' => set_value('tglinput', $row->tglinput),
+                'id_users' => set_value('id_users', $row->id_users),
+            );
+            $this->template->load('template', 'm_pasien/m_pasien_form', $data);
         } else {
             $this->session->set_flashdata('message', '<div class="alert bg-warning-500" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -163,18 +169,18 @@ class M_pasien extends CI_Controller
             $this->update($this->input->post('nomr', TRUE));
         } else {
             $data = array(
-		'nik' => $this->input->post('nik',TRUE),
-		'nama' => $this->input->post('nama',TRUE),
-		'tgllhr' => $this->input->post('tgllhr',TRUE),
-		'alamat' => $this->input->post('alamat',TRUE),
-		'kodepos' => $this->input->post('kodepos',TRUE),
-		'kdklmn' => $this->input->post('kdklmn',TRUE),
-		'kdkawin' => $this->input->post('kdkawin',TRUE),
-		'hp' => $this->input->post('hp',TRUE),
-		'foto' => $this->input->post('foto',TRUE),
-		'tglinput' => $this->input->post('tglinput',TRUE),
-		'id_users' => $this->input->post('id_users',TRUE),
-	    );
+                'nik' => $this->input->post('nik', TRUE),
+                'nama' => $this->input->post('nama', TRUE),
+                'tgllhr' => $this->input->post('tgllhr', TRUE),
+                'alamat' => $this->input->post('alamat', TRUE),
+                'kodepos' => $this->input->post('kodepos', TRUE),
+                'kdklmn' => $this->input->post('kdklmn', TRUE),
+                'kdkawin' => $this->input->post('kdkawin', TRUE),
+                'hp' => $this->input->post('hp', TRUE),
+                'foto' => $this->input->post('foto', TRUE),
+                'tglinput' => $this->input->post('tglinput', TRUE),
+                'id_users' => $this->input->post('id_users', TRUE),
+            );
 
             $this->M_pasien_model->update($this->input->post('nomr', TRUE), $data);
             $this->session->set_flashdata('message', '<div class="alert bg-info-500" role="alert">
@@ -207,20 +213,20 @@ class M_pasien extends CI_Controller
 
     public function _rules()
     {
-	$this->form_validation->set_rules('nik', 'nik', 'trim|required');
-	$this->form_validation->set_rules('nama', 'nama', 'trim|required');
-	$this->form_validation->set_rules('tgllhr', 'tgllhr', 'trim|required');
-	$this->form_validation->set_rules('alamat', 'alamat', 'trim|required');
-	$this->form_validation->set_rules('kodepos', 'kodepos', 'trim|required');
-	$this->form_validation->set_rules('kdklmn', 'kdklmn', 'trim|required');
-	$this->form_validation->set_rules('kdkawin', 'kdkawin', 'trim|required');
-	$this->form_validation->set_rules('hp', 'hp', 'trim|required');
-	$this->form_validation->set_rules('foto', 'foto', 'trim|required');
-	$this->form_validation->set_rules('tglinput', 'tglinput', 'trim|required');
-	$this->form_validation->set_rules('id_users', 'id users', 'trim|required');
+        $this->form_validation->set_rules('nik', 'nik', 'trim|required');
+        $this->form_validation->set_rules('nama', 'nama', 'trim|required');
+        $this->form_validation->set_rules('tgllhr', 'tgllhr', 'trim|required');
+        $this->form_validation->set_rules('alamat', 'alamat', 'trim|required');
+        $this->form_validation->set_rules('kodepos', 'kodepos', 'trim|required');
+        $this->form_validation->set_rules('kdklmn', 'kdklmn', 'trim|required');
+        $this->form_validation->set_rules('kdkawin', 'kdkawin', 'trim|required');
+        // $this->form_validation->set_rules('hp', 'hp', 'trim|required');
+        // $this->form_validation->set_rules('foto', 'foto', 'trim|required');
+        $this->form_validation->set_rules('tglinput', 'tglinput', 'trim|required');
+        $this->form_validation->set_rules('id_users', 'id users', 'trim|required');
 
-	$this->form_validation->set_rules('nomr', 'nomr', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+        $this->form_validation->set_rules('nomr', 'nomr', 'trim');
+        $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
     public function excel()
@@ -245,43 +251,42 @@ class M_pasien extends CI_Controller
 
         $kolomhead = 0;
         xlsWriteLabel($tablehead, $kolomhead++, "No");
-	xlsWriteLabel($tablehead, $kolomhead++, "Nik");
-	xlsWriteLabel($tablehead, $kolomhead++, "Nama");
-	xlsWriteLabel($tablehead, $kolomhead++, "Tgllhr");
-	xlsWriteLabel($tablehead, $kolomhead++, "Alamat");
-	xlsWriteLabel($tablehead, $kolomhead++, "Kodepos");
-	xlsWriteLabel($tablehead, $kolomhead++, "Kdklmn");
-	xlsWriteLabel($tablehead, $kolomhead++, "Kdkawin");
-	xlsWriteLabel($tablehead, $kolomhead++, "Hp");
-	xlsWriteLabel($tablehead, $kolomhead++, "Foto");
-	xlsWriteLabel($tablehead, $kolomhead++, "Tglinput");
-	xlsWriteLabel($tablehead, $kolomhead++, "Id Users");
+        xlsWriteLabel($tablehead, $kolomhead++, "Nik");
+        xlsWriteLabel($tablehead, $kolomhead++, "Nama");
+        xlsWriteLabel($tablehead, $kolomhead++, "Tgllhr");
+        xlsWriteLabel($tablehead, $kolomhead++, "Alamat");
+        xlsWriteLabel($tablehead, $kolomhead++, "Kodepos");
+        xlsWriteLabel($tablehead, $kolomhead++, "Kdklmn");
+        xlsWriteLabel($tablehead, $kolomhead++, "Kdkawin");
+        xlsWriteLabel($tablehead, $kolomhead++, "Hp");
+        xlsWriteLabel($tablehead, $kolomhead++, "Foto");
+        xlsWriteLabel($tablehead, $kolomhead++, "Tglinput");
+        xlsWriteLabel($tablehead, $kolomhead++, "Id Users");
 
-	foreach ($this->M_pasien_model->get_all() as $data) {
+        foreach ($this->M_pasien_model->get_all() as $data) {
             $kolombody = 0;
 
             //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
             xlsWriteNumber($tablebody, $kolombody++, $nourut);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->nik);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->nama);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->tgllhr);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->alamat);
-	    xlsWriteNumber($tablebody, $kolombody++, $data->kodepos);
-	    xlsWriteNumber($tablebody, $kolombody++, $data->kdklmn);
-	    xlsWriteNumber($tablebody, $kolombody++, $data->kdkawin);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->hp);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->foto);
-	    xlsWriteLabel($tablebody, $kolombody++, $data->tglinput);
-	    xlsWriteNumber($tablebody, $kolombody++, $data->id_users);
+            xlsWriteLabel($tablebody, $kolombody++, $data->nik);
+            xlsWriteLabel($tablebody, $kolombody++, $data->nama);
+            xlsWriteLabel($tablebody, $kolombody++, $data->tgllhr);
+            xlsWriteLabel($tablebody, $kolombody++, $data->alamat);
+            xlsWriteNumber($tablebody, $kolombody++, $data->kodepos);
+            xlsWriteNumber($tablebody, $kolombody++, $data->kdklmn);
+            xlsWriteNumber($tablebody, $kolombody++, $data->kdkawin);
+            xlsWriteLabel($tablebody, $kolombody++, $data->hp);
+            xlsWriteLabel($tablebody, $kolombody++, $data->foto);
+            xlsWriteLabel($tablebody, $kolombody++, $data->tglinput);
+            xlsWriteNumber($tablebody, $kolombody++, $data->id_users);
 
-	    $tablebody++;
+            $tablebody++;
             $nourut++;
         }
 
         xlsEOF();
         exit();
     }
-
 }
 
 /* End of file M_pasien.php */
