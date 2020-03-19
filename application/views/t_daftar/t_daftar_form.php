@@ -43,8 +43,6 @@
                                     <td>
                                         <h3>Poliklinik</h3> <?php echo form_error('kdpoli') ?>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <?php foreach ($get_poli as $row) : ?>
                                             <label class="btn btn-primary">
@@ -57,8 +55,6 @@
                                     <td>
                                         <h3>Dokter</h3> <?php echo form_error('kddokter') ?>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <div class="form-group">
                                             <select name="kddokter" id="kddokter" class="select2 form-control w-100 select2-hidden-accessible" id="single-default" data-select2-id="single-default" tabindex="-1" aria-hidden="true">
@@ -75,8 +71,6 @@
                                         <td>
                                             <h3>Metode Pembayaran</h3> <?php echo form_error('kdbayar') ?>
                                         </td>
-                                    </tr>
-                                    <tr>
                                         <td>
                                             <?php foreach ($get_metode as $row) : ?>
                                                 <label class="btn btn-primary">
@@ -89,8 +83,6 @@
                                         <td>
                                             <h3>Pembayaran</h3>
                                         </td>
-                                    </tr>
-                                    <tr>
                                         <td>
                                             <div id='bayar'>
                                             </div>
@@ -101,8 +93,6 @@
                                     <td>
                                         <h3>Apakah Pasien ini Rujukan?</h3> <?php echo form_error('rujukan') ?>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>
                                         <div class="form-check-inline">
                                             <label class="customradio"><span class="radiotextsty">Ya, Pasien Rujukan</span>

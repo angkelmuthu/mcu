@@ -293,9 +293,10 @@ class T_daftar_model extends CI_Model
         return $hasil->result();
     }
     /* fungsi untuk memanggil data pada table provinsi*/
-    function get_poli()
+    function get_poli($unit)
     {
         $this->db->from('m_poli');
+        $this->db->where('kdunit',$unit);
         $hasil = $this->db->get();
         return $hasil->result();
     }

@@ -13,7 +13,7 @@
                             </h2>
                         </div>
                         <div class="col-xl-6 ml-auto mr-auto">
-                            <a href="<?php echo base_url(); ?>t_daftar/create/<?php echo $this->uri->segment(3); ?>/<?php echo $this->uri->segment(4); ?>/N" class="card bg-primary text-white text-center p-3">
+                            <a href="<?php echo base_url(); ?>t_daftar/unitopt/<?php echo $this->uri->segment(3); ?>/<?php echo $this->uri->segment(4); ?>/N" class="card bg-primary text-white text-center p-3">
                                 <blockquote class="blockquote mb-0">
                                     <h3>PASIEN UMUM</h3>
                                     <footer class="blockquote-footer text-white">
