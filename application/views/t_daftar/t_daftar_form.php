@@ -15,7 +15,10 @@
                         <form id="form1" name="form1" action="<?php echo $action; ?>" method="post">
                             <?php
                             $action = $this->uri->segment(2);
+                            $baru = $this->uri->segment(3);
                             $nomr = $this->uri->segment(4);
+                            $bayar = $this->uri->segment(5);
+                            $unit = $this->uri->segment(6);
                             if ($action == 'create') {
                                 $cekreg = $this->db->query("SELECT * from v_bill where nomr='$nomr' and status='BL'");
                                 $reg = $cekreg->row_array();
@@ -37,20 +40,40 @@
                             ?>
                             <table class='table table-striped'>
                                 <input type="hidden" class="form-control" name="noreg" value="<?php echo $noreg_max; ?>" readonly />
-                                <input type="hidden" class="form-control" name="nomr" id="nomr" placeholder="Nomr" value="<?php echo $this->uri->segment(4); ?>" readonly />
-                                <input type="hidden" class="form-control" name="baru" id="baru" placeholder="Baru" value="<?php echo $this->uri->segment(3); ?>" readonly />
-                                <tr>
-                                    <td>
-                                        <h3>Poliklinik</h3> <?php echo form_error('kdpoli') ?>
-                                    </td>
-                                    <td>
-                                        <?php foreach ($get_poli as $row) : ?>
-                                            <label class="btn btn-primary">
-                                                <input type="radio" name="kdpoli" id="kdpoli" value="<?php echo $row->kdpoli; ?>"><?php echo $row->poli; ?>
-                                            </label>
-                                        <?php endforeach; ?>
-                                    </td>
-                                </tr>
+                                <input type="hidden" class="form-control" name="nomr" value="<?php echo $nomr ?>" readonly />
+                                <input type="hidden" class="form-control" name="baru" value="<?php echo $baru ?>" readonly />
+                                <?php
+                                $this->db->from('m_unit');
+                                $this->db->where('kdunit', $unit);
+                                $inap = $this->db->get()->row_array();
+                                if ($inap['inap'] == 'N') {
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <h3>Poliklinik</h3> <?php echo form_error('kdpoli') ?>
+                                        </td>
+                                        <td>
+                                            <?php foreach ($get_poli as $row) : ?>
+                                                <label class="btn btn-primary">
+                                                    <input type="radio" name="kdpoli" id="kdpoli" value="<?php echo $row->kdpoli; ?>"><?php echo $row->poli; ?>
+                                                </label>
+                                            <?php endforeach; ?>
+                                        </td>
+                                    </tr>
+                                <?php } else { ?>
+                                    <tr>
+                                        <td>
+                                            <h3>Ruang</h3> <?php echo form_error('kdpoli') ?>
+                                        </td>
+                                        <td>
+                                            <?php foreach ($get_ruang as $row) : ?>
+                                                <label class="btn btn-primary">
+                                                    <input type="radio" name="kdruang" id="kdruang" value="<?php echo $row->kdruang; ?>"><?php echo $row->ruang; ?>
+                                                </label>
+                                            <?php endforeach; ?>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
                                 <tr>
                                     <td>
                                         <h3>Dokter</h3> <?php echo form_error('kddokter') ?>
@@ -63,7 +86,6 @@
                                     </td>
                                 </tr>
                                 <?php
-                                $bayar = $this->uri->segment(5);
                                 if ($bayar == 'Y') {
                                     echo '<input type="hidden" class="form-control" name="kdbayar" id="kdbayar" placeholder="kdbayar" value="1" />';
                                 } else { ?>
@@ -180,6 +202,39 @@
             //var id = $("input[name=metode]");
             $.ajax({
                 url: "<?php echo base_url(); ?>index.php/t_daftar/jadwaldokter",
+                method: "POST",
+                data: {
+                    id: id
+                },
+                async: false,
+                dataType: 'json',
+                success: function(data) {
+                    var html = '';
+                    var i;
+                    var dt = new Date();
+                    var time = dt.getHours() + ":" + dt.getMinutes();
+                    for (i = 0; i < data.length; i++) {
+                        var jam_akhir = data[i].jam_akhir;
+                        if (time > jam_akhir) {
+                            var disable = "disabled";
+                        } else {
+                            var disable = "";
+                        }
+                        html += '<option value="' + data[i].kddokter + '" ' + disable + '>Jam : ' + data[i].jam_mulai + ' - ' + data[i].jam_akhir + ' | ' + data[i].dokter + '</option>';
+                    }
+                    $('#kddokter').html(html);
+                }
+            });
+        });
+    });
+    ///////////////////////////////////////////////
+    $(document).ready(function() {
+        //$('#metode').change(function() {
+        $('input[type=radio][name="kdruang').change(function() {
+            var id = $(this).val();
+            //var id = $("input[name=metode]");
+            $.ajax({
+                url: "<?php echo base_url(); ?>index.php/t_daftar/jadwaldokterIGD",
                 method: "POST",
                 data: {
                     id: id

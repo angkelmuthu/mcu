@@ -353,7 +353,7 @@ class T_daftar extends CI_Controller
     ///////////////////////////////////////////////
     public function create()
     {
-        $unit=$this->uri->segment(6);
+        $unit = $this->uri->segment(6);
         $data = array(
             'button' => 'Create',
             'action' => site_url('t_daftar/create_action'),
@@ -372,6 +372,7 @@ class T_daftar extends CI_Controller
             'jadwaldok' => $this->T_daftar_model->get_dokter(),
             'get_metode' => $this->T_daftar_model->get_metode(),
             'get_poli' => $this->T_daftar_model->get_poli($unit),
+            'get_ruang' => $this->T_daftar_model->get_ruang($unit),
         );
         $this->template->load('template', 't_daftar/t_daftar_form', $data);
     }
@@ -385,6 +386,12 @@ class T_daftar extends CI_Controller
     {
         $id = $this->input->post('id');
         $data = $this->T_daftar_model->get_jadwaldokter($id);
+        echo json_encode($data);
+    }
+    function jadwaldokterIGD()
+    {
+        $id = $this->input->post('id');
+        $data = $this->T_daftar_model->get_jadwaldokterIGD($id);
         echo json_encode($data);
     }
     public function create_action()

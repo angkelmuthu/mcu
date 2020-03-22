@@ -13,24 +13,28 @@
                             </h2>
                         </div>
                         <div class="col-xl-12">
-                        <div class="demo text-center">
-                            <?php
-                                $baru=$this->uri->segment(3);
-                                $nomr=$this->uri->segment(4);
-                                $bpjs=$this->uri->segment(5);
+                            <div class="demo text-center">
+                                <?php
+                                $baru = $this->uri->segment(3);
+                                $nomr = $this->uri->segment(4);
+                                $bpjs = $this->uri->segment(5);
                                 $this->db->from('m_unit');
                                 //$this->db->order_by('unit', 'asc');
                                 $units = $this->db->get()->result();
                                 foreach ($units as $unit) { ?>
-<a href="<?php echo base_url(); ?>t_daftar/create/<?php echo $baru.'/'.$nomr.'/'.$bpjs.'/'.$unit->kdunit ?>" class="btn btn-outline-success btn-lg waves-effect waves-themed" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="<?php $this->db->from('m_poli');
-                                $this->db->where('kdunit', $unit->kdunit);
-                                $polis = $this->db->get()->result();
-                                foreach ($polis as $poli) { echo $poli->poli.', '; }?>" data-original-title="Terdapat Poli atau sub unit">
-    <?php echo $unit->unit; ?>
-                                </a>
+                                    <a href="<?php echo base_url(); ?>t_daftar/create/<?php echo $baru . '/' . $nomr . '/' . $bpjs . '/' . $unit->kdunit ?>" class="btn btn-outline-success btn-lg waves-effect waves-themed" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="
+                                    <?php $this->db->from('m_poli');
+                                    $this->db->where('kdunit', $unit->kdunit);
+                                    $polis = $this->db->get()->result();
+                                    foreach ($polis as $poli) {
+                                        echo $poli->poli . ', ';
+                                    } ?>
+                                    " data-original-title="Terdapat Poli atau sub unit">
+                                        <?php echo $unit->unit; ?>
+                                    </a>
                                 <?php } ?>
+                            </div>
                         </div>
-                                </div>
                     </div>
                 </div>
             </div>
