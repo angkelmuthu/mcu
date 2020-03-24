@@ -148,7 +148,7 @@ class T_daftar_model extends CI_Model
     }
     function get_dokter()
     {
-        $qry = "SELECT a.kdjadwal,a.kddokter,b.dokter,a.jam_mulai,a.jam_akhir,a.kdpoli FROM m_dokterjadwal a
+        $qry = "SELECT a.kdjadwal,a.kddokter,b.dokter,a.jam_mulai,a.jam_akhir,a.kode FROM m_dokterjadwal a
             LEFT JOIN m_dokter b ON a.kddokter=b.kddokter
             WHERE a.hari=date_format(now(),'%w')";
         $query = $this->db->query($qry);
@@ -293,9 +293,17 @@ class T_daftar_model extends CI_Model
         return $hasil->result();
     }
     /* fungsi untuk memanggil data pada table provinsi*/
-    function get_poli()
+    function get_poli($unit)
     {
         $this->db->from('m_poli');
+        $this->db->where('kdunit', $unit);
+        $hasil = $this->db->get();
+        return $hasil->result();
+    }
+    function get_ruang($unit)
+    {
+        $this->db->from('m_ruang');
+        $this->db->where('kdunit', $unit);
         $hasil = $this->db->get();
         return $hasil->result();
     }
@@ -303,9 +311,22 @@ class T_daftar_model extends CI_Model
     /* fungsi untuk memanggil data pada table kota*/
     function get_jadwaldokter($id)
     {
-        $qry = "SELECT a.kdjadwal,a.kddokter,b.dokter,TIME_FORMAT(a.jam_mulai, '%H:%i') AS jam_mulai,TIME_FORMAT(a.jam_akhir, '%H:%i') as jam_akhir,a.kdpoli FROM m_dokterjadwal a
+        $qry = "SELECT a.kdjadwal,a.kddokter,b.dokter,TIME_FORMAT(a.jam_mulai, '%H:%i') AS jam_mulai,TIME_FORMAT(a.jam_akhir, '%H:%i') as jam_akhir,a.kode FROM m_dokterjadwal a
         LEFT JOIN m_dokter b ON a.kddokter=b.kddokter
-        WHERE a.kdpoli='$id' and a.hari=date_format(now(),'%w')";
+        WHERE a.kdunit='RJ' and a.kode='$id' and a.hari=date_format(now(),'%w')";
+        $query = $this->db->query($qry);
+        return $query->result();
+        // $this->db->from('m_dokterjadwal');
+        // $this->db->where('kdpoli', $id);
+        // $this->db->where('aktif', 'Y');
+        // $hasil = $this->db->get();
+        // return $hasil->result();
+    }
+    function get_jadwaldokterIGD($id)
+    {
+        $qry = "SELECT a.kdjadwal,a.kddokter,b.dokter,TIME_FORMAT(a.jam_mulai, '%H:%i') AS jam_mulai,TIME_FORMAT(a.jam_akhir, '%H:%i') as jam_akhir,a.kode FROM m_dokterjadwal a
+        LEFT JOIN m_dokter b ON a.kddokter=b.kddokter
+        WHERE a.kdunit='IGD' and a.kode='$id' and a.hari=date_format(now(),'%w')";
         $query = $this->db->query($qry);
         return $query->result();
         // $this->db->from('m_dokterjadwal');
