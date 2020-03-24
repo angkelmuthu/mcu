@@ -20,7 +20,7 @@
                     <div class="col-xl-3 ml-auto mr-auto">
                         <a class="card bg-info text-white text-center p-3" onclick="toggleVisibility('by');">
                             <h2>Pencarian Data<br>Pasien</h2>
-                        </a>
+                        </a>sa
                     </div>
                     <div class="col-xl-3 ml-auto mr-auto">
                         <a href="<?php echo base_url(); ?>m_pasien" class="card bg-success text-white text-center p-3">
