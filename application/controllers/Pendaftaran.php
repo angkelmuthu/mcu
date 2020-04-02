@@ -15,39 +15,166 @@ class Pendaftaran extends CI_Controller
 
     public function index()
     {
-        $q = urldecode($this->input->get('q', TRUE));
-        $start = intval($this->uri->segment(3));
-
-        if ($q <> '') {
-            $config['base_url'] = base_url() . '.php/c_url/index.html?q=' . urlencode($q);
-            $config['first_url'] = base_url() . 'index.php/pendaftaran/index.html?q=' . urlencode($q);
-        } else {
-            $config['base_url'] = base_url() . 'index.php/pendaftaran/index/';
-            $config['first_url'] = base_url() . 'index.php/pendaftaran/index/';
-        }
-
-        $config['per_page'] = 10;
-        $config['page_query_string'] = FALSE;
-        $config['total_rows'] = $this->Pendaftaran_model->total_rows($q);
-        $pendaftaran = $this->Pendaftaran_model->get_limit_data($config['per_page'], $start, $q);
-        $config['full_tag_open'] = '<ul class="pagination justify-content-center">';
-        $config['full_tag_close'] = '</ul>';
-        $this->load->library('pagination');
-        $this->pagination->initialize($config);
-
-        $data = array(
-            'pendaftaran_data' => $pendaftaran,
-            'q' => $q,
-            'pagination' => $this->pagination->create_links(),
-            'total_rows' => $config['total_rows'],
-            'start' => $start,
-        );
-        $this->template->load('template', 'pendaftaran/t_daftar_list', $data);
+        $this->template->load('template', 'pendaftaran/p1_installasi');
     }
 
-    public function IGD()
+    public function dua()
     {
-        $this->template->load('template', 'pendaftaran/pilih_metode');
+        if ($this->session->flashdata('successx')) {
+            $data = $this->session->flashdata('successx');
+            $this->session->set_flashdata('success', $data);
+            $this->template->load('template', 'pendaftaran/p2_dtpasien', $data);
+        } elseif ($this->session->flashdata('errorx')) {
+            //$data = $this->session->flashdata('errorx');
+            $this->session->set_flashdata('error', 'fhgjgj');
+            $this->template->load('template', 'pendaftaran/p2_dtpasien');
+        } else {
+            $this->template->load('template', 'pendaftaran/p2_dtpasien');
+        }
+        //$this->template->load('template', 'pendaftaran/pendaftaran2');
+    }
+
+    public function tiga()
+    {
+        $data = array(
+            'metodebayar' => $this->Pendaftaran_model->metodebayar(),
+        );
+        $this->template->load('template', 'pendaftaran/p3_pembayaran', $data);
+    }
+
+    public function empat()
+    {
+        $unit = $this->uri->segment(3);
+        $metode = $this->uri->segment(6);
+        $data = array(
+            'button' => 'Create',
+            'action' => site_url('t_daftar/create_action'),
+            'get_poli' => $this->Pendaftaran_model->get_poli($unit),
+            'get_bayar' => $this->Pendaftaran_model->get_bayar($metode),
+            'get_ruang' => $this->Pendaftaran_model->get_ruang($unit),
+        );
+        $this->template->load('template', 'pendaftaran/p4_polibed', $data);
+    }
+    public function lima()
+    {
+        //$this->_rules();
+
+        //if ($this->form_validation->run() == FALSE) {
+        //$this->create();
+        //redirect(site_url('pendaftaran'));
+        //} else {
+        $unit = $this->input->post('unit');
+        $data = array(
+            'noreg' => $this->input->post('noreg', TRUE),
+            'nobill' => $this->input->post('nobill', TRUE),
+            'nomr' => $this->input->post('nomr', TRUE),
+            'baru' => $this->input->post('baru', TRUE),
+            'unit' => $this->input->post('unit', TRUE),
+            'kddokter' => $this->input->post('kddokter', TRUE),
+            'kdpoli' => $this->input->post('kdpoli', TRUE),
+            'kdbayar' => $this->input->post('kdbayar', TRUE),
+            'rujukan' => $this->input->post('rujukan', TRUE),
+            'kdrujuk' => $this->input->post('kdrujuk', TRUE),
+            'tglreg' => $this->input->post('tglreg', TRUE),
+            'id_users' => $this->input->post('id_users', TRUE),
+        );
+        $this->session->set_flashdata('pesan', $data);
+        if ($unit == 'IGD' || $unit == 'RI') {
+            $this->template->load('template', 'pendaftaran/p5_keluarga', $data);
+        } else {
+            $this->template->load('template', 'pendaftaran/p7_verifikasi', $data);
+        }
+        //}
+    }
+
+    function enam()
+    {
+        $kdbayar = $this->input->post('kdbayar');
+        $data = array(
+            'noreg' => $this->input->post('noreg', TRUE),
+            'nobill' => $this->input->post('nobill', TRUE),
+            'nomr' => $this->input->post('nomr', TRUE),
+            'baru' => $this->input->post('baru', TRUE),
+            'unit' => $this->input->post('unit', TRUE),
+            'kddokter' => $this->input->post('kddokter', TRUE),
+            'kdpoli' => $this->input->post('kdpoli', TRUE),
+            'kdbayar' => $this->input->post('kdbayar', TRUE),
+            'rujukan' => $this->input->post('rujukan', TRUE),
+            'kdrujuk' => $this->input->post('kdrujuk', TRUE),
+            'tglreg' => $this->input->post('tglreg', TRUE),
+            'id_users' => $this->input->post('id_users', TRUE),
+            'nama' => $this->input->post('nama', TRUE),
+            'alamat' => $this->input->post('alamat', TRUE),
+            'hp' => $this->input->post('hp', TRUE),
+            'kdhub' => $this->input->post('kdhub', TRUE),
+        );
+        $this->session->set_flashdata('pesan', $data);
+        if ($kdbayar == 2) {
+            $this->template->load('template', 'pendaftaran/p7_verifikasi', $data);
+        } else {
+            $this->template->load('template', 'pendaftaran/p6_asuransi', $data);
+        }
+    }
+    function tujuh()
+    {
+        $data = array(
+            'noreg' => $this->input->post('noreg', TRUE),
+            'nobill' => $this->input->post('nobill', TRUE),
+            'nomr' => $this->input->post('nomr', TRUE),
+            'baru' => $this->input->post('baru', TRUE),
+            'unit' => $this->input->post('unit', TRUE),
+            'kddokter' => $this->input->post('kddokter', TRUE),
+            'kdpoli' => $this->input->post('kdpoli', TRUE),
+            'kdbayar' => $this->input->post('kdbayar', TRUE),
+            'rujukan' => $this->input->post('rujukan', TRUE),
+            'kdrujuk' => $this->input->post('kdrujuk', TRUE),
+            'tglreg' => $this->input->post('tglreg', TRUE),
+            'id_users' => $this->input->post('id_users', TRUE),
+            'nama' => $this->input->post('nama', TRUE),
+            'alamat' => $this->input->post('alamat', TRUE),
+            'hp' => $this->input->post('hp', TRUE),
+            'kdhub' => $this->input->post('kdhub', TRUE),
+        );
+        $this->session->set_flashdata('pesan', $data);
+        $this->template->load('template', 'pendaftaran/p7_verifikasi', $data);
+    }
+    function bed()
+    {
+        $id = $this->input->post('id');
+        $data = $this->Pendaftaran_model->get_bed($id);
+        echo json_encode($data);
+    }
+    function jadwaldokter()
+    {
+        $unit = $this->input->post('unit');
+        $id = $this->input->post('id');
+        $data = $this->Pendaftaran_model->get_jadwaldokter($id, $unit);
+        echo json_encode($data);
+    }
+    public function tap()
+    {
+        $tap = $this->input->post('tap');
+        $unit = $this->input->post('unit');
+        $row = $this->Pendaftaran_model->tap($tap);
+        if ($row) {
+            $data = array(
+                'nama' => set_value('nama', $row->nama),
+                'tgllhr' => set_value('tgllhr', $row->tgllhr),
+                'alamat' => set_value('alamat', $row->alamat),
+                'nomr' => set_value('nomr', $row->nomr),
+                'nik' => set_value('nik', $row->nik),
+                'kdklmn' => set_value('kdklmn', $row->kdklmn),
+                'hp' => set_value('hp', $row->hp),
+                'foto' => set_value('foto', $row->foto),
+            );
+            $this->session->set_flashdata('successx', $data);
+            //$this->template->load('template', 'pendaftaran/pendaftaran2', $data);
+            redirect(site_url('pendaftaran/dua/' . $unit));
+        } else {
+            $this->session->set_flashdata('errorx', 'bbbbb');
+            //$this->template->load('template', 'pendaftaran/pendaftaran2');
+            redirect(site_url('pendaftaran/dua/' . $unit));
+        }
     }
 
     public function read($id)

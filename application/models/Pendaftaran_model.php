@@ -29,6 +29,56 @@ class Pendaftaran_model extends CI_Model
         return $this->db->get($this->table)->row();
     }
 
+    // get m_pasien
+    function tap($tap)
+    {
+        $this->db->like('nomr', $tap);
+        $this->db->or_like('nik', $tap);
+        $this->db->or_like('hp', $tap);
+        return $this->db->get('m_pasien')->row();
+    }
+
+    //cara bayar
+    function metodebayar()
+    {
+        $this->db->where('aktif', 'Y');
+        return $this->db->get('m_bayar_metode')->result();
+    }
+    function get_bayar($metode)
+    {
+        $this->db->where('kdmetodebayar', $metode);
+        $this->db->where('aktif', 'Y');
+        return $this->db->get('m_bayar')->result();
+    }
+    function get_poli($unit)
+    {
+        $this->db->where('kdunit', $unit);
+        return $this->db->get('m_poli')->result();
+    }
+    function get_ruang($unit)
+    {
+        $this->db->where('kdunit', $unit);
+        return $this->db->get('m_ruang')->result();
+    }
+    function get_bed($id)
+    {
+        $this->db->where('kdruang', $id);
+        $this->db->where('aktif', 'Y');
+        return $this->db->get('m_ruangbed')->result();
+    }
+    function get_jadwaldokter($id, $unit)
+    {
+        //$dtf = date_format(now(), '%w');
+        $originalDate = date("Y-m-d");
+        $newDate = date("%w", strtotime($originalDate));
+        $this->db->select('a.kdjadwal,a.kddokter,b.dokter,TIME_FORMAT(a.jam_mulai, "%H:%i") AS jam_mulai,TIME_FORMAT(a.jam_akhir, "%H:%i") as jam_akhir,a.kode');
+        $this->db->from('m_dokterjadwal a');
+        $this->db->join('m_dokter b', 'a.kddokter=b.kddokter', 'LEFT');
+        $this->db->where('a.kdunit', $unit);
+        $this->db->where('a.kode', $id);
+        $this->db->where('a.hari', $newDate);
+        return $this->db->get()->result();
+    }
     // get total rows
     function total_rows($q = NULL)
     {
