@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'root',
-	'database' => 'mcu',
+	'hostname' => 'rsko-jakarta.com',
+	'username' => 'u7793908_mcu',
+	'password' => 'ra073071',
+	'database' => 'u7793908_mcu',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
